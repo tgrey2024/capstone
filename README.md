@@ -29,9 +29,9 @@ Live site: add link
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## User Experience Design Process
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 ## Project Brief
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 ## Users
 Seniors with Memory and/or Language Problems: These are the primary users for whom the app is designed. These seniors may be dealing with conditions such as dementia or other cognitive impairments. The app aims to enhance their quality of life by providing a personalised digital space where they can compile cherished photos, favourite songs, newspaper articles, videos and other memory aids. This resource serves as a valuable tool to help them recall significant events, personal stories, maintain cognitive function and engage more actively with their surroundings. Colour blindness, in particular colour vision deterioration e.g. tritanopia ("blue-yellow" colour blindness) is also common in those aged 70 and over.
 
@@ -40,7 +40,7 @@ Carers and Loved Ones: These users include family members, friends and caregiver
 Developer/Admin: This superuser is responsible for developing, maintaining and updating the web app. They ensure the app is functional, secure, user friendly and handles any user support and content issues.
 
 
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 ### User Stories
 - **Link to User Stories in GitHub Projects:**
   - [Add a link to the GitHub Projects kanban board.]
@@ -61,14 +61,14 @@ Developer/Admin: This superuser is responsible for developing, maintaining and u
 - **Reasoning For Any Final Changes:**
   - [Summarise significant changes made to the design during development and the reasons behind them.]
   - [Reflect on how these changes enhance inclusivity and accessibility.]
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 
 ## Key Features
 - **Feature 1:** [Briefly describe the implemented feature.]
 - **Feature 2:** [Briefly describe the implemented feature.]
 - **Inclusivity Notes:** 
   - [Mention how the features address the needs of diverse users, including those with SEND.]
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 
 ## Deployment
 - **Platform:** [Platform used, e.g., Heroku, AWS, etc.]
@@ -97,7 +97,7 @@ Once the MVP has been created in Gitpod, go to GitHub Pages to make an early dep
 - **Security Measures:**
   - Use of environment variables for sensitive data.
   - Ensured DEBUG mode is disabled in production.
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 
 Validation of HTML/CSS, Lighthouse Audits, Bugs
 #### HTML Validation
@@ -119,7 +119,7 @@ Add details of CSS validation:
 ### Bugs yet to be Fixed
 *  
 
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 
 ## AI Implementation and Orchestration
 
@@ -140,7 +140,8 @@ Add details of CSS validation:
   - AI tools streamlined repetitive tasks, enabling focus on high-level development.
   - Efficiency gains included faster debugging, comprehensive testing, and improved code quality.
   - Challenges included contextual adjustments to AI-generated outputs, which were resolved effectively, enhancing inclusivity.
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
+
 ## Testing Summary
 
 - **Manual Testing:**
@@ -151,17 +152,27 @@ Add details of CSS validation:
   - Tools Used: [Mention any testing frameworks or tools, e.g., Django TestCase.]
   - Features Covered: [Briefly list features covered by automated tests.]
   - Adjustments Made: [Describe any manual corrections to AI-generated test cases, particularly for accessibility.]
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
+
 ## Future Enhancements
 - [List potential improvements or additional features for future development.]
 - Consider enhancements to improve accessibility further, such as voice input capabilities or additional language support.
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
+
 ## Technologies Used
 ### Languages and Technologies
 ![Static Badge](https://img.shields.io/badge/HTML5-Language-blue)
 ![Static Badge](https://img.shields.io/badge/CSS3-Language-blue)
 ![Static Badge](https://img.shields.io/badge/GitHub-RepoHosting-black)
+Heroku
+Cloudinary
 ![Static Badge](https://img.shields.io/badge/Gitpod-IDE-yellow)
+Javascript
+Python
+Django
+DB PostgreSQL
+Whitenoise
+AllAuth
 
 ### Libraries
 ![Static Badge](https://img.shields.io/badge/Bootstrap-5.3-purple)
@@ -174,8 +185,10 @@ Add details of CSS validation:
 ![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-green)
 ![Static Badge](https://img.shields.io/badge/MSCopilot-AI-orange)
 ![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI-orange)
+Perplexity AI
+DiagramGPT/Eraser
 
-[Back to top](#top)
+<p align="right"><a href="#top">Back to top</a></p>
 
 ## Credits
 ### Content References
@@ -186,7 +199,7 @@ MS Copilot was used to generate much of the homepage and blog content.
 * Pexels - [https://www.pexels.com/](https://www.pexels.com/)
 
 #### Acknowledgements
-Many thanks to my three patient testers (also my husband and teenage children) for helping me test throughout development, 
+Many thanks to my patient testers for helping me test throughout development, 
 Everyone in my WECA group who have been so helpful and supportive leading up to this project, and
 Code Institute tutors (Dillon, Mark and Roo) for answering my endless questions
 <p align="right"><a href="#top">Back to top</a></p>
