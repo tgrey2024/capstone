@@ -4,7 +4,7 @@
 ## Overview
 Reminineez is a Django-based digital scrapbook app that allows authenticated users to create individualised scrapbooks of photos, songs, etc for seniors with problems with memory and/or language, to serve as a memory aid as part of their reminiscence therapy. Research has shown that personalised memory aids can significantly improve the quality and quantity of conversations with carers and loved ones, stimulate neural connections and enhances self-esteem and wellbeing. Conversations about the past can also help to bring the family closer and build stronger bonds.
 
-Live site: add link
+Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07ac70d1d.herokuapp.com/)
 
 ## Table of Contents
 - [User Experience Design Process](#user-experience-design-process)
@@ -23,27 +23,41 @@ Live site: add link
 - [Future Features](#future-features)
 - [Technologies Used](#technologies-used)
 - [Deployment](#deployment)
+    - [Platform](#platform)
+    - [High Level Deployment Steps](#high-level-deployment-steps)
+    - [Verification and Validation](#verification-and-validation)
+    - [Security Measures](#security-measures)
 - [Testing](#testing)
 - [Credits](#credits)
 
 <p align="right"><a href="#top">Back to top</a></p>
+<hr/>
 
 ## User Experience Design Process
 <p align="right"><a href="#top">Back to top</a></p>
+<hr/>
+
 ## Project Brief
 <p align="right"><a href="#top">Back to top</a></p>
+<hr/>
+
 ## Users
-Seniors with Memory and/or Language Problems: These are the primary users for whom the app is designed. These seniors may be dealing with conditions such as dementia or other cognitive impairments. The app aims to enhance their quality of life by providing a personalised digital space where they can compile cherished photos, favourite songs, newspaper articles, videos and other memory aids. This resource serves as a valuable tool to help them recall significant events, personal stories, maintain cognitive function and engage more actively with their surroundings. Colour blindness, in particular colour vision deterioration e.g. tritanopia ("blue-yellow" colour blindness) is also common in those aged 70 and over.
+<strong>Seniors with Memory and/or Language Problems:</strong> These are the primary users for whom the app is designed. These seniors may be dealing with conditions such as dementia or other cognitive impairments. The app aims to enhance their quality of life by providing a personalised digital space where they can compile cherished photos, favourite songs, newspaper articles, videos and other memory aids. This resource serves as a valuable tool to help them recall significant events, personal stories, maintain cognitive function and engage more actively with their surroundings. Colour blindness, in particular colour vision deterioration e.g. tritanopia ("blue-yellow" colour blindness) is also common in those aged 70 and over.
 
-Carers and Loved Ones: These users include family members, friends and caregivers who interact with the seniors on a daily basis. They may be helping the seniors to use the app to create, update and manage the individual memory books/blogs for their loved ones, or they may be the ones creating the blogs on behalf of the seniors. By incorporating familiar and beloved content, they can improve the quality and quantity of their conversations with the seniors. This process not only helps to strengthen emotional bonds but also provides carers with insights into the senior's life story, enabling more empathetic and tailored care.
+<strong>Carers and Loved Ones:</strong> These users include family members, friends and caregivers who interact with the seniors on a daily basis. They may be helping the seniors to use the app to create, update and manage the individual memory books/blogs for their loved ones, or they may be the ones creating the blogs on behalf of the seniors. By incorporating familiar and beloved content, they can improve the quality and quantity of their conversations with the seniors. This process not only helps to strengthen emotional bonds but also provides carers with insights into the senior's life story, enabling more empathetic and tailored care.
 
-Developer/Admin: This superuser is responsible for developing, maintaining and updating the web app. They ensure the app is functional, secure, user friendly and handles any user support and content issues.
+<strong>Developer/Admin:</strong> This superuser is responsible for developing, maintaining and updating the web app. They ensure the app is functional, secure, user friendly and handles any user support and content issues.
 
 
 <p align="right"><a href="#top">Back to top</a></p>
+<hr/>
+
 ### User Stories
 - **Link to User Stories in GitHub Projects:**
   - [Add a link to the GitHub Projects kanban board.]
+<p align="right"><a href="#top">Back to top</a></p>
+<hr/>
+
 ## Design
 ### Wireframes
   - [Attach or link to accessible wireframes used in the design process, ensuring high colour contrast and alt text for visual elements.]
@@ -71,30 +85,33 @@ Developer/Admin: This superuser is responsible for developing, maintaining and u
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Deployment
-- **Platform:** [Platform used, e.g., Heroku, AWS, etc.]
+### Platform
+The web app is hosted on Heroku using Eco Dynos, and is deployed via the designated Github repository.
 
+A request is made via the CI Database Maker, which generates a PostgreSQL database hosted on AWS, with the database credentials sent to the email address provided in the request.
 
-- **High-Level Deployment Steps:** 
-  1. [Step 1]
-  2. [Step 2]
-  3. [Step 3]
-  The [Code Institute Template] (https://github.com/Code-Institute-Org/ci-full-template) was used to create the GitHub repository, so that the website could be developed in the correct setup of Gitpod IDE.
+### High-Level Deployment Steps
+The [Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template) was used to create the GitHub repository, so that the website could be developed in the correct setup of Gitpod IDE.
 
 The GitHub Copilot extension was also installed in my local client version of MS VS Code, which was also connected with the same GitHub repository and linked to Gitpod via SSH. This allows for AI pair programming in the initial stages of development to create certain sections faster.
 
-The process is as follows:
-1. Login to your GitHub profile.
-2. Go to the [Code Institute Template] (https://github.com/Code-Institute-Org/ci-full-template).
-3. Click **Use this template** and then **Create a new repository**.
-4. Enter the repo name and choose to create from template
-5. Click **Open** with the Gitpod logo to open the Code Institute IDE workspace.
-6. Open VS Code locally and click on Gitpod logo on the left. Click on right arrow next to the workspace you want to work on.
- 
-Once the MVP has been created in Gitpod, go to GitHub Pages to make an early deployment of the project, so that testing can be done in Dev Tools to highlight key issues that need to be resolve early on in the project.
-- **Verification and Validation:**
+The deployment process is as follows:
+1. Login to your GitHub profile and go to [Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template). **Use this template** and **Create a new repository**.
+2. Open the Code Institute Gitpod IDE workspace. Open VS Code locally, connect and open the workspace. Create the MVP.
+3. Login to Heroku and create a new app using a unique name and select the correct region. Add Config Vars in Settings.
+4. Install web server gunicorn and freeze requirements.
+5. Create a new Procfile in the root directory and specify the running of the web app with process type as gunicorn in the Procfile.
+6. Add deployed apps to ALLOWED_HOSTS in settings.py, and set Debug = False. Add, commit and push to the Github repo.
+7. In Heroku, go to Deploy tab, search for the correct Github repo and under manual deploy click **Deploy Branch**.
+8. **View app** to verify that it is been deployed correctly. This deployed site can now be validated and tested e.g. in Chrome Dev Tools.
+9. In the app's Resources tab, check that Eco Dynos are used and remove any unnecessary Add-ons.
+10. Subsequent changes to the code will need to be pushed to the Github repo and manually deployed on Heroku.
+
+### Verification and Validation
   - Steps taken to verify the deployed version matches the development version in functionality.
   - [Include any additional checks to ensure accessibility of the deployed application.]
-- **Security Measures:**
+
+### Security Measures
   - Use of environment variables for sensitive data.
   - Ensured DEBUG mode is disabled in production.
 <p align="right"><a href="#top">Back to top</a></p>
