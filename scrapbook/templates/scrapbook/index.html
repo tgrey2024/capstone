@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- {% block title %}Homepage{% endblock %} -->
+
+{% block content %}
+    <h1>Homepage</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptatum, odit modi reiciendis blanditiis ducimus odio, sint reprehenderit qui necessitatibus consectetur dicta nulla nobis? A fugiat quisquam tempore praesentium dolore.</p>
+    <div class="col-12 mt-3 left">
+        <div class="row">
+            {% for scrapbook in scrapbook_list %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="Text">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ scrapbook.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{{ scrapbook.author }}</p>
+                        <p class="card-text h6">{{ scrapbook.content }}</p>
+                        <p class="card-text h6">Last Modified: {{ scrapbook.updated_on }}</p>
+                        <a href="#" class="btn btn-info scrapbook-link">Open Scrapbook</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
