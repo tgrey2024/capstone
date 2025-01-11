@@ -22,6 +22,13 @@ class Scrapbook(models.Model):
     description = models.TextField(blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    # orders scrapbooks from newest to oldest
+    class Meta:
+        ordering = ["-created_on"]
+
+    # returns f-string with title and author from dataset
+    def __str__(self):
+        return f"{self.title} | by {self.author}"
 
 class Post(models.Model):
     """
@@ -37,6 +44,14 @@ class Post(models.Model):
     content = models.TextField(max_length=200, blank=True)
     approved = models.BooleanField(default=False)
     
+    # orders posts from newest to oldest
+    class Meta:
+        ordering = ["-created_on"]
+
+    # returns f-string with title, scrapbook title and author from dataset
+    def __str__(self):
+        return f"{self.title} from {self.scrapbook.title} | by {self.author}"   
+    
 
 class Image(models.Model):
     """
@@ -46,4 +61,12 @@ class Image(models.Model):
     featured_image = CloudinaryField('image', default='placeholder')
     caption = models.TextField(max_length=200, blank=True)
     is_puzzle = models.BooleanField(default=False)
+
+    # orders images from newest to oldest
+    class Meta:
+        ordering = ["post"]
+
+    # returns f-string with title and author from dataset
+    def __str__(self):
+        return f"{self.post.title} | {self.caption[:100]}..."
 
