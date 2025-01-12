@@ -12,6 +12,15 @@ h1 {
     color: #56351e;
     text-align: center;
 }
+
+/* Post content */
+.post-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+
 /* Footer */
 #footer {
     background-color: #56351e;
