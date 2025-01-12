@@ -34,13 +34,13 @@ class Post(models.Model):
     """
     Stores a single post entry related to :model:`auth.User` and :model:`blog.Post`.
     """
-    scrapbook = models.ForeignKey(Scrapbook, on_delete=models.CASCADE, related_name="post")
+    scrapbook = models.ForeignKey(Scrapbook, on_delete=models.CASCADE, related_name="posts")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="post_author")
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=STATUS, default=-1)
+    status = models.IntegerField(choices=STATUS, default=0)
     content = models.TextField(max_length=200, blank=True)
     approved = models.BooleanField(default=False)
     

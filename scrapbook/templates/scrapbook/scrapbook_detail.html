@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <!-- Scrapbook title goes in these h1 tags -->
+            <h1>{{ scrapbook.title }}</h1>
+            <!-- Scrapbook author goes before the | the post's created date goes after -->
+            <p class="scrapbook-subtitle">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-12 card mb-4  mt-3 left top">
+            <div class="card-body">
+                <!-- The scrapbook content goes inside the card-text. -->
+                <!-- Use the | safe filter inside the template tags -->
+                <p class="card-text">
+                    {{ scrapbook.content | safe }}
+                </p>
+                <!-- add cards for each post in this scrapbook -->
+                {% for post in posts %}
+                <div class="card mb-4">
+                    {% if post.post_image.all %}
+                    <img class="post-image" src="{{ post.post_image.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content | safe }}</p>
+                        <p class="card-text">Last Modified: {{ post.updated_on }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

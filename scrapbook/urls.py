@@ -10,4 +10,6 @@ from django.urls import path
 
 urlpatterns = [
     path("", views.ScrapbookListView.as_view(), name="home"),
+    path("<slug:slug>/", views.ScrapbookDetailView.as_view(),
+         name="scrapbook_detail"),
 ]
