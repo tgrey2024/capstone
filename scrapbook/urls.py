@@ -9,5 +9,5 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path("", views.ScrapbookListView.as_view(), name="scrapbook-list"),
+    path("", views.ScrapbookListView.as_view(), name="home"),
 ]

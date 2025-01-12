@@ -30,7 +30,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link {% if request.path == home_url %}active{%endif%}" aria-current="page" href="{% url 'home' %}">Home</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -61,7 +61,11 @@
                     <h2>Remineez</h2>
                 </div>
                 <div class="col-4 text-center">
-                    <h2 class="sub-heading-color">© Tripta Grey 2025</h2>
+                    <h2 class="sub-heading-color">
+                      {% block copyright %}
+                      © Tripta Grey 2025
+                      {% endblock copyright %}
+                    </h2>
                 </div>
                 <!-- Social links -->
                 <div class="col-4 social-links text-md-end">
