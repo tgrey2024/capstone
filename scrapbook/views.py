@@ -18,7 +18,7 @@ class ScrapbookDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["posts"] = self.get_object().posts.filter(status=2).order_by("-created_on")
+        context["posts"] = self.get_object().posts.filter(status=2).order_by("created_on")
         context["post_form"] = PostForm()
         return context
 

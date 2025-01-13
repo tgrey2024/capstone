@@ -24,6 +24,9 @@ h1 {
     margin-right: 6px;
 }
 
+.navbar-nav > .nav-item .nav-link a:hover {
+    color: #c3151b;
+}
 
 /* Post content */
 .post-image {
@@ -32,6 +35,19 @@ h1 {
     object-fit: cover;
 }
 
+.card-body {
+    min-height: 17rem;
+}
+
+.card-body .metadata {
+    font-size: smaller;
+    line-height: 55%;
+}
+
+.card-body .scrapbook-link {
+    bottom: 0.8rem;
+    padding: 0.5rem 1rem;
+}
 
 /* Footer */
 #footer {
@@ -63,12 +79,24 @@ h1 {
     transition: color 0.3s ease-in-out;
 }
 
-#contact .social-links i:hover {
+#footer .social-links i:hover {
     color: #c3151b;
 }
 
 @media (min-width: 234px) {
     #navbar .navbar-brand {
         display: block;
+    }
+}
+
+@media (min-width: 767px) {
+    .card-body {
+        min-height: 22rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-body {
+        min-height: 17rem;
     }
 }

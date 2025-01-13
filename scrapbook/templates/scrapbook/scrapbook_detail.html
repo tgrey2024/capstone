@@ -20,19 +20,21 @@
             <div class="row">
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
-                <div class="col-md-4">
+                <div class="col-12 col-md-4">
                     <div class="card mb-4">
                         {% if post.images.all %}
                         <div class="text-center">
                             <img class="post-image" src="{{ post.images.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
                         </div>
                         {% endif %}
-                        <div class="card-body">
+                        <div class="card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
                             <p class="card-text">{{ post.content | safe }}</p>
-                            <p class="card-text">Last Modified: {{ post.updated_on }}</p>
-                            <a href="#" class="btn btn-info scrapbook-link">Edit</a>
-                            <a href="#" class="btn btn-danger scrapbook-link">Delete</a>
+                            <div class="position-absolute bottom-0 end-0 px-2">
+                                <a href="#" class="btn btn-info scrapbook-link mx-auto my-2">Edit</a>
+                                <a href="#" class="btn btn-danger scrapbook-link mx-auto my-2">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +45,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-4 mx-auto">
+        <div class="col-10 col-md-8 col-lg-6 mx-auto">
             <div class="card mb-4">
                 <div class="card-body">
                     {% if user.is_authenticated %}
