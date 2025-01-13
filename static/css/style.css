@@ -1,17 +1,29 @@
 body {
     background-color: #f2e3bc;
-    padding-top: 57.15px; /* pushes the top of the header down under fixed navbar */
+    padding-top: 70.15px; /* pushes the top of the header down under fixed navbar */
 }
-/* Navbar */
-#navbar {
-    background-color: #c47335;
-}
-
 
 h1 {
     color: #56351e;
     text-align: center;
 }
+
+/* Navbar */
+#navbar {
+    background-color: #c47335;
+}
+
+#navbar .navbar-brand{
+    color: #f2e3bc;
+    font-size: 1.6rem;
+    display: none;
+}
+
+#navbar .logo {
+    width: 30px;
+    margin-right: 6px;
+}
+
 
 /* Post content */
 .post-image {
@@ -36,6 +48,7 @@ h1 {
 #footer .sub-heading-color {
     color:  #f2e3bc;
     font-size: 0.8rem;
+    padding-top: 3px;
 }
 
 #footer i {
@@ -46,10 +59,16 @@ h1 {
 
 #footer .social-links i {
     color: #c47335;
-    font-size: 1.9rem;
+    font-size: 1rem;
     transition: color 0.3s ease-in-out;
 }
 
 #contact .social-links i:hover {
     color: #c3151b;
+}
+
+@media (min-width: 234px) {
+    #navbar .navbar-brand {
+        display: block;
+    }
 }

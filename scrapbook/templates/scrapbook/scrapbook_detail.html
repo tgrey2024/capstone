@@ -14,25 +14,29 @@
 </div>
 
 
-<div class="container text-center">
+<div class="container">
     <div class="row">
         <div class="col-12 card mb-4  mt-3 left top">
             <div class="card-body">
                 <!-- The scrapbook content goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags -->
-                <p class="card-text">
+                <p class="lead card-text">
                     {{ scrapbook.content | safe }}
                 </p>
                 <!-- add cards for each post in this scrapbook -->
                 {% for post in posts %}
                 <div class="card mb-4">
                     {% if post.post_image.all %}
-                    <img class="post-image" src="{{ post.post_image.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="text-center">
+                        <img class="post-image" src="{{ post.post_image.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    </div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.content | safe }}</p>
                         <p class="card-text">Last Modified: {{ post.updated_on }}</p>
+                        <a href="#" class="btn btn-info scrapbook-link">Edit</a>
+                        <a href="#" class="btn btn-danger scrapbook-link">Delete</a>
                     </div>
                 </div>
                 {% endfor %}
