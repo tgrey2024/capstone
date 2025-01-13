@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+from django.contrib import messages
 from .models import Scrapbook, Post, Image
 from .forms import PostForm
 
@@ -31,6 +32,10 @@ class ScrapbookDetailView(generic.DetailView):
             post.author = request.user
             post.scrapbook = self.object
             post.save()
+            messages.add_message(
+        request, messages.SUCCESS,
+        'Post added successfully'
+    )
             return redirect('scrapbook_detail', slug=self.object.slug)
         context["post_form"] = post_form
         return self.render_to_response(context)
