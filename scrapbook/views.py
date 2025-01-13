@@ -14,6 +14,7 @@ class ScrapbookDetailView(generic.DetailView):
     model = Scrapbook
     template_name = "scrapbook/scrapbook_detail.html"
     context_object_name = "scrapbook"
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -4,13 +4,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 mt-3 text-center">
+        <div class="col-12 mt-3">
             <!-- Scrapbook title goes in these h1 tags -->
-            <h1>{{ scrapbook.title }}</h1>
+            <h3 class="d-inline">{{ scrapbook.title }}</h1>
             <!-- Scrapbook author goes before the | the post's created date goes after -->
-            <p class="scrapbook-subtitle">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+            <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
             <!-- Use the | safe filter inside the template tags -->
-            <p class="lead card-text">{{ scrapbook.content | safe }}</p>
+            <p class="lead">{{ scrapbook.content | safe }}</p>
         </div>
     </div>
     <div class="row">

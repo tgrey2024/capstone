@@ -58,6 +58,11 @@
         </nav>
     </header>
     <main>
+      {% if user.is_authenticated %}
+        <p class="text-end mx-3 my-1">You are logged in as {{ user.username }}</p>
+        {% else %}
+        <p class="text-end mx-3 my-1">You are not logged in</p>
+        {% endif %}
         {% block content %}
         <!-- content goes here -->
         {% endblock %}
