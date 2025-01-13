@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from django.contrib import messages
+from django.http import JsonResponse
 from .models import Scrapbook, Post, Image
 from .forms import PostForm
 
-# Create your views here.
 class ScrapbookListView(generic.ListView):
     queryset = Scrapbook.objects.filter(status=2).order_by("-created_on")
     template_name = "scrapbook/index.html"
@@ -25,18 +24,14 @@ class ScrapbookDetailView(generic.DetailView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        context = self.get_context_data()
-        post_form = PostForm(data=request.POST)
+        post_form = PostForm(data=request.POST, files=request.FILES)
         if post_form.is_valid():
             post = post_form.save(commit=False)
             post.author = request.user
             post.scrapbook = self.object
             post.save()
-            messages.add_message(
-        request, messages.SUCCESS,
-        'Post added successfully'
-    )
-            return redirect('scrapbook_detail', slug=self.object.slug)
-        context["post_form"] = post_form
-        return self.render_to_response(context)
-
+            if 'image' in request.FILES:
+                image = Image(post=post, featured_image=request.FILES['image'])
+                image.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'errors': post_form.errors})

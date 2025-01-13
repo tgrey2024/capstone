@@ -79,7 +79,7 @@ class Image(models.Model):
     """
     Stores a single image entry related to :model:`scrapbook.Post`.
     """
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_image")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
     featured_image = CloudinaryField('image', default='placeholder')
     caption = models.TextField(max_length=200, blank=True)
     is_puzzle = models.BooleanField(default=False)
