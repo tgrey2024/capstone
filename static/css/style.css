@@ -49,6 +49,16 @@ h1 {
     padding: 0.5rem 1rem;
 }
 
+/* Create/Edit Form */
+#image-preview-container {
+    max-width: 397.33px;
+}
+
+#image-preview-container img {
+    width: 100%;
+    height: auto;
+}
+
 /* Footer */
 #footer {
     background-color: #56351e;

@@ -20,7 +20,7 @@
             <div class="row">
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
-                <div class="col-12 col-md-4">
+                <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
                         {% if post.images.all %}
                         <div class="text-center">
@@ -30,12 +30,11 @@
                         <div class="card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
-                            <div class="card-text text-muted metadata"><strong class="text-secondary">
-                                <i class="far fa-posts"></i> {{ posts_count }}
-                              </strong></div>
                             <p class="card-text">{{ post.content | safe }}</p>
                             <div class="position-absolute bottom-0 end-0 px-2">
-                                <a href="#" class="btn btn-info scrapbook-link mx-auto my-2">Edit</a>
+                                {% if user.is_authenticated and post.author == user %}
+                                  <button class="btn btn-info btn-edit scrapbook-link mx-auto my-2" data-post_id="{{ post.id }}">Edit</button>
+                                {% endif %}
                                 <a href="#" class="btn btn-danger scrapbook-link mx-auto my-2">Delete</a>
                             </div>
                         </div>
@@ -52,11 +51,28 @@
             <div class="card mb-4">
                 <div class="card-body">
                     {% if user.is_authenticated %}
-                    <h4>Add another Post in this Scrapbook:</h4>
+                    <h4 id="postFormTitle">Add another Post in this Scrapbook:</h4>
                     <p>Posting as: {{ user.username }}</p>
                     <form id="postForm" method="POST" enctype="multipart/form-data" style="margin-top: 1.3em;">
-                        {{ post_form|crispy }}
                         {% csrf_token %}
+                        <div class="mb-3">
+                            {{ post_form.title.label_tag }}<br>
+                            {{ post_form.title }}
+                        </div>
+                        <div class="mb-3">
+                            {{ post_form.content.label_tag }}<br>
+                            {{ post_form.content }}
+                        </div>
+                        <div class="mb-3">
+                            {{ post_form.status.label_tag }}<br>
+                            {{ post_form.status }}
+                        </div>
+                        <div id="image-preview-container"></div>
+                        <div class="mb-3">
+                            {{ post_form.image.label_tag }}<br>
+                            {{ post_form.image }}
+                        </div>
+                        <button id="changeImageButton" type="button" class="btn btn-secondary" style="display: none;">Change Image</button>
                         <button id="submitButton" type="submit" class="btn btn-info">Add Post</button>
                     </form>
                     {% else %}
@@ -80,4 +96,9 @@
     {% endif %}
 </div>
 
+{% endblock %}
+{% block extras %}
+<!-- Javascript link -->
+<script src="{% static 'js/img-upload.js' %}"></script>
+<script src="{% static 'js/posts.js' %}"></script>
 {% endblock %}
