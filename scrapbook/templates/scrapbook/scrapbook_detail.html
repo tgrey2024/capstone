@@ -30,6 +30,9 @@
                         <div class="card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
+                            <div class="card-text text-muted metadata"><strong class="text-secondary">
+                                <i class="far fa-posts"></i> {{ posts_count }}
+                              </strong></div>
                             <p class="card-text">{{ post.content | safe }}</p>
                             <div class="position-absolute bottom-0 end-0 px-2">
                                 <a href="#" class="btn btn-info scrapbook-link mx-auto my-2">Edit</a>

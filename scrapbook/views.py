@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.http import JsonResponse
+from django.db import transaction
 from .models import Scrapbook, Post, Image
 from .forms import PostForm
 
@@ -9,29 +10,31 @@ class ScrapbookListView(generic.ListView):
     template_name = "scrapbook/index.html"
     # context_object_name = "scrapbooks"
     paginate_by = 3
+    
+def scrapbook_detail(request, slug):
+    scrapbook = get_object_or_404(Scrapbook, slug=slug)
+    posts = scrapbook.posts.filter(status=2).order_by("created_on")
+    post_form = PostForm()
 
+    if request.method == 'POST':
+        return handle_post_request(request, scrapbook)
 
-class ScrapbookDetailView(generic.DetailView):
-    model = Scrapbook
-    template_name = "scrapbook/scrapbook_detail.html"
-    context_object_name = "scrapbook"
+    context = {
+        'scrapbook': scrapbook,
+        'posts': posts,
+        'post_form': post_form,
+    }
+    return render(request, 'scrapbook/scrapbook_detail.html', context)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["posts"] = self.get_object().posts.filter(status=2).order_by("created_on")
-        context["post_form"] = PostForm()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        post_form = PostForm(data=request.POST, files=request.FILES)
-        if post_form.is_valid():
-            post = post_form.save(commit=False)
-            post.author = request.user
-            post.scrapbook = self.object
-            post.save()
-            if 'image' in request.FILES:
-                image = Image(post=post, featured_image=request.FILES['image'])
-                image.save()
-            return JsonResponse({'success': True})
-        return JsonResponse({'success': False, 'errors': post_form.errors})
+@transaction.atomic
+def handle_post_request(request, scrapbook):
+    post_form = PostForm(data=request.POST, files=request.FILES)
+    if post_form.is_valid():
+        post = post_form.save(commit=False)
+        post.author = request.user
+        post.scrapbook = scrapbook
+        post.save()
+        if 'image' in request.FILES:
+            Image.objects.create(post=post, featured_image=request.FILES['image'])
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'errors': post_form.errors})
