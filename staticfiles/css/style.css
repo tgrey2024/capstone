@@ -59,6 +59,10 @@ h1 {
     height: auto;
 }
 
+#updateButton {
+    display: none;
+}
+
 /* Footer */
 #footer {
     background-color: #56351e;

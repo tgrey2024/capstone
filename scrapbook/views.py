@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -50,11 +50,17 @@ def handle_post_request(request, scrapbook):
 def post_edit(request, slug, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
+        queryset = Scrapbook.objects.filter(status=2)
+        scrapbook = get_object_or_404(queryset, slug=slug)
+        post = get_object_or_404(Post, pk=post_id)
         post_form = PostForm(data=request.POST, files=request.FILES, instance=post)
-        if post_form.is_valid():
-            post_form.save()
-            return JsonResponse({'success': True})
-        return JsonResponse({'success': False, 'errors': post_form.errors})
-    else:
-        post_form = PostForm(instance=post)
-    return render(request, 'scrapbook/post_edit.html', {'post_form': post_form, 'scrapbook': post.scrapbook})
+        
+        if post_form.is_valid() and post.author == request.user:
+            post = post_form.save(commit=False)
+            post.scrapbook = scrapbook
+            post.save()
+            messages.add_message(request, messages.SUCCESS, 'Post updated successfully!')   
+        else:
+            messages.add_message(request, messages.ERROR, 'Error updating post!')
+
+    return HttpResponseRedirect(reverse('scrapbook:scrapbook_detail', args=[slug]))

@@ -6,13 +6,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const postImage = document.getElementById("id_image");
     const postStatus = document.getElementById("id_status");
     const postForm = document.getElementById("postForm");
+    const postFormTitle = document.getElementById("postFormTitle");
     const submitButton = document.getElementById("submitButton");
+    const updateButton = document.getElementById("updateButton");
     const changeImageButton = document.getElementById("changeImageButton");
     const imagePreviewContainer = document.getElementById("image-preview-container");
 
     let imageChanged = false;
-    let currentImageUrl = '';
+    // let currentImageUrl = '';
 
+        /**
+    * Initializes edit functionality for the provided edit buttons.
+    * 
+    * For each button in the `editButtons` collection:
+    * - Retrieves the associated post's ID upon click.
+    * - Fetches the content of the corresponding post.
+    * - Populates the `postTitle`, `postContent` textbox and textarea with the post's content for editing.
+    * - Hides submit button and displays update button.
+    * - Sets the form's action attribute to the `edit_post/{postId}` endpoint.
+    */
     for (let button of editButtons) {
         button.addEventListener("click", (e) => {
             let postId = e.target.getAttribute("data-post_id");
@@ -20,18 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if (postElement) {
                 let title = postElement.getAttribute("data-title");
                 let content = postElement.getAttribute("data-content");
-                currentImageUrl = postElement.getAttribute("data-image-url");
-
-                postTitle.value = title;
+                // currentImageUrl = postElement.getAttribute("data-image-url");
+                postFormTitle.innerText = "Edit Post Text";
+                // postTitle.value = title;
                 postContent.value = content;
-                postStatus.value = 0; // Set status to draft
-                
+                // postStatus.value = 0; // Set status to draft
+                // postImage.value = currentImageUrl;
                 // Hide the image preview container and the image uploading widget
                 imagePreviewContainer.style.display = 'none';
                 postImage.style.display = 'none';
                 changeImageButton.style.display = 'none';
 
-                submitButton.innerText = "Update";
+                submitButton.innerText = 'Update';
                 postForm.setAttribute("action", `edit_post/${postId}`);
                 imageChanged = false; // Reset the flag
             } else {
@@ -39,54 +51,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    changeImageButton.addEventListener("click", () => {
-        const existingPreview = document.querySelector('.image-preview');
-        if (existingPreview) {
-            existingPreview.remove();
-        }
-        postImage.style.display = 'block';
-        changeImageButton.style.display = 'none';
-        imageChanged = true; // Set the flag to indicate the image has been changed
-    });
-
-    postForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(postForm);
-
-        if (!imageChanged) {
-            // Remove the image field from the form data if the image has not been changed
-            formData.delete('image');
-            // Add the current image URL to the form data
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
-            }
-            formData.append('image_url', currentImageUrl);
-        }
-
-        fetch(postForm.action, {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => {
-            console.log(response);
-            console.log(response.json());
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            if (data.success) {
-                window.location.reload();
-            } else {
-                alert('Error updating post: ' + JSON.stringify(data.errors));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error updating post: ' + error.message);
-        });
-    });
 });
