@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import Scrapbook, Post
@@ -20,14 +21,21 @@ def scrapbook_detail(request, slug):
     scrapbook = get_object_or_404(Scrapbook, slug=slug)
     posts = scrapbook.posts.filter(status=2).order_by("created_on")
     post_form = PostForm()
+    
+    # Pagination
+    paginator = Paginator(posts, 6)  # Show 6 posts per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     if request.method == 'POST':
         return handle_post_request(request, scrapbook)
 
     context = {
         'scrapbook': scrapbook,
-        'posts': posts,
+        'posts': page_obj,
         'post_form': post_form,
+        'is_paginated': page_obj.has_other_pages(),
+        'page_obj': page_obj,
     }
     return render(request, 'scrapbook/scrapbook_detail.html', context)
 

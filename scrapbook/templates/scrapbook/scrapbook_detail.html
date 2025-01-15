@@ -10,7 +10,7 @@
             <h3 class="d-inline">{{ scrapbook.title }}</h3>
             <!-- Scrapbook author goes before the | the post's created date goes after -->
             <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
-            <!-- Use the | safe filter inside the template tags -->
+            <!-- Use | safe filter to mark content as safe for rendering as HTML -->
             <p class="lead">{{ scrapbook.content | safe }}</p>
             <!-- Add a button to create a new post if the user is authenticated -->
             {% if user.is_authenticated %}
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                {% if forloop.counter|divisibleby:3 %}
+                {% if forloop.counter|divisibleby:6 %}
             </div>
             <div class="row">
                 {% endif %}

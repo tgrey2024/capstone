@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <!-- Bootstrap 5 card for each scrapbook -->
                         <div class="card mb-4">
-                            <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="Text">
+                            <img src="{{ scrapbook.image.url}}" class="card-img-top" alt="Text">
                             <div class="card-body">
                                 <h5 class="card-title">{{ scrapbook.title }}</h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ scrapbook.author }}</p>
