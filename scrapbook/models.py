@@ -17,7 +17,7 @@ class Scrapbook(models.Model):
     """
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    image = CloudinaryField('scrapbookimage', default='placeholder')
+    image = CloudinaryField('scrapbook_image', default='placeholder')
     content = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -41,7 +41,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="post_author")
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    image = CloudinaryField('postimage', default='placeholder')
+    image = CloudinaryField('post_image', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS)
@@ -76,22 +76,3 @@ class Post(models.Model):
             if Post.objects.filter(slug=self.slug).exists():
                 self.slug = f"{self.slug}-{uuid.uuid4().hex[:8]}"
         super().save(*args, **kwargs)
-
-# todo: remove this model
-class Image(models.Model):
-    """
-    Stores a single image entry related to :model:`scrapbook.Post`.
-    """
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
-    featured_image = CloudinaryField('image', default='placeholder')
-    caption = models.TextField(max_length=200, blank=True)
-    is_puzzle = models.BooleanField(default=False)
-
-    # orders images from newest to oldest
-    class Meta:
-        ordering = ["post"]
-
-    # returns f-string with title and author from dataset
-    def __str__(self):
-        return f"{self.post.title} | {self.caption[:100]}..."
-

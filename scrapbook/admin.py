@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Scrapbook, Post, Image
+from .models import Scrapbook, Post
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -23,5 +23,3 @@ class PostAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('content',)
 
-    
-admin.site.register(Image)
