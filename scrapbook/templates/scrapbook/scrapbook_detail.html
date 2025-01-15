@@ -12,6 +12,8 @@
             <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
             <!-- Use the | safe filter inside the template tags -->
             <p class="lead">{{ scrapbook.content | safe }}</p>
+            <!-- todo: point to edit-post for create function -->
+            
         </div>
     </div>
     <div class="row">
@@ -22,20 +24,27 @@
                 <!-- add cards for each post in this scrapbook -->
                 <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
-                        {% if post.images.all %}
+                        <!-- todo: remove
+                        {% if post.images.all %} -->
                         <div class="text-center">
-                            <img class="post-image" src="{{ post.images.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                            <!-- this uses new cloudinary field in post -->
+                            <!-- todo: -->
+                            <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
+                            <!-- todo: remove <img class="post-image" src="{{ post.images.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}"> -->
                         </div>
-                        {% endif %}
+                        <!-- todo: remove {% endif %} -->
                         <div class="card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
                             <p class="card-text">{{ post.content | safe }}</p>
                             <div class="position-absolute bottom-0 end-0 px-2">
                                 {% if user.is_authenticated and post.author == user %}
-                                  <button class="btn btn-info btn-edit scrapbook-link mx-auto my-2" data-post_id="{{ post.id }}">Edit</button>
+                                  <!-- todo: remove <button class="btn btn-info btn-edit scrapbook-link mx-auto my-2" data-post_id="{{ post.id }}">Edit</button> -->
+                                  <a href="{% url 'edit-post' post.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit</a>
                                 {% endif %}
-                                <a href="#" class="btn btn-danger scrapbook-link mx-auto my-2">Delete</a>
+                                {% if user.is_authenticated and post.author == user %}
+                                  <a href="#" class="btn btn-danger scrapbook-link mx-auto my-2">Delete</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -47,6 +56,7 @@
                 {% endfor %}
             </div>
         </div>
+        <!-- todo: to be replaced by separate form post_form.html
         <div class="col-10 col-md-8 col-lg-6 mx-auto">
             <div class="card mb-4">
                 <div class="card-body">
@@ -80,7 +90,7 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     {% if is_paginated %}
     <nav aria-label="Page navigation">
@@ -99,6 +109,7 @@
 {% endblock %}
 {% block extras %}
 <!-- Javascript link -->
+ <!-- todo: remove
 <script src="{% static 'js/img-upload.js' %}"></script>
-<script src="{% static 'js/posts.js' %}"></script>
+<script src="{% static 'js/posts.js' %}"></script>-->
 {% endblock %}

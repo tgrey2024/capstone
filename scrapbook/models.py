@@ -17,6 +17,7 @@ class Scrapbook(models.Model):
     """
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
+    image = CloudinaryField('scrapbookimage', default='placeholder')
     content = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -40,9 +41,10 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="post_author")
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
+    image = CloudinaryField('postimage', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=STATUS, default=0)
+    status = models.IntegerField(choices=STATUS)
     content = models.TextField(max_length=200, blank=True)
     approved = models.BooleanField(default=False)
     
@@ -75,6 +77,7 @@ class Post(models.Model):
                 self.slug = f"{self.slug}-{uuid.uuid4().hex[:8]}"
         super().save(*args, **kwargs)
 
+# todo: remove this model
 class Image(models.Model):
     """
     Stores a single image entry related to :model:`scrapbook.Post`.

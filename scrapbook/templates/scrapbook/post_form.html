@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+    <h1>Edit Post Content</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptatum, odit modi reiciendis blanditiis ducimus odio, sint reprehenderit qui necessitatibus consectetur dicta nulla nobis? A fugiat quisquam tempore praesentium dolore.</p>
+    
+{% block content %}
+<div class="container">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form|crispy}}
+    </div>
+    <!-- <div class="mb-3">
+        {{ form.title.label_tag }}<br>
+        {{ form.title }}
+    </div>
+    <div class="mb-3">
+        {{ form.content.label_tag }}<br>
+        {{ form.content |crispy}}
+    </div>
+    <div class="mb-3">
+        {{ form.status.label_tag }}<br>
+        {{ form.status }}
+    </div>
+    <div id="image-preview-container"></div>
+    <div class="mb-3">
+        {{ form.image.label_tag }}<br>
+        {{ form.image }}
+    </div> -->
+    <input type="submit" value="Update">
+</form>
+</div>
+{% endblock content %}

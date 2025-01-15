@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: formData,
         })
         .then(response => response.json())
+        
         .then(data => {
             if (data.success) { // If the response indicates success, reload the page
                 window.location.reload();
