@@ -13,7 +13,9 @@
             <!-- Use the | safe filter inside the template tags -->
             <p class="lead">{{ scrapbook.content | safe }}</p>
             <!-- todo: point to edit-post for create function -->
-            
+            {% if user.is_authenticated %}
+            <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post</a>
+            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -24,15 +26,9 @@
                 <!-- add cards for each post in this scrapbook -->
                 <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
-                        <!-- todo: remove
-                        {% if post.images.all %} -->
-                        <div class="text-center">
-                            <!-- this uses new cloudinary field in post -->
-                            <!-- todo: -->
+                       <div class="text-center">
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
-                            <!-- todo: remove <img class="post-image" src="{{ post.images.all.0.featured_image.url }}" class="card-img-top" alt="{{ post.title }}"> -->
                         </div>
-                        <!-- todo: remove {% endif %} -->
                         <div class="card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
@@ -56,41 +52,6 @@
                 {% endfor %}
             </div>
         </div>
-        <!-- todo: to be replaced by separate form post_form.html
-        <div class="col-10 col-md-8 col-lg-6 mx-auto">
-            <div class="card mb-4">
-                <div class="card-body">
-                    {% if user.is_authenticated %}
-                    <h4 id="postFormTitle">Add another Post in this Scrapbook:</h4>
-                    <p>Posting as: {{ user.username }}</p>
-                    <form id="postForm" method="POST" enctype="multipart/form-data" style="margin-top: 1.3em;">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            {{ post_form.title.label_tag }}<br>
-                            {{ post_form.title }}
-                        </div>
-                        <div class="mb-3">
-                            {{ post_form.content.label_tag }}<br>
-                            {{ post_form.content }}
-                        </div>
-                        <div class="mb-3">
-                            {{ post_form.status.label_tag }}<br>
-                            {{ post_form.status }}
-                        </div>
-                        <div id="image-preview-container"></div>
-                        <div class="mb-3">
-                            {{ post_form.image.label_tag }}<br>
-                            {{ post_form.image }}
-                        </div>
-                        <button id="changeImageButton" type="button" class="btn btn-secondary" style="display: none;">Change Image</button>
-                        <button id="submitButton" type="submit" class="btn btn-info">Add Post</button>
-                    </form>
-                    {% else %}
-                    <p>Log in to add a post to this scrapbook</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div> -->
     </div>
     {% if is_paginated %}
     <nav aria-label="Page navigation">

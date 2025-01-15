@@ -80,6 +80,14 @@ class PostCreateView(CreateView):
     fields = ["scrapbook", 'title', 'image', 'status', 'content']
     template_name = 'scrapbook/post_form.html'
     success_url = '/'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.scrapbook = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 class PostUpdateView(UpdateView):
     model = Post
