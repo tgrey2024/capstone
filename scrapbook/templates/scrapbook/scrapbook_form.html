@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Edit Scrapbook Content <i class="fa-regular fa-pen-to-square"></i></h1>
 <div class="container">
-<form method="scrapbook" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="mb-3">
         {{ form|crispy}}

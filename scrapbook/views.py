@@ -39,15 +39,35 @@ def scrapbook_detail(request, slug):
     }
     return render(request, 'scrapbook/scrapbook_detail.html', context)
 
+class ScrapbookCreateView(CreateView):
+    model = Scrapbook
+    fields = ['title', 'image', 'status', 'content', 'description']
+    template_name = 'scrapbook/scrapbook_form.html'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('scrapbook:scrapbook_detail',
+                            kwargs={'slug': self.object.slug})
+
 
 class ScrapbookUpdateView(UpdateView):
     model = Scrapbook
     fields = ['title', 'image', 'status', 'content']
     template_name = 'scrapbook/scrapbook_form.html'
     
-    # def get_success_url(self):
-    #     return reverse_lazy('/',
-    #                         kwargs={'slug': self.object.slug})
+    def get_success_url(self):
+        return reverse_lazy('scrapbook:scrapbook_detail',
+                            kwargs={'slug': self.object.slug})
+    
+class ScrapbookDeleteView(DeleteView):
+    model = Scrapbook
+    template_name = 'scrapbook/confirm_delete.html'
+        
+    def get_success_url(self):
+        return reverse_lazy('home')
     
 
 class PostCreateView(CreateView):
@@ -75,9 +95,10 @@ class PostUpdateView(UpdateView):
         return reverse_lazy('scrapbook_detail',
                             kwargs={'slug': self.object.scrapbook.slug})
 
+
 class PostDeleteView(DeleteView):
     model = Post
-    template_name = 'scrapbook/post_confirm_delete.html'
+    template_name = 'scrapbook/confirm_delete.html'
         
     def get_success_url(self):
         return reverse_lazy('scrapbook_detail',
