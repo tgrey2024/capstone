@@ -1,5 +1,5 @@
 body {
-    background-color: #f2e3bc;
+    background-color: #f7f7de;
     padding-top: 70.15px; /* pushes the top of the header down under fixed navbar */
 }
 
@@ -8,13 +8,19 @@ h1 {
     text-align: center;
 }
 
+.btn {
+    background-color: #2660a4;
+    border-color: #2660a4;
+    color: white;
+}
+
 /* Navbar */
 #navbar {
     background-color: #c47335;
 }
 
 #navbar .navbar-brand{
-    color: #f2e3bc;
+    color: #f7f7de;
     font-size: 1.6rem;
     display: none;
 }
@@ -22,10 +28,6 @@ h1 {
 #navbar .logo {
     width: 30px;
     margin-right: 6px;
-}
-
-.navbar-nav > .nav-item .nav-link a:hover {
-    color: #c3151b;
 }
 
 /* Post content */
@@ -94,7 +96,7 @@ h1 {
 }
 
 #footer .social-links i:hover {
-    color: #c3151b;
+    color: #f2e3bc;
 }
 
 @media (min-width: 234px) {
