@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+    
+{% block content %}
+<h1>Edit Scrapbook Content <i class="fa-regular fa-pen-to-square"></i></h1>
+<div class="container">
+<form method="scrapbook" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form|crispy}}
+    </div>
+    <input class="btn btn-info" type="submit" value="Update">
+</form>
+</div>
+{% endblock content %}

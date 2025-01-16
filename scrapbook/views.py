@@ -39,6 +39,17 @@ def scrapbook_detail(request, slug):
     }
     return render(request, 'scrapbook/scrapbook_detail.html', context)
 
+
+class ScrapbookUpdateView(UpdateView):
+    model = Scrapbook
+    fields = ['title', 'image', 'status', 'content']
+    template_name = 'scrapbook/scrapbook_form.html'
+    
+    # def get_success_url(self):
+    #     return reverse_lazy('/',
+    #                         kwargs={'slug': self.object.slug})
+    
+
 class PostCreateView(CreateView):
     model = Post
     fields = ["scrapbook", 'title', 'image', 'status', 'content']

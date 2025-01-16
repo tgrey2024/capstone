@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
-    <h1>Edit Post Content <i class="fa-regular fa-pen-to-square"></i></h1>
     
 {% block content %}
+<h1>Edit Post Content <i class="fa-regular fa-pen-to-square"></i></h1>
 <div class="container">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
