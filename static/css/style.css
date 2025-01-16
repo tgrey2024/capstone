@@ -7,10 +7,10 @@ h1 {
     color: #56351e;
     text-align: center;
 }
-
+/* button style for most buttons */
 .btn {
     background-color: #2660a4;
-    border-color: #2660a4;
+    border: none;
     color: white;
 }
 

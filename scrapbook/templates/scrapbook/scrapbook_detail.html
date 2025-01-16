@@ -11,7 +11,7 @@
             <!-- Scrapbook author goes before the | the post's created date goes after -->
             <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
             <!-- Use | safe filter to mark content as safe for rendering as HTML -->
-            <p class="lead">{{ scrapbook.content | safe }}</p>
+            <div class="lead">{{ scrapbook.content | safe }}</div>
             <!-- Add a button to create a new post if the user is authenticated -->
             {% if user.is_authenticated %}
             <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post <i class="fa-regular fa-square-plus"></i></a>
