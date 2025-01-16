@@ -29,7 +29,7 @@
                        <div class="text-center">
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
-                        <div class="card-body position-relative px-3">
+                        <div class="card-body post-card-body position-relative px-3">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
                             <p class="card-text">{{ post.content | safe }}</p>

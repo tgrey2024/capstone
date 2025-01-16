@@ -37,7 +37,7 @@ h1 {
     object-fit: cover;
 }
 
-.card-body {
+.post-card-body {
     min-height: 17rem;
 }
 
@@ -106,13 +106,13 @@ h1 {
 }
 
 @media (min-width: 767px) {
-    .card-body {
+    .post-card-body {
         min-height: 22rem;
     }
 }
 
 @media (min-width: 992px) {
-    .card-body {
+    .post-card-body {
         min-height: 17rem;
     }
 }
