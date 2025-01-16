@@ -7,9 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 class ScrapbookListView(generic.ListView):
-    queryset = Scrapbook.objects.filter(status=2).order_by("-created_on")
+    queryset = Scrapbook.objects.all().order_by("-created_on")
     template_name = "scrapbook/index.html"
-    paginate_by = 3
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
