@@ -44,8 +44,8 @@
                             <div class="position-absolute bottom-0 end-0 px-2">
                                 {% if user.is_authenticated and post.author == user %}
                                     <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-regular fa-image"></i></a>
-                                    <a href="{% url 'edit-post' post.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                    <a href="{% url 'delete-post' post.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                    <a href="{% url 'scrapbook:edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'scrapbook:delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
                                 {% endif %}
                             </div>
                         </div>
