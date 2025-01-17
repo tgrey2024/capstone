@@ -38,6 +38,24 @@ def scrapbook_detail(request, slug):
     }
     return render(request, 'scrapbook/scrapbook_detail.html', context)
 
+# PostDetailView extends generic.DetailView
+class PostDetailView(generic.DetailView):
+    model = Post
+    template_name = 'scrapbook/post_detail.html'
+    
+    def get_object(self):
+        scrapbook_slug = self.kwargs['scrapbook_slug']
+        post_slug = self.kwargs['post_slug']
+        return get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['scrapbook'] = self.object.scrapbook
+        return context
+    
+    
+
+
 class ScrapbookCreateView(CreateView):
     model = Scrapbook
     fields = ['title', 'image', 'status', 'content', 'description']

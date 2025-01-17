@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title %}Scrapbook Detail{% endblock %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-12 mt-3">
-            <!-- Scrapbook title goes in these h1 tags -->
+            <!-- Scrapbook title -->
             <h3 class="d-inline">{{ scrapbook.title }}</h3>
-            <!-- Scrapbook author goes before the | the post's created date goes after -->
+            <!-- Scrapbook author | the scrapbook's created date goes after -->
             <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
-            <!-- Use | safe filter to mark content as safe for rendering as HTML -->
+            <!-- Filter to mark content as safe for rendering as HTML -->
             <div class="lead">{{ scrapbook.content | safe }}</div>
-            <!-- Create a new post if the user is authenticated -->
+            <!-- Allow user to see button to create a post if the user is authenticated -->
             {% if user.is_authenticated %}
             <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post <i class="fa-regular fa-square-plus"></i></a>
             {% endif %}
@@ -30,15 +32,20 @@
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
                         <div class="card-body post-card-body position-relative px-3">
-                            <h5 class="card-title">{{ post.title }}</h5>
+                            {% if user.is_authenticated and post.author == user %}
+                            <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
+                            {% endif %}                                    
+                            <h5 class="card-title linked-title">{{ post.title }}</h5>
+                            {% if user.is_authenticated and post.author == user %}
+                            </a>
+                            {% endif %}                                    
                             <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
                             <p class="card-text">{{ post.content | safe }}</p>
                             <div class="position-absolute bottom-0 end-0 px-2">
                                 {% if user.is_authenticated and post.author == user %}
-                                  <a href="{% url 'edit-post' post.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                {% endif %}
-                                {% if user.is_authenticated and post.author == user %}
-                                  <a href="{% url 'delete-post' post.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-regular fa-image"></i></a>
+                                    <a href="{% url 'edit-post' post.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'delete-post' post.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
                                 {% endif %}
                             </div>
                         </div>
@@ -52,6 +59,7 @@
             </div>
         </div>
     </div>
+    <!-- Pagination -->
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">

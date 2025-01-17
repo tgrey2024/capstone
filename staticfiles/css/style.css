@@ -8,10 +8,7 @@ h1 {
     text-align: center;
 }
 
-a {
-    color: #174f11;
-    text-decoration: none;
-}
+
 
 /* button style for most buttons */
 .btn {
@@ -26,7 +23,6 @@ a {
 }
 
 #navbar .navbar-brand{
-    color: #f7f7de;
     font-size: 1.6rem;
     display: none;
 }
@@ -43,7 +39,7 @@ a {
     object-fit: cover;
 }
 
-.card-body > a > h5 {
+.linked-title {
     color: #174f11;
     text-decoration: none;
 }

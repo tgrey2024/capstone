@@ -39,7 +39,7 @@ h1 {
     object-fit: cover;
 }
 
-.card-body > a > h5 {
+.linked-title {
     color: #174f11;
     text-decoration: none;
 }
