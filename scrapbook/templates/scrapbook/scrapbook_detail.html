@@ -26,27 +26,44 @@
             <div class="row">
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
-                <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
+                 <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
+                <div id="post{{ post.id }}" class="col-12 col-md-4 {% if not post.status == 2 and not post.author == user %}d-none{% endif %}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
-                       <div class="text-center">
+                       <div class="text-center {% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}">
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
                         <div class="card-body post-card-body position-relative px-3">
-                            {% if user.is_authenticated and post.author == user %}
-                            <a class="text-decoration-none icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 196, 115, 53;" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
-                            {% endif %}                                    
-                            <h5 class="card-title linked-title">{{ post.title }}</h5>
-                            {% if user.is_authenticated and post.author == user %}
-                            </a>
-                            {% endif %}                                    
-                            <p class="card-text text-muted metadata">Last updated: {{ post.updated_on }}</p>
-                            <p class="card-text">{{ post.content | safe }}</p>
-                            <div class="position-absolute bottom-0 end-0 px-2">
+                            <div class="{% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}">
+                            
+                                <!-- if logged in user is the post author, make the title a link -->
                                 {% if user.is_authenticated and post.author == user %}
-                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-regular fa-image"></i></a>
-                                    <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                    <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
-                                {% endif %}
+                                <a class="text-decoration-none icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 196, 115, 53;" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
+                                {% endif %}                                    
+                                <h5 class="card-title linked-title">{{ post.title }}</h5>
+                                {% if user.is_authenticated and post.author == user %}
+                                </a>
+                                {% endif %}                                    
+                                <!-- Last Updated and Status icon conditionals -->
+                                <div>
+                                    <p class="card-text text-muted metadata">LastUpdated: {{ post.updated_on }}</p>
+                                    {% if user.is_authenticated and post.author == user %}
+                                        {% if post.status == 0 %}
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                                        {% elif post.status == 1 %}
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                                        {% elif post.status == 2 %}
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock-open"></i></div>
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                                <p class="card-text">{{ post.content | safe }}</p>
+                                <div class="position-absolute bottom-0 end-0 px-2">
+                                    {% if user.is_authenticated and post.author == user %}
+                                        <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-regular fa-image"></i></a>
+                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -5,9 +5,6 @@ from .models import Scrapbook, Post
 from .forms import PostForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from django.views.generic.detail import DetailView
-from django.db import transaction
-
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -28,7 +25,8 @@ class ScrapbookDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         scrapbook = self.get_object()
-        posts = scrapbook.posts.filter(status=2).order_by("created_on")
+        posts = scrapbook.posts.all()
+        ordering = ["-created_on"]
         post_form = PostForm()
         
         # Pagination
@@ -68,7 +66,7 @@ class ScrapbookCreateView(CreateView):
 
 class ScrapbookUpdateView(UpdateView):
     model = Scrapbook
-    fields = ['title', 'image', 'status', 'content', 'description']
+    fields = ['title', 'image', 'status', 'content']
     template_name = 'scrapbook/scrapbook_form.html'
     
     def get_success_url(self):
@@ -81,17 +79,7 @@ class ScrapbookDeleteView(DeleteView):
         
     def get_success_url(self):
         return reverse_lazy('home')
-
-@transaction.atomic
-def handle_post_request(request, scrapbook):
-    post_form = PostForm(data=request.POST, files=request.FILES)
-    if post_form.is_valid():
-        post = post_form.save(commit=False)
-        post.author = request.user
-        post.scrapbook = scrapbook
-        post.save()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False, 'errors': post_form.errors})    
+    
 
 class PostCreateView(CreateView):
     model = Post
@@ -133,8 +121,8 @@ class PostDeleteView(DeleteView):
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
     def get_success_url(self):
-        return reverse_lazy('scrapbook:scrapbook_detail',
-                            kwargs={'slug': self.object.scrapbook.slug})
+        return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
+
 
 # PostDetailView extends generic.DetailView
 class PostDetailView(generic.DetailView):
@@ -150,4 +138,3 @@ class PostDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['scrapbook'] = self.object.scrapbook
         return context
-    

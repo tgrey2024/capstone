@@ -21,6 +21,7 @@
             <div class="col-12 mt-3 left">
                 <div class="row">
                     {% for scrapbook in scrapbook_list %}
+                    <!-- don't show a scrapbook if its status is not Public and its author is not the logged-in user -->
                     <div class="col-md-4 {% if not scrapbook.status == 2 and not scrapbook.author == user %}d-none{% endif %}">
                         <!-- Bootstrap 5 card for each scrapbook -->
                         <div class="card mb-4">
@@ -37,6 +38,7 @@
                                         <i class="far fa-posts"></i> {{ scrapbook.post_count }} Posts
                                         </strong>
                                     </div> -->
+                                    <!-- Last Updated and Status icon conditionals -->
                                     <div>
                                         <p class="card-subtitle d-inline text-body-secondary mb-2">Updated: {{ scrapbook.updated_on }}</p>
                                         {% if user.is_authenticated and scrapbook.author == user %}
