@@ -119,3 +119,6 @@ class ScrapbookViewsTest(TestCase):
         response = self.client.post(reverse('scrapbook:delete-post', kwargs={'slug': self.scrapbook.slug, 'post_id': self.post.id}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Post.objects.count(), 0)
+        response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
+        self.assertNotContains(response, 'Test Post')
+        
