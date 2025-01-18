@@ -34,6 +34,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '8000-tgrey2024-capstone-vwz9ad2eczu.ws.codeinstitute-ide.net',
     '127.0.0.1',
+    'localhost',
     '.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [

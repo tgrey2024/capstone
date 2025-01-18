@@ -7,52 +7,45 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 class ScrapbookListView(generic.ListView):
-    queryset = Scrapbook.objects.all().order_by("-created_on")
+    model = Scrapbook
+    ordering = ["-created_on"]
     template_name = "scrapbook/index.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post_count'] = Post.objects.filter(
-            scrapbook__in=self.queryset, status=2).count()
+            scrapbook__in=self.get_queryset(), status=2).count()
         return context
     
-def scrapbook_detail(request, slug):
-    scrapbook = get_object_or_404(Scrapbook, slug=slug)
-    posts = scrapbook.posts.filter(status=2).order_by("created_on")
-    post_form = PostForm()
+class ScrapbookDetailView(generic.DetailView):
+    model = Scrapbook
+    template_name = 'scrapbook/scrapbook_detail.html'
+    context_object_name = 'scrapbook'
     
-    # Pagination
-    paginator = Paginator(posts, 6)  # Show 6 posts per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    if request.method == 'POST':
-        return handle_post_request(request, scrapbook)
-
-    context = {
-        'scrapbook': scrapbook,
-        'posts': page_obj,
-        'post_form': post_form,
-        'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj,
-    }
-    return render(request, 'scrapbook/scrapbook_detail.html', context)
-
-# PostDetailView extends generic.DetailView
-class PostDetailView(generic.DetailView):
-    model = Post
-    template_name = 'scrapbook/post_detail.html'
-    
-    def get_object(self):
-        scrapbook_slug = self.kwargs['scrapbook_slug']
-        post_slug = self.kwargs['post_slug']
-        return get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['scrapbook'] = self.object.scrapbook
+        scrapbook = self.get_object()
+        posts = scrapbook.posts.filter(status=2).order_by("created_on")
+        post_form = PostForm()
+        
+        # Pagination
+        paginator = Paginator(posts, 6)  # Show 6 posts per page
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        
+        context.update({
+            'posts': page_obj,
+            'post_form': post_form,
+            'is_paginated': page_obj.has_other_pages(),
+            'page_obj': page_obj,
+        })
         return context
     
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return handle_post_request(request, self.object)
+
+ 
     
 
 
@@ -108,15 +101,39 @@ class PostUpdateView(UpdateView):
     fields = ["scrapbook", 'title', 'image', 'status', 'content']
     template_name = 'scrapbook/post_form.html'
     
+    def get_object(self):
+        scrapbook_slug = self.kwargs['slug']
+        post_id = self.kwargs['post_id']
+        return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
+
     def get_success_url(self):
-        return reverse_lazy('scrapbook_detail',
-                            kwargs={'slug': self.object.scrapbook.slug})
+        return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
 
 
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'scrapbook/confirm_delete.html'
         
+    def get_object(self):
+        scrapbook_slug = self.kwargs['slug']
+        post_id = self.kwargs['post_id']
+        return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
+
     def get_success_url(self):
-        return reverse_lazy('scrapbook_detail',
-                            kwargs={'slug': self.object.scrapbook.slug})
+        return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
+
+
+# PostDetailView extends generic.DetailView
+class PostDetailView(generic.DetailView):
+    model = Post
+    template_name = 'scrapbook/post_detail.html'
+    
+    def get_object(self):
+        scrapbook_slug = self.kwargs['scrapbook_slug']
+        post_slug = self.kwargs['post_slug']
+        return get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['scrapbook'] = self.object.scrapbook
+        return context

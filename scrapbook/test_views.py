@@ -96,28 +96,26 @@ class ScrapbookViewsTest(TestCase):
 
     def test_post_update_view(self):
         # Test the PostUpdateView
-        pass
-        # self.client.login(username='testuser', password='testpass')
-        # response = self.client.post(reverse('scrapbook:edit-post', kwargs={'slug': self.scrapbook.slug, 'post_id': self.post.id}), {
-        #     'scrapbook': self.scrapbook.id,
-        #     'title': 'Updated Post',
-        #     'image': 'placeholder',
-        #     'status': 2,
-        #     'content': 'Updated Post content',
-        # })
-        # if response.status_code != 302:
-        #     print(response.content)
-        # self.assertEqual(response.status_code, 302)
-        # self.post.refresh_from_db()
-        # self.assertEqual(self.post.title, 'Updated Post')
-        # self.assertEqual(self.post.status, 2)
-        # self.assertEqual(self.post.content, 'Updated Post content')
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(reverse('scrapbook:edit-post', kwargs={'slug': self.scrapbook.slug, 'post_id': self.post.id}), {
+            'scrapbook': self.scrapbook.id,
+            'title': 'Updated Post',
+            'image': 'placeholder',
+            'status': 2,
+            'content': 'Updated Post content',
+        })
+        if response.status_code != 302:
+            print(response.content)
+        self.assertEqual(response.status_code, 302)
+        self.post.refresh_from_db()
+        self.assertEqual(self.post.title, 'Updated Post')
+        self.assertEqual(self.post.status, 2)
+        self.assertEqual(self.post.content, 'Updated Post content')
     
 
     def test_post_delete_view(self):
         # Test the PostDeleteView
-        pass
-        # self.client.login(username='testuser', password='testpass')
-        # response = self.client.post(reverse('scrapbook:delete-post', kwargs={'slug': self.scrapbook.slug, 'post_id': self.post.id}))
-        # self.assertEqual(response.status_code, 302)
-        # self.assertEqual(Post.objects.count(), 0)
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(reverse('scrapbook:delete-post', kwargs={'slug': self.scrapbook.slug, 'post_id': self.post.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Post.objects.count(), 0)
