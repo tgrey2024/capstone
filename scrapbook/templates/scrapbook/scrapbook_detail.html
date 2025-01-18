@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-body post-card-body position-relative px-3">
                             {% if user.is_authenticated and post.author == user %}
-                            <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
+                            <a class="text-decoration-none icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 196, 115, 53;" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
                             {% endif %}                                    
                             <h5 class="card-title linked-title">{{ post.title }}</h5>
                             {% if user.is_authenticated and post.author == user %}
