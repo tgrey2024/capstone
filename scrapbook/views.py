@@ -5,6 +5,7 @@ from .models import Scrapbook, Post
 from .forms import PostForm, ScrapbookForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.contrib import messages
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -45,6 +46,18 @@ class ScrapbookDetailView(generic.DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         return handle_post_request(request, self.object)
+    
+def handle_post_request(request, scrapbook):
+    post_form = PostForm(request.POST, request.FILES)
+    if post_form.is_valid():
+        post = post_form.save(commit=False)
+        post.author = request.user
+        post.scrapbook = scrapbook
+        post.save()
+        messages.success(request, "Post created successfully.")
+    else:
+        messages.error(request, "Post creation failed.")
+    return redirect(reverse('scrapbook:scrapbook_detail', kwargs={'slug': scrapbook.slug}))
 
 class ScrapbookCreateView(CreateView):
     model = Scrapbook
@@ -53,6 +66,7 @@ class ScrapbookCreateView(CreateView):
     
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Scrapbook created successfully.")
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -65,6 +79,10 @@ class ScrapbookUpdateView(UpdateView):
     form_class = ScrapbookForm
     template_name = 'scrapbook/scrapbook_form.html'
     
+    def form_valid(self, form):
+        messages.success(self.request, "Scrapbook updated successfully.")
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail',
                             kwargs={'slug': self.object.slug})
@@ -73,6 +91,10 @@ class ScrapbookDeleteView(DeleteView):
     model = Scrapbook
     template_name = 'scrapbook/confirm_delete.html'
         
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Scrapbook deleted successfully.")
+        return super().delete(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse_lazy('home')
 
@@ -90,6 +112,7 @@ class PostCreateView(CreateView):
         form.instance.author = self.request.user
         form.instance.scrapbook = get_object_or_404(
             Scrapbook, slug=self.kwargs['slug'])
+        messages.success(self.request, "Post created successfully.")
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -111,6 +134,10 @@ class PostUpdateView(UpdateView):
         post_id = self.kwargs['post_id']
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
+    def form_valid(self, form):
+        messages.success(self.request, "Post updated successfully.")
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
 
@@ -123,6 +150,16 @@ class PostDeleteView(DeleteView):
         scrapbook_slug = self.kwargs['slug']
         post_id = self.kwargs['post_id']
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Post deleted successfully.")
+        return response
+
+    # def delete(self, request, *args, **kwargs):
+    #     response = super().delete(request, *args, **kwargs)
+    #     messages.success(self.request, "Post deleted successfully.")
+    #     return response
 
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})

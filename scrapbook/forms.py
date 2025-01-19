@@ -26,6 +26,8 @@ class PostForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if scrapbook:
             self.fields['scrapbook'].initial = scrapbook
+        if self.instance and self.instance.pk:
+            self.fields['image'].required = False
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -35,6 +37,8 @@ class PostForm(forms.ModelForm):
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
+        if not image and self.instance.pk:
+            return self.instance.image
         if image:
             if hasattr(image, 'file') and hasattr(image.file, 'size'):
                 if image.file.size > 2 * 1024 * 1024:  # 2MB

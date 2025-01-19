@@ -12,6 +12,12 @@
     <div class="mb-3">
         {{ form|crispy}}
     </div>
+    {% if form.instance.image %}
+    <div class="mb-3">
+        <label>Current Image:</label><br>
+        <img src="{{ form.instance.image.url }}" alt="Current Image" style="max-width: 200px;">
+    </div>
+    {% endif %}
     <!-- <div class="mb-3">
         {{ form.title.label_tag }}<br>
         {{ form.title }}

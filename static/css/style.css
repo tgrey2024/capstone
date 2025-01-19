@@ -32,6 +32,10 @@ h1 {
     margin-right: 6px;
 }
 
+#msg {
+    color: #56351e;
+}
+
 /* Scrapbook and Post content */
 .post-image {
     width: 100%;
