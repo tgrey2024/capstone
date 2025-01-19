@@ -20,8 +20,8 @@
             <div class="lead">{{ post.content | safe }}</div>
             <!-- Edit post if the user is authenticated -->
             {% if user.is_authenticated and post.author == user %}
-                <a href="{% url 'edit-post' post.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                <a href="{% url 'delete-post' post.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                <a href="{% url 'edit-post' post.scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                <a href="{% url 'delete-post' post.scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
             {% endif %}
         </div>
     </div>

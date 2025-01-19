@@ -115,7 +115,7 @@ class PostDeleteView(DeleteView):
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
     def get_success_url(self):
-        return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
+        return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 
 # PostDetailView extends generic.DetailView
