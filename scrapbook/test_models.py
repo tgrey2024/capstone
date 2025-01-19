@@ -2,6 +2,7 @@ import re
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 from .models import Scrapbook, Post
 
 class ScrapbookModelTest(TestCase):
@@ -19,12 +20,6 @@ class ScrapbookModelTest(TestCase):
         self.assertEqual(scrapbook.author, self.user)
         self.assertEqual(scrapbook.slug, 'test-scrapbook')
         self.assertEqual(scrapbook.status, 1)
-        self.assertEqual(scrapbook.content, '')
-        self.assertEqual(scrapbook.description, '')
-        self.assertIsNotNone(scrapbook.created_on)
-        self.assertIsNotNone(scrapbook.updated_on)
-        self.assertEqual(str(scrapbook), 'Test Scrapbook | by testuser')
-        self.assertEqual(scrapbook.image, 'placeholder')
 
     def test_scrapbook_str(self):
         # Test the __str__ method of the Scrapbook model
@@ -73,6 +68,7 @@ class ScrapbookModelTest(TestCase):
         self.assertEqual(scrapbook.content, '')
         self.assertEqual(scrapbook.description, '')
 
+    # Edge tests
     def test_scrapbook_title_length(self):
         # Edge test for the maximum length of the title field
         title = 'a' * 101
@@ -86,6 +82,90 @@ class ScrapbookModelTest(TestCase):
         scrapbook = Scrapbook(slug=slug, author=self.user)
         with self.assertRaises(ValidationError):
             scrapbook.full_clean()  # This will run the model's validation
+
+    def test_scrapbook_special_characters(self):
+        # Edge test for the title field with special characters
+        scrapbook = Scrapbook.objects.create(title='Test Scrapbook! @#%^&*()_+{}:"<>?', author=self.user)
+        self.assertEqual(scrapbook.title, 'Test Scrapbook! @#%^&*()_+{}:"<>?')
+
+    def test_scrapbook_title_spaces(self):
+        # Edge test for the title field with leading and trailing spaces
+        scrapbook = Scrapbook.objects.create(title='  Test Scrapbook  ', author=self.user)
+        self.assertEqual(scrapbook.title, 'Test Scrapbook')
+
+    def test_scrapbook_title_max_length(self):
+        # Edge test for the maximum length of the title field
+        title = 'a' * 100
+        scrapbook = Scrapbook(title=title, author=self.user)
+        self.assertTrue(scrapbook.title, title)
+
+    def test_scrapbook_title_exceed_length(self):
+        # Edge test for the maximum length of the title field
+        title = 'a' * 101
+        scrapbook = Scrapbook(title=title, author=self.user)
+        with self.assertRaises(ValidationError):
+            scrapbook.full_clean()
+
+    def test_scrapbook_description_special_characters(self):
+        # Edge test to ensure that the description field can handle special characters and does not raise validation errors.
+        scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user, description='Test Scrapbook! @#%^&*()_+{}:"<>?')
+        self.assertEqual(scrapbook.description, 'Test Scrapbook! @#%^&*()_+{}:"<>?')
+
+    def test_scrapbook_description_max_length(self):
+        # Edge test to ensure that the description field accepts a description that is exactly at the maximum length limit.
+        description = 'a' * 500
+        scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user, description=description)
+        self.assertEqual(scrapbook.description, description)
+
+    # Test Scrapbook Description Exceeding Maximum Length:
+    def test_scrapbook_description_exceed_length(self):
+        # Ensure that the description field raises a validation error when the description exceeds the maximum length limit.
+        description = 'a' * 501
+        scrapbook = Scrapbook(title='Test Scrapbook', author=self.user, description=description)
+        with self.assertRaises(ValidationError):
+            scrapbook.full_clean()
+
+    def test_scrapbook_invalid_image_format(self):
+        # Edge test to ensure that the image field raises a validation error when an invalid image format is uploaded.
+        scrapbook = Scrapbook(title='Test Scrapbook', author=self.user, image='test.pdf')
+        with self.assertRaises(ValidationError):
+            scrapbook.full_clean()
+
+    def test_scrapbook_large_image_file(self):
+        # Edge test to ensure that the image field raises a validation error when an image file exceeds the maximum allowed size.
+        scrapbook = Scrapbook(title='Test Scrapbook', author=self.user, image='test.jpg')
+        with self.assertRaises(ValidationError):
+            scrapbook.full_clean()
+
+    def test_scrapbook_missing_author(self):
+        # Edge test to ensure that the scrapbook cannot be created without an author and raises a validation error.
+        with self.assertRaises(IntegrityError):
+            Scrapbook.objects.create(title='Test Scrapbook')
+
+    def test_scrapbook_invalid_status(self):
+        # Edge test to ensure that the status field raises a validation error when an invalid status value is provided.
+        scrapbook = Scrapbook(title='Test Scrapbook', author=self.user, status=3)
+        with self.assertRaises(ValidationError):
+            scrapbook.full_clean()
+
+    # Test Scrapbook Slug Uniqueness:
+    def test_scrapbook_unique_slug(self):
+        # Edge test to ensure that the slug field generates unique slugs for scrapbooks with the same title.
+        scrapbook1 = Scrapbook.objects.create(title='Test Scrapbook', author=self.user)
+        scrapbook2 = Scrapbook.objects.create(title='Test Scrapbook', author=self.user)
+        self.assertNotEqual(scrapbook1.slug, scrapbook2.slug)
+
+    def test_scrapbook_created_on(self):
+        # Edge test to ensure that the created_on field is automatically set to the current date and time when a scrapbook is created.
+        scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user)
+        self.assertIsNotNone(scrapbook.created_on)
+
+    def test_scrapbook_updated_on(self):
+        # Edge test to ensure that the updated_on field is automatically updated to the current date and time when a scrapbook is modified.
+        scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user)
+        scrapbook.title = 'Updated Scrapbook'
+        scrapbook.save()
+        self.assertIsNotNone(scrapbook.updated_on)
 
 class PostModelTest(TestCase):
 

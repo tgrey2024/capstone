@@ -3,14 +3,14 @@
 {% load crispy_forms_tags %}
     
 {% block content %}
-<h1>Edit Scrapbook Content <i class="fa-regular fa-pen-to-square"></i></h1>
+<h1>Create/Edit Scrapbook <i class="fa-regular fa-pen-to-square"></i></h1>
 <div class="container">
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="mb-3">
-        {{ form|crispy}}
+        {{ form|crispy }}
     </div>
-    <input class="btn btn-info" type="submit" value="Update">
+    <input class="btn btn-info" type="submit" value="Save">
 </form>
 </div>
 {% endblock content %}

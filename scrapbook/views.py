@@ -1,9 +1,9 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .models import Scrapbook, Post
-from .forms import PostForm
-from django.urls import reverse_lazy
+from .forms import PostForm, ScrapbookForm
+from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 class ScrapbookListView(generic.ListView):
@@ -46,13 +46,9 @@ class ScrapbookDetailView(generic.DetailView):
         self.object = self.get_object()
         return handle_post_request(request, self.object)
 
- 
-    
-
-
 class ScrapbookCreateView(CreateView):
     model = Scrapbook
-    fields = ['title', 'image', 'status', 'content', 'description']
+    form_class = ScrapbookForm
     template_name = 'scrapbook/scrapbook_form.html'
     
     def form_valid(self, form):
@@ -66,7 +62,7 @@ class ScrapbookCreateView(CreateView):
 
 class ScrapbookUpdateView(UpdateView):
     model = Scrapbook
-    fields = ['title', 'image', 'status', 'content']
+    form_class = ScrapbookForm
     template_name = 'scrapbook/scrapbook_form.html'
     
     def get_success_url(self):
@@ -79,13 +75,11 @@ class ScrapbookDeleteView(DeleteView):
         
     def get_success_url(self):
         return reverse_lazy('home')
-    
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ["scrapbook", 'title', 'image', 'status', 'content']
+    form_class = PostForm
     template_name = 'scrapbook/post_form.html'
-    success_url = '/'
     
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -138,3 +132,13 @@ class PostDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['scrapbook'] = self.object.scrapbook
         return context
+
+def create_scrapbook(request):
+    if request.method == 'POST':
+        form = ScrapbookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('scrapbook:home'))
+    else:
+        form = ScrapbookForm()
+    return render(request, 'scrapbook/scrapbook_form.html', {'form': form})
