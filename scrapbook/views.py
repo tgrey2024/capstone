@@ -81,6 +81,11 @@ class PostCreateView(CreateView):
     form_class = PostForm
     template_name = 'scrapbook/post_form.html'
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
+        return kwargs
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.scrapbook = get_object_or_404(
@@ -93,9 +98,14 @@ class PostCreateView(CreateView):
 
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ["scrapbook", 'title', 'image', 'status', 'content']
+    form_class = PostForm
     template_name = 'scrapbook/post_form.html'
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
+        return kwargs
+
     def get_object(self):
         scrapbook_slug = self.kwargs['slug']
         post_id = self.kwargs['post_id']

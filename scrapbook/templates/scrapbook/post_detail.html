@@ -8,21 +8,41 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3">
-            <!-- Post title -->
-            <h3 class="d-inline">{{ post.title }}</h3>
-            <!-- Post author | the post's last updated date -->
-            <p class="scrapbook-subtitle mx-4">{{ post.author }} | Last updated: {{ post.updated_on }}</p>
-            <div class="text-start">
-                <img src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
+        <div class="col-12 mt-3 text-start">
+            <!-- Back to Scrapbook Detail -->
+            <a href="{% url 'scrapbook:scrapbook_detail' slug=post.scrapbook.slug %}" class="btn btn-info"><i class="fa-solid fa-arrow-left"></i></a>
+            <br />
+        </div>
+        <div class="col-12 mt-3 text-center">
+            
+            <div>
+                <!-- Post title -->
+                <h3 class="d-inline">{{ post.title }}</h3>
+                <!-- Status icon conditionals -->
+                {% if user.is_authenticated and post.author == user %}
+                    {% if post.status == 0 %}
+                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                    {% elif post.status == 1 %}
+                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                    {% elif post.status == 2 %}
+                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock-open"></i></div>
+                    {% endif %}
+                {% endif %}
+                <!-- Post author | the post's last updated date -->
+                <p class="scrapbook-subtitle">{{ post.author }} | Last updated: {{ post.updated_on }}</p>
+                <div class="text-center">
+                    <img src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
+                </div>
+                <!-- Filter to mark content as safe for rendering as HTML -->
+                <div class="lead">{{ post.content | safe }}</div>
             </div>
-            <!-- Filter to mark content as safe for rendering as HTML -->
-            <div class="lead">{{ post.content | safe }}</div>
-            <!-- Edit post if the user is authenticated -->
+            <div>
+                <!-- Edit post if the user is authenticated -->
             {% if user.is_authenticated and post.author == user %}
                 <a href="{% url 'edit-post' post.scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                 <a href="{% url 'delete-post' post.scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
             {% endif %}
+            </div>
         </div>
     </div>
 </div>
