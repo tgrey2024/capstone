@@ -38,11 +38,11 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i> About</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-book-open"></i> Scrapbooks</a>
-                  </li>
                   <!-- navbar shows Logout if user is authenticated, else shows Register and Login -->
                   {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page" href="{% url 'my_scrapbook_list' %}"><i class="fa-solid fa-book-open"></i> My Scrapbooks</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page" href="{% url 'account_logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                   </li>
