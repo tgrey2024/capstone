@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>My Scrapbooks</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptatum, odit modi reiciendis blanditiis ducimus odio, sint reprehenderit qui necessitatibus consectetur dicta nulla nobis? A fugiat quisquam tempore praesentium dolore.</p>
+                <h1>Published Scrapbooks</h1>
+                <p>Shared scrapbooks can be viewed by all users.</p>
                 <!-- Create a new scrapbook if the user is authenticated -->
                 {% if user.is_authenticated %}
                 <a href="{% url 'create-scrapbook' %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a New Scrapbook <i class="fa-regular fa-square-plus"></i></a>
@@ -21,8 +21,8 @@
             <div class="col-12 mt-3 left">
                 <div class="row">
                     {% for scrapbook in scrapbook_list %}
-                    <!-- don't show a scrapbook if its status is not Public and its author is not the logged-in user -->
-                    <div class="col-md-4 {% if not scrapbook.status == 2 and not scrapbook.author == user %}d-none{% endif %}">
+                    <!-- don't show a scrapbook if its status is not Public -->
+                    <div class="col-md-4 {% if not scrapbook.status == 2 %}d-none{% endif %}">
                         <!-- Bootstrap 5 card for each scrapbook -->
                         <div class="card mb-4">
                             <div class="text-center">

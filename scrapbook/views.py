@@ -18,6 +18,18 @@ class ScrapbookListView(generic.ListView):
             scrapbook__in=self.get_queryset(), status=2).count()
         return context
     
+class ScrapbookMyListView(generic.ListView):
+    model = Scrapbook
+    ordering = ["-created_on"]
+    template_name = "scrapbook/scrapbook_mylist.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_count'] = Post.objects.filter(
+            scrapbook__in=self.get_queryset(), status=2).count()
+        return context
+
+    
 class ScrapbookDetailView(generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
