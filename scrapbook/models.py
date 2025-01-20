@@ -15,7 +15,6 @@ def validate_status(value):
     if value not in [0, 1, 2]:
         raise ValidationError(f'{value} is not a valid status')
 
-# Create your models here.
 class Scrapbook(models.Model):
     """
     Stores a single scrapbook entry related to :model:`auth.User`.

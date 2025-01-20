@@ -91,10 +91,16 @@ class ScrapbookDeleteView(DeleteView):
     model = Scrapbook
     template_name = 'scrapbook/confirm_delete.html'
         
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "Scrapbook deleted successfully.")
-        return super().delete(request, *args, **kwargs)
+    def get_object(self):
+        scrapbook_slug = self.kwargs['slug']
+        scrapbook_id = self.kwargs['scrapbook_id']
+        return get_object_or_404(Scrapbook, id=scrapbook_id, slug=scrapbook_slug)
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Scrapbook deleted successfully.")
+        return response
+    
     def get_success_url(self):
         return reverse_lazy('home')
 
@@ -135,8 +141,14 @@ class PostUpdateView(UpdateView):
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
     def form_valid(self, form):
+        response = super().form_valid(form)
         messages.success(self.request, "Post updated successfully.")
-        return super().form_valid(form)
+        return response
+    
+    def form_invalid(self, form):
+        print("Form is invalid")
+        print(form.errors)
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
