@@ -6,6 +6,9 @@ from .forms import PostForm, ScrapbookForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -18,11 +21,12 @@ class ScrapbookListView(generic.ListView):
             scrapbook__in=self.get_queryset(), status=2).count()
         return context
     
-class ScrapbookMyListView(generic.ListView):
+class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
     template_name = "scrapbook/scrapbook_mylist.html"
-    
+    login_url = '/accounts/login/'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post_count'] = Post.objects.filter(
@@ -71,11 +75,12 @@ def handle_post_request(request, scrapbook):
         messages.error(request, "Post creation failed.")
     return redirect(reverse('scrapbook:scrapbook_detail', kwargs={'slug': scrapbook.slug}))
 
-class ScrapbookCreateView(CreateView):
+class ScrapbookCreateView(LoginRequiredMixin, CreateView):
     model = Scrapbook
     form_class = ScrapbookForm
     template_name = 'scrapbook/scrapbook_form.html'
-    
+    login_url = '/accounts/login/'
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         messages.success(self.request, "Scrapbook created successfully.")
@@ -86,11 +91,12 @@ class ScrapbookCreateView(CreateView):
                             kwargs={'slug': self.object.slug})
 
 
-class ScrapbookUpdateView(UpdateView):
+class ScrapbookUpdateView(LoginRequiredMixin, UpdateView):
     model = Scrapbook
     form_class = ScrapbookForm
     template_name = 'scrapbook/scrapbook_form.html'
-    
+    login_url = '/accounts/login/'
+
     def form_valid(self, form):
         messages.success(self.request, "Scrapbook updated successfully.")
         return super().form_valid(form)
@@ -99,10 +105,11 @@ class ScrapbookUpdateView(UpdateView):
         return reverse_lazy('scrapbook:scrapbook_detail',
                             kwargs={'slug': self.object.slug})
     
-class ScrapbookDeleteView(DeleteView):
+class ScrapbookDeleteView(LoginRequiredMixin, DeleteView):
     model = Scrapbook
     template_name = 'scrapbook/confirm_delete.html'
-        
+    login_url = '/accounts/login/'
+
     def get_object(self):
         scrapbook_slug = self.kwargs['slug']
         scrapbook_id = self.kwargs['scrapbook_id']
@@ -116,10 +123,11 @@ class ScrapbookDeleteView(DeleteView):
     def get_success_url(self):
         return reverse_lazy('home')
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'scrapbook/post_form.html'
+    login_url = '/accounts/login/'
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -137,11 +145,12 @@ class PostCreateView(CreateView):
         return reverse_lazy('scrapbook:scrapbook_detail',
                             kwargs={'slug': self.object.scrapbook.slug})
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'scrapbook/post_form.html'
-    
+    login_url = '/accounts/login/'
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
@@ -166,10 +175,11 @@ class PostUpdateView(UpdateView):
         return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'scrapbook/confirm_delete.html'
-        
+    login_url = '/accounts/login/'
+
     def get_object(self):
         scrapbook_slug = self.kwargs['slug']
         post_id = self.kwargs['post_id']
@@ -179,11 +189,6 @@ class PostDeleteView(DeleteView):
         response = super().form_valid(form)
         messages.success(self.request, "Post deleted successfully.")
         return response
-
-    # def delete(self, request, *args, **kwargs):
-    #     response = super().delete(request, *args, **kwargs)
-    #     messages.success(self.request, "Post deleted successfully.")
-    #     return response
 
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})

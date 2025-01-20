@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Published Scrapbooks</h1>
+                <h1>Published Scrapbooks <i class="fa-solid fa-globe"></i></h1>
                 <p id="subtitle">Shared scrapbooks can be viewed by all users.</p>
                 <!-- Create a new scrapbook if the user is authenticated -->
                 {% if user.is_authenticated %}
@@ -32,25 +32,13 @@
                                 <div class="{% if user.is_authenticated and scrapbook.author == user and scrapbook.status == 0 %}opacity-50{% endif %}">
                                     <a class="text-decoration-none icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 196, 115, 53;" href="{% url 'scrapbook_detail' scrapbook.slug %}">
                                         <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
+                                    <!-- Author and Status icon conditionals -->
                                     <h6 class="card-subtitle mb-2 text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
-                                    <!-- <div class="col-12">
-                                        <strong class="text-secondary card-text text-muted metadata">
-                                        <i class="far fa-posts"></i> {{ scrapbook.post_count }} Posts
-                                        </strong>
-                                    </div> -->
-                                    <!-- Last Updated and Status icon conditionals -->
-                                    <div>
-                                        <p class="card-subtitle d-inline text-body-secondary mb-2">Updated: {{ scrapbook.updated_on }}</p>
-                                        {% if user.is_authenticated and scrapbook.author == user %}
-                                            {% if scrapbook.status == 0 %}
-                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
-                                            {% elif scrapbook.status == 1 %}
-                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
-                                            {% elif scrapbook.status == 2 %}
-                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock-open"></i></div>
-                                        {% endif %}
-                                        {% endif %}
-                                    </div>
+                                    {% if scrapbook.status == 2 %}
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                    {% endif %}
+                                    <!-- Last Updated -->
+                                    <p class="card-subtitle text-body-secondary mb-2">Last updated: {{ scrapbook.updated_on }}</p>
                                 </div>
                                 <div>
                                     <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-solid fa-book-open"></i></a>

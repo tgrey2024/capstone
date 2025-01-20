@@ -40,14 +40,14 @@
                                     </div> -->
                                     <!-- Last Updated and Status icon conditionals -->
                                     <div>
-                                        <p class="card-subtitle d-inline text-body-secondary mb-2">Updated: {{ scrapbook.updated_on }}</p>
+                                        <p class="card-subtitle d-inline text-body-secondary mb-2">Last updated: {{ scrapbook.updated_on }}</p>
                                         {% if user.is_authenticated and scrapbook.author == user %}
                                             {% if scrapbook.status == 0 %}
                                             <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
                                             {% elif scrapbook.status == 1 %}
                                             <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
                                             {% elif scrapbook.status == 2 %}
-                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock-open"></i></div>
+                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
                                         {% endif %}
                                         {% endif %}
                                     </div>

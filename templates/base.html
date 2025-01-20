@@ -76,17 +76,20 @@
         </div>
     </header>
     <main>
+      <!-- Logged in status -->
+      <div id="logged-in">
       {% if user.is_authenticated %}
-        <div class="text-end mx-3 my-1 d-flex justify-content-end align-items-center">
+        <div class="text-end mx-3 d-flex justify-content-end align-items-center">
             <span class="d-none d-md-block d-lg-block">You are logged in as</span>
             <span class="mx-2"> {{ user.username }} <i class="fa-solid fa-user"></i></span>
         </div>
         {% else %}
-        <div class="text-end mx-3 my-1 d-flex justify-content-end align-items-center">
+        <div class="text-end mx-3 d-flex justify-content-end align-items-center">
             <span class="d-none d-md-block d-lg-block">You are not logged in </span>
             <span class="mx-2"><i class="fa-regular fa-user"></i></span>
         </div>
         {% endif %}
+      </div>
         {% block content %}
         <!-- content goes here -->
         {% endblock %}
@@ -97,10 +100,10 @@
     <footer id="footer" class="mt-auto">
         <div class="container section">
             <div class="row justify-content-center">
-                <div class="col-4 text-md-start">
+                <div class="col-12 col-sm-4 text-center">
                     <h2>Remineez</h2>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-12 col-sm-4 text-center">
                     <h2 class="sub-heading-color">
                       {% block copyright %}
                       © Tripta Grey 2025
@@ -108,7 +111,7 @@
                     </h2>
                 </div>
                 <!-- Social links -->
-                <div class="col-4 social-links text-md-end">
+                <div class="col-12 col-sm-4 social-links text-center">
                     <a href="https://www.instagram.com" target="_blank"
                         aria-label="Visit our Instagram page (opens in a new tab)" rel="noopener"><i
                             class="fa-brands fa-instagram"></i></a>
