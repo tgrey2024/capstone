@@ -11,16 +11,30 @@
             <!-- Back to Scrapbook List -->
             <a href="{% url 'home' %}" class="btn btn-info"><i class="fa-solid fa-arrow-left"></i></a>
             <br />
-            <!-- Scrapbook title -->
-            <h3>{{ scrapbook.title }}</h3>
-            <!-- Scrapbook author | the scrapbook's created date goes after -->
-            <p class="scrapbook-subtitle d-inline mx-4">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
-            <!-- Filter to mark content as safe for rendering as HTML -->
-            <div class="lead">{{ scrapbook.content | safe }}</div>
-            <!-- Allow user to see button to create a post if the user is authenticated -->
-            {% if user.is_authenticated %}
-            <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post <i class="fa-regular fa-square-plus"></i></a>
-            {% endif %}
+            <div class="row">
+                <!-- Scrapbook title -->
+                <div class="col-sm-12 col-md-6">
+                    <h3>{{ scrapbook.title }}</h3>
+                </div>
+                <!-- Scrapbook author | the scrapbook's created date goes after -->
+                <div class="col-sm-12 col-md-6">
+                    <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+                </div>
+                <!-- Filter to mark content as safe for rendering as HTML -->
+                <div class="col-sm-12 col-md-6 lead">{{ scrapbook.content | safe }}</div>
+                <div class="col-sm-12 col-md-6">
+                    {% if user.is_authenticated and scrapbook.author == user %}
+                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                    {% endif %}
+                </div>
+                <!-- Allow user to see button to create a post if the user is authenticated -->
+                <div class="col-sm-12 col-md-6">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post <i class="fa-regular fa-square-plus"></i></a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
