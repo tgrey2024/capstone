@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.exceptions import PermissionDenied
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -34,10 +35,17 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
         return context
 
     
-class ScrapbookDetailView(generic.DetailView):
+class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
     context_object_name = 'scrapbook'
+    login_url = '/accounts/login/'
+
+    def get_object(self):
+        scrapbook = super().get_object()
+        if scrapbook.status != 2 and scrapbook.author != self.request.user:
+            raise PermissionDenied("You do not have permission to view this scrapbook.")
+        return scrapbook
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -193,15 +201,19 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 
-class PostDetailView(generic.DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     template_name = 'scrapbook/post_detail.html'
-    
+    login_url = '/accounts/login/'
+
     def get_object(self):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_slug = self.kwargs['post_slug']
-        return get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
-
+        post = get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
+        if post.status != 2 and post.author != self.request.user:
+            raise PermissionDenied("You do not have permission to view this post.")
+        return post
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['scrapbook'] = self.object.scrapbook
