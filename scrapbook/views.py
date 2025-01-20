@@ -14,7 +14,7 @@ class ScrapbookListView(generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
     template_name = "scrapbook/index.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post_count'] = Post.objects.filter(
@@ -30,7 +30,7 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post_count'] = Post.objects.filter(
-            scrapbook__in=self.get_queryset(), status=2).count()
+            scrapbook__in=self.get_queryset()).count()
         return context
 
     
@@ -194,7 +194,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 
-# PostDetailView extends generic.DetailView
 class PostDetailView(generic.DetailView):
     model = Post
     template_name = 'scrapbook/post_detail.html'
