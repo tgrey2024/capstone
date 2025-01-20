@@ -27,7 +27,7 @@
         <!-- Navbar -->
         <nav id="navbar" class="navbar navbar-expand-lg shadow fixed-top navbar-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo_blue.png' %}" alt="Remineez logo" class="logo"><span>Remineez</span></a>
+              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo_blue.png' %}" alt="Remineez logo" class="logo"><span class="logo">Remineez</span></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -77,9 +77,15 @@
     </header>
     <main>
       {% if user.is_authenticated %}
-        <p class="text-end mx-3 my-1">You are logged in as {{ user.username }} <i class="fa-solid fa-user"></i></p>
+        <div class="text-end mx-3 my-1 d-flex justify-content-end align-items-center">
+            <span class="d-none d-md-block d-lg-block">You are logged in as</span>
+            <span class="mx-2"> {{ user.username }} <i class="fa-solid fa-user"></i></span>
+        </div>
         {% else %}
-        <p class="text-end mx-3 my-1">You are not logged in <i class="fa-regular fa-user"></i></p>
+        <div class="text-end mx-3 my-1 d-flex justify-content-end align-items-center">
+            <span class="d-none d-md-block d-lg-block">You are not logged in </span>
+            <span class="mx-2"><i class="fa-regular fa-user"></i></span>
+        </div>
         {% endif %}
         {% block content %}
         <!-- content goes here -->

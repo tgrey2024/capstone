@@ -5,9 +5,9 @@
 {% block title %}Edit Post Form{% endblock %}
 
 {% block content %}
-<h1>Edit Post Content <i class="fa-regular fa-pen-to-square"></i></h1>
 <div class="container">
-<form method="post" enctype="multipart/form-data">
+    <h1>Edit Post Content <i class="fa-regular fa-pen-to-square"></i></h1>
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     {% if form.instance.image %}

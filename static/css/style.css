@@ -1,14 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 body {
+    font-family: "Lucida Sans Unicode", sans-serif;
     background-color: #f7f7de;
     padding-top: 70.15px; /* pushes the top of the header down under fixed navbar */
 }
 
-h1 {
-    color: #56351e;
-    text-align: center;
+h1, h2, h3, h4, h5, h6, .logo {
+    font-family: 'Philosopher', sans-serif, 'Open Sans', sans-serif;
+    font-weight: 700;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: #56351e;
+}
 
+#subtitle {
+    margin-top: -0.5rem;
+    margin-bottom: 0.3rem;
+}
 
 /* button style for most buttons */
 .btn {
@@ -23,13 +33,14 @@ h1 {
 }
 
 #navbar .navbar-brand{
-    font-size: 1.6rem;
     display: none;
 }
 
 #navbar .logo {
     width: 30px;
     margin-right: 6px;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
 }
 
 #msg {
@@ -57,13 +68,17 @@ h1 {
 }
 
 .card-body .metadata {
-    font-size: smaller;
-    line-height: 55%;
+    font-size: 0.8rem;
 }
 
 .card-body .scrapbook-link {
     bottom: 0.8rem;
     padding: 0.5rem 1rem;
+}
+
+.card-text {
+    margin-top: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 /* Create/Edit Form */
@@ -114,19 +129,22 @@ h1 {
     color: #f2e3bc;
 }
 
-@media (min-width: 234px) {
+/* Media query: small phones (332px and up) */
+@media screen and (min-width:332px) {
     #navbar .navbar-brand {
         display: block;
     }
 }
 
-@media (min-width: 767px) {
+
+/* Media query: tablets and medium devices (768px and up) */
+@media screen and (min-width: 768px) {
     .post-card-body {
         min-height: 22rem;
     }
 }
-
-@media (min-width: 992px) {
+/* Media query: laptops and larger screens (992px and up) */
+@media screen and (min-width: 992px) {
     .post-card-body {
         min-height: 17rem;
     }

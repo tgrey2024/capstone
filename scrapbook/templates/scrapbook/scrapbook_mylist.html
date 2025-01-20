@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <h1>My Scrapbooks</h1>
-                <p>Here are all my draft, private and public scrapbooks.</p>
+                <p id="subtitle">Here are all my draft, private and public scrapbooks.</p>
                 <!-- Create a new scrapbook if the user is authenticated -->
                 {% if user.is_authenticated %}
                 <a href="{% url 'create-scrapbook' %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a New Scrapbook <i class="fa-regular fa-square-plus"></i></a>
