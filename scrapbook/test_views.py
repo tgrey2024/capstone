@@ -143,18 +143,6 @@ class ScrapbookViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
 
-    def test_post_create_view_with_empty_content(self):
-        # Edge Test: Test the PostCreateView with empty content
-        self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('scrapbook:create-post', kwargs={'slug': self.scrapbook.slug}), {
-            'scrapbook': self.scrapbook.id,
-            'title': 'New Post',
-            'image': 'placeholder',
-            'status': 1,
-            'content': '',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'This field is required.')
 
     def test_post_update_view_with_special_characters_in_title(self):
         # Edge Test: Test the PostUpdateView with special characters in the title

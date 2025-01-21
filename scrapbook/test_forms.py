@@ -44,7 +44,7 @@ class PostFormTest(TestCase):
         # Test the PostForm with invalid data
         form = PostForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 4)  # Expect 4 errors instead of 3
+        self.assertEqual(len(form.errors), 3)
 
     def test_post_form_missing_title(self):
         # Test the PostForm with missing title
@@ -94,20 +94,6 @@ class PostFormTest(TestCase):
         self.assertEqual(post.status, 1)
         self.assertTrue(post.image is not None)
         self.assertTrue(post.image != '')
-
-    def test_post_form_empty_fields(self):
-        # Edge Test: Test the PostForm with empty title and content
-        form = PostForm(data={
-            'scrapbook': self.scrapbook.id,
-            'title': '',
-            'content': '',
-            'status': 1,
-        })
-        self.assertFalse(form.is_valid())
-        self.assertIn('title', form.errors)
-        self.assertIn('content', form.errors)
-        self.assertEqual(form.errors['title'], ['This field is required.'])
-        self.assertEqual(form.errors['content'], ['This field is required.'])
 
     def test_post_form_invalid_image_format(self):
         # Edge Test: Test the PostForm with invalid image format

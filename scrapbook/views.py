@@ -87,8 +87,7 @@ class ScrapbookCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('scrapbook:scrapbook_detail',
-                            kwargs={'slug': self.object.slug})
+        return reverse_lazy('my_scrapbook_list')
 
 
 class ScrapbookUpdateView(LoginRequiredMixin, UpdateView):
@@ -121,7 +120,7 @@ class ScrapbookDeleteView(LoginRequiredMixin, DeleteView):
         return response
     
     def get_success_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('my_scrapbook_list')
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
