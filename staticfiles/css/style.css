@@ -64,6 +64,11 @@ h1, h2, h3, h4, h5, h6 {
     color: #56351e;
 }
 
+.with-back-btn {
+    position: relative; 
+    top: -50px;
+}
+
 /* Scrapbook and Post content */
 .post-image {
     width: 100%;
@@ -187,5 +192,9 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (min-width: 992px) {
     .post-card-body {
         min-height: 17rem;
+    }
+
+    #post-image {
+        width: 750px;
     }
 }
