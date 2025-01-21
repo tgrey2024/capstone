@@ -69,18 +69,25 @@ class ScrapbookForm(forms.ModelForm):
 
     class Meta:
         model = Scrapbook
-        fields = ('title', 'image', 'status', 'content', 'description')
+        fields = ('title', 'content', 'description', 'status', 'image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),            
         }
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
+        if not image and self.instance.pk:
+            return self.instance.image
         if image:
+            if isinstance(image, CloudinaryResource):
+                return image
+            if hasattr(image, 'size'):
+                if image.size > 2 * 1024 * 1024:  # 2MB
+                    raise forms.ValidationError("Image file too large. Size should not exceed 2.0 MB.")
             try:
                 img = Image.open(image)
                 img.verify()

@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
-    
+{% block title %}{% if action == 'create' %}Create{% else %}Edit{% endif %} Scrapbook Form{% endblock %}
+
 {% block content %}
-<h1>Create/Edit Scrapbook <i class="fa-regular fa-pen-to-square"></i></h1>
 <div class="container">
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="mb-3">
+    <h1>
+        {% if action == 'create' %}
+            Create Scrapbook Details
+        {% else %}
+            Edit Scrapbook Details
+        {% endif %} <i class="fa-regular fa-pen-to-square"></i>
+    </h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         {{ form|crispy }}
-    </div>
-    <input class="btn btn-info" type="submit" value="Save">
-</form>
+        {% if action == 'edit' and form.instance.image %}
+        <div class="mb-3 current-image">
+            <label>Current Scrapbook Cover Image:</label><br>
+            <img src="{{ form.instance.image.url }}" alt="Current Scrapbook Cover Image" style="max-width: 200px;">
+            <p>{{ form.instance.image.name }}</p>
+        </div>
+        {% endif %}
+        <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}">
+    </form>
 </div>
 {% endblock content %}

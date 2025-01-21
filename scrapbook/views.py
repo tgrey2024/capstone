@@ -88,6 +88,11 @@ class ScrapbookCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('my_scrapbook_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'create'
+        return context
 
 
 class ScrapbookUpdateView(LoginRequiredMixin, UpdateView):
@@ -101,8 +106,12 @@ class ScrapbookUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('scrapbook:scrapbook_detail',
-                            kwargs={'slug': self.object.slug})
+        return reverse_lazy('my_scrapbook_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'edit'
+        return context
     
 class ScrapbookDeleteView(LoginRequiredMixin, DeleteView):
     model = Scrapbook
@@ -143,6 +152,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail',
                             kwargs={'slug': self.object.scrapbook.slug})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'create'
+        return context
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
@@ -171,8 +185,13 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('scrapbook:post_detail', kwargs={'scrapbook_slug': self.object.scrapbook.slug, 'post_slug': self.object.slug})
-
+        return reverse_lazy('scrapbook:scrapbook_detail',
+                            kwargs={'slug': self.object.scrapbook.slug})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'edit'
+        return context
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
