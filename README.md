@@ -53,8 +53,31 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 <hr/>
 
 ### User Stories
-- **Link to User Stories in GitHub Projects:**
-  - [Add a link to the GitHub Projects kanban board.]
+
+Here are all the user stories that have been prioritised (all must have and some should have ones) for the current implementation of the webapp:
+
+| User Stories                                    | MoSCoW priority           |  Status |
+| ----------------------------------------------- |:-------------------------:| -------:|
+| User-Friendly Navigation and Responsive Design  | must have                 |   Done  |
+| Account Registration                            | must have                 |   Done  |
+| View Paginated Posts                            | must have                 |   Done  |
+| Create Scrapbook                                | must have                 |   Done  |
+| Read Scrapbook                                  | must have                 |   Done  |
+| Update Scrapbook Metadata                       | must have                 |   Done  |
+| Delete Scrapbook                                | must have                 |   Done  |
+| Create Post                                     | must have                 |   Done  |
+| Open a Post                                     | must have                 |   Done  |
+| Update a Post                                   | must have                 |   Done  |
+| Delete a Post                                   | must have                 |   Done  |
+| CRUD Draft Scrapbook                            | must have                 |   Done  |
+| User Authentication                             | must have                 |   Done  |
+| Change Post and Scrapbook Status                | must have                 |   Done  |
+| Post and Scrapbook Access Control               | must have                 |   Done  |
+
+All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
+
+As well as using the Project Board to track progress on our project, I also used it during testing to log any significant bugs that need to be fixed before the project deadline. These were then assigned and prioritised alongside other issues and user stories.
+
 <p align="right"><a href="#top">Back to top</a></p>
 <hr/>
 
@@ -66,7 +89,31 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
   <b>Add other wireframes</b>
 </details>
 
+### Colour Scheme
+![colour palette_v2](https://github.com/user-attachments/assets/e6e7cee8-61a9-4ce7-b837-621b6819ab24)
+![tritanopia colour palette_v2](https://github.com/user-attachments/assets/de444e1e-81ee-4afb-807a-b6e324e88655)
+![WCAG_navbar link text](https://github.com/user-attachments/assets/4a5dc435-642b-478c-b5d9-05b14abade01)
+![navbar test](https://github.com/user-attachments/assets/9a5ecb5c-364d-4efd-a2f6-68457dd29f5f)
+
+### Typography
+After testing different font combinations on [Google Fonts](https://fonts.google.com/) and [Online Fonts](https://online-fonts.com/), I have chosen sans-serif fonts as they are easier to read for most users. I have chosen Philosopher for my titles and headings, as it is more distinctive with its playful kicks. Google Fonts has been used as these are convenient to embed into the CSS file as an @import.<br>
+
+Philosopher<br>
+![PhilosopherExample](https://github.com/user-attachments/assets/75024fdb-5e29-45a9-b2ea-bdb7c9e02cf3)
+<br>
+Open Sans is used as a backup font.<br>
+
+![OpenSansExample](https://github.com/user-attachments/assets/664da0ee-65ae-43f8-beef-70c659c2e906)
+
+<br>
+For the paragraph and menu text, I have picked the widely-available and reliable Lucida Sans Unicode for legibility.
+<br>
+Lucida Sans Unicode<br>
+![LucidaExample](https://github.com/user-attachments/assets/07e8ffb8-68b3-4871-88b6-3e3170c016d6)
+
   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
+
+
 ### Mockup
   - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
 - **Design Rationale:**
