@@ -5,10 +5,10 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock head_title %}
 
 {% block content %}
-<div class="container">
+<div class="container move-up">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <h1>{% trans "Sign Out" %}</h1>
+      <h3>{% trans "Sign Out" %}</h3>
       <p>{% trans 'Are you sure you want to sign out?' %}</p>
     </div>
   </div>
@@ -19,7 +19,8 @@
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
-        <button class="btn btn-info right" type="submit">{% trans 'Sign Out' %}</button>
+        <button class="btn btn-info right" type="submit" aria-label="Sign Out button">{% trans 'Sign Out' %}</button>
+        <a class="btn btn-secondary" href="javascript:history.back()" aria-label="Cancel Sign Out and go back a page">Cancel</a>
       </form>
     </div>
   </div>

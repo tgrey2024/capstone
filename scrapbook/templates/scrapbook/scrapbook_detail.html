@@ -4,11 +4,11 @@
 {% block title %}Scrapbook Detail{% endblock %}
 
 {% block content %}
-<div class="container with-back-btn">
+<div class="container with-backbtn">
     <div class="row">
         <div class="col-12 mt-3">
             <!-- Back to Scrapbook List -->
-            <a href="{% url 'home' %}" class="btn btn-info"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="{% url 'home' %}" class="btn btn-info" aria-label="Go back to Home page"><i class="fa-solid fa-arrow-left" aria-label="Left Arrow Back Icon"></i></a>
             <br />
             <div class="row">
                 <div class="mt-1 pt-3 col-sm-12 col-md-8">
@@ -27,14 +27,14 @@
                 </div>
                 <div class="col-sm-12 col-md-4 pb-4">
                     {% if user.is_authenticated and scrapbook.author == user %}
-                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square" aria-label="Edit Scrapbook Icon"></i></a>
+                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can" aria-label="Delete Scrapbook Icon"></i></a>
                     {% endif %}
                 </div>
                 <!-- Allow user to see button to create a post if the user is authenticated -->
                 <div class="col-sm-12 col-md-6">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2">Add a Post <i class="fa-regular fa-square-plus"></i></a>
+                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Add a Post <i class="fa-regular fa-square-plus" aria-label="Create Post Icon"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -52,41 +52,38 @@
                         <div class="text-center">
                             <img class="card-img-top {% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
-                        <div class="card-body post-card-body position-relative px-3">
+                        <div class="card-body px-3">
                             <div class="{% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}">
-                            
-                                <!-- if logged in user is the post author, make the title a link -->
+                            <!-- if logged in user is the post author, make the title a link -->
                                 {% if user.is_authenticated and post.author == user %}
-                                <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
+                                <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" aria-label="Go to Post Detail page">
                                 {% endif %}                                    
-                                <h5 class="card-title {% if user.is_authenticated and post.author == user %}linked-title{% endif %}">{{ post.title }}</h5>
+                                <h5 class="card-title d-inline {% if user.is_authenticated and post.author == user %}linked-title{% endif %}">{{ post.title }}</h5>
                                 {% if user.is_authenticated and post.author == user %}
                                 </a>
                                 {% endif %}                                    
                                 <!-- Status icon conditionals -->
                                 {% if user.is_authenticated and post.author == user %}
                                         {% if post.status == 0 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen" aria-label="Draft Icon"></i></div>
                                         {% elif post.status == 1 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock" aria-label="Private Icon"></i></div>
                                         {% elif post.status == 2 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe" aria-label="Public Icon"></i></div>
                                     {% endif %}
                                 {% endif %}
                                 <!-- Last Updated -->
-                                <div>
-                                    <p class="card-text date-time mb-2">Updated: {{ post.updated_on }}</p>
-                                </div>
+                                <p class="card-subtitle date-time mb-2">Updated: {{ post.updated_on }}</p>
                                 <p class="card-text">{{ post.content | safe }}</p>
                             </div>
                             <div>
                                 <!-- Open, Edit and Delete Buttons -->
-                                <!-- if logged in user is the post author, show edit and delete buttons -->
                                 <div class="text-end mb-1">
-                                        <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link">Open <i class="fa-regular fa-image"></i></a>
+                                        <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image" aria-label="Open Post Icon"></i></a>
+                                    <!-- if logged in user is the post author, show edit and delete buttons -->
                                     {% if user.is_authenticated and post.author == user %}
-                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square" aria-label="Edit Post Icon"></i></a>
+                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can" aria-label="Delete Post Icon"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -106,10 +103,10 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
-            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link"> &laquo; PREV</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Go to previous page"> &laquo; PREV</a></li>
             {% endif %}
             {% if page_obj.has_next %}
-            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Go to next page"> NEXT &raquo;</a></li>
             {% endif %}
         </ul>
     </nav>

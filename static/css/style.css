@@ -37,20 +37,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header .navbar-nav .nav-link {
-    color: #f7f7de;
+    color: #ffffff;
     }
 
 .header .navbar-nav .nav-link:hover {
-    color: #efcb6f;
+    color: #ffffa7;
     transition: color 0.2s ease-in-out;
 }
 
 .header .navbar-nav .active {
-    color: #ffffff;
+    color: #ffffa7;
 }
 
 .header .navbar-nav .active:hover, .header .navbar-nav .active:active {
-    color: #ffffff;
+    color: #ffffa7;
 }
 
 #navbar .logo {
@@ -62,11 +62,18 @@ h1, h2, h3, h4, h5, h6 {
 
 #msg {
     color: #56351e;
+    background-color: #ffffa7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.with-back-btn {
+.move-up {
     position: relative; 
-    top: -50px;
+    top: -20px;
+}
+
+.with-backbtn {
+    position: relative; 
+    top: -45px;
 }
 
 /* Scrapbook and Post content */
@@ -113,6 +120,17 @@ h1, h2, h3, h4, h5, h6 {
 .card-text {
     margin-top: 0.8rem;
     margin-bottom: 1rem;
+}
+
+.page-link {
+    color: #56351e;
+    text-transform:lowercase;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    color: #a15317;
+    text-decoration: none;
 }
 /* Post Detail page */
 #post-image {

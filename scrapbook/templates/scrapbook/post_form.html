@@ -3,14 +3,14 @@
 {% block title %}{% if action == 'create' %}Create{% else %}Edit{% endif %} Post Form{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>
+<div class="container move-up">
+    <h3>
         {% if action == 'create' %}
             Create Post Content
         {% else %}
             Edit Post Content
-        {% endif %} <i class="fa-regular fa-pen-to-square"></i>
-    </h1>
+        {% endif %} <i class="fa-regular fa-pen-to-square" aria-label="Create/Edit Icon"></i>
+    </h3>
     <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
@@ -21,7 +21,7 @@
         <p>{{ form.instance.image.name }}</p>
     </div>
     {% endif %}
-    <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}">
+    <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}" aria-label="Update Post Button">
 </form>
 </div>
 {% endblock content %}
