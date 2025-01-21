@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container move-up">
     <h3>
-        Confirm Delete <i class="fa-regular fa-trash-can" aria-label="Delete Icon"></i>
+        Confirm Delete <i class="fa-regular fa-trash-can"></i>
     </h3>
     <form method="post">{% csrf_token %}
         <p>Are you sure you want to delete "<strong>{{ object }}</strong>"?</p>
