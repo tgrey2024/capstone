@@ -96,20 +96,20 @@ As well as using the Project Board to track progress on our project, I also used
 ![navbar test](https://github.com/user-attachments/assets/9a5ecb5c-364d-4efd-a2f6-68457dd29f5f)
 
 ### Typography
-After testing different font combinations on [Google Fonts](https://fonts.google.com/) and [Online Fonts](https://online-fonts.com/), I have chosen sans-serif fonts as they are easier to read for most users. I have chosen Philosopher for my titles and headings, as it is more distinctive with its playful kicks. Google Fonts has been used as these are convenient to embed into the CSS file as an @import.<br>
+After testing different font combinations on [Google Fonts](https://fonts.google.com/) and [Online Fonts](https://online-fonts.com/), I have chosen sans-serif fonts as they are easier to read for most users.<br>
 
 Philosopher<br>
-![PhilosopherExample](https://github.com/user-attachments/assets/75024fdb-5e29-45a9-b2ea-bdb7c9e02cf3)
-<br>
-Open Sans is used as a backup font.<br>
+![PhilosopherExample](https://github.com/user-attachments/assets/75024fdb-5e29-45a9-b2ea-bdb7c9e02cf3)<br>
+I have chosen Philosopher for my titles and headings, as it is more distinctive with its playful kicks. Google Fonts has been used as these are convenient to embed into the CSS file as an @import. Open Sans is used as a backup font.<br>
 
-![OpenSansExample](https://github.com/user-attachments/assets/664da0ee-65ae-43f8-beef-70c659c2e906)
+<br>Lucida Sans Unicode<br>
+![LucidaExample](https://github.com/user-attachments/assets/8cc52d4c-1690-47b2-943c-1b9ea508e054)<br>
+For the paragraph and menu text, I have picked the widely-available and reliable Lucida Sans Unicode because of its legibility and support for different character sets.<br>
 
-<br>
-For the paragraph and menu text, I have picked the widely-available and reliable Lucida Sans Unicode for legibility.
-<br>
-Lucida Sans Unicode<br>
-![LucidaExample](https://github.com/user-attachments/assets/07e8ffb8-68b3-4871-88b6-3e3170c016d6)
+
+
+
+
 
   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
 
