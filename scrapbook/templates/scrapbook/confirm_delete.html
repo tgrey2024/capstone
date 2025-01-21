@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
+{% block title %}Delete Confirmation{% endblock %}
     
 {% block content %}
 <div class="container">
+    <h1>
+        Confirm Delete <i class="fa-regular fa-trash-can"></i>
+    </h1>
     <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <p>Are you sure you want to delete "<strong>{{ object }}</strong>"?</p>
         {{ form }}
         <input class="btn btn-info" type="submit" value="Confirm">
+        <a class="btn btn-secondary" href="javascript:history.back()">Cancel</a>
     </form>
 </div>
 {% endblock content %}
