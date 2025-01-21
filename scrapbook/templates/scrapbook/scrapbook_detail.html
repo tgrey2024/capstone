@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-12 mt-3">
             <!-- Back to Scrapbook List -->
-            <a href="{% url 'home' %}" class="btn btn-info" aria-label="Go back to Home page"><i class="fa-solid fa-arrow-left" aria-label="Left Arrow Back Icon"></i></a>
-            <br />
+            <a href="{% url 'home' %}" class="btn btn-info" aria-label="Go back to Home page"><i class="fa-solid fa-arrow-left"></i></a>
+            <br>
             <div class="row">
                 <div class="mt-1 pt-3 col-sm-12 col-md-8">
                     <!-- Scrapbook title -->
@@ -27,14 +27,14 @@
                 </div>
                 <div class="col-sm-12 col-md-4 pb-4">
                     {% if user.is_authenticated and scrapbook.author == user %}
-                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square" aria-label="Edit Scrapbook Icon"></i></a>
-                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can" aria-label="Delete Scrapbook Icon"></i></a>
+                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
                     {% endif %}
                 </div>
                 <!-- Allow user to see button to create a post if the user is authenticated -->
                 <div class="col-sm-12 col-md-6">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Add a Post <i class="fa-regular fa-square-plus" aria-label="Create Post Icon"></i></a>
+                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Add a Post <i class="fa-regular fa-square-plus"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -65,25 +65,25 @@
                                 <!-- Status icon conditionals -->
                                 {% if user.is_authenticated and post.author == user %}
                                         {% if post.status == 0 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen" aria-label="Draft Icon"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
                                         {% elif post.status == 1 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock" aria-label="Private Icon"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
                                         {% elif post.status == 2 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe" aria-label="Public Icon"></i></div>
+                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
                                     {% endif %}
                                 {% endif %}
                                 <!-- Last Updated -->
                                 <p class="card-subtitle date-time mb-2">Updated: {{ post.updated_on }}</p>
-                                <p class="card-text">{{ post.content | safe }}</p>
+                                <p class="card-text">{{ post.content|truncatechars:72|safe }}</p>
                             </div>
                             <div>
                                 <!-- Open, Edit and Delete Buttons -->
-                                <div class="text-end mb-1">
-                                        <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image" aria-label="Open Post Icon"></i></a>
+                                <div class="text-center mt-4">
+                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link mx-auto mt-3 d-none d-sm-inline d-md-block d-lg-inline" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
                                     <!-- if logged in user is the post author, show edit and delete buttons -->
                                     {% if user.is_authenticated and post.author == user %}
-                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square" aria-label="Edit Post Icon"></i></a>
-                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can" aria-label="Delete Post Icon"></i></a>
+                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-lg-inline" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-xl-inline" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
