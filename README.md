@@ -90,10 +90,19 @@ As well as using the Project Board to track progress on our project, I also used
 </details>
 
 ### Colour Scheme
-![colour palette_v2](https://github.com/user-attachments/assets/e6e7cee8-61a9-4ce7-b837-621b6819ab24)
-![tritanopia colour palette_v2](https://github.com/user-attachments/assets/de444e1e-81ee-4afb-807a-b6e324e88655)
+The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
+![colour palette_v2](https://github.com/user-attachments/assets/e6e7cee8-61a9-4ce7-b837-621b6819ab24)<br><br>
+I also needed to check the colour palette works for any colour blind users, particularly Tritan colour blindness, which becomes more common as one ages. The symptoms include difficulty differentiating blue and green, yellow and pink, purple and red, etc. I therefore also used the colour blindness check in Coolors to test the colours are distinguishable for users with Tritanopia.<br>
+![tritanopia colour palette_v2](https://github.com/user-attachments/assets/de444e1e-81ee-4afb-807a-b6e324e88655)<br>
+
+It is also important to design for a higher colour contrast, since many dementia patient also suffers from poor contrast perception. I used the WCAG extension to scan my initial design and found that the key concerns were the colours chosen for the Bootstrap navbar, as shown below on the left.<br>
+
+Once I built the Bootstrap navbar, I tested with different shades of background colours (see middle screenshot below), but I found it difficult to find to get a contrast ratio higher than 4 with the Bootstrap default styles for nav links. By overriding the nav link styles and making the hover colours more vibrant, I managed to improve the WCAG colours above 5 (see below right screenshot).<br>
+
+![navbar test](https://github.com/user-attachments/assets/9a5ecb5c-364d-4efd-a2f6-68457dd29f5f)<br>
+<br>
 ![WCAG_navbar link text](https://github.com/user-attachments/assets/4a5dc435-642b-478c-b5d9-05b14abade01)
-![navbar test](https://github.com/user-attachments/assets/9a5ecb5c-364d-4efd-a2f6-68457dd29f5f)
+
 
 ### Typography
 After testing different font combinations on [Google Fonts](https://fonts.google.com/) and [Online Fonts](https://online-fonts.com/), I have chosen sans-serif fonts as they are easier to read for most users.<br>
@@ -255,6 +264,10 @@ DiagramGPT/Eraser
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Credits
+### Code References
+[Classy Class-Based Views](https://ccbv.co.uk/) - references to Django class-based views with examples and links to Django documentation
+Example of how to override Bootstrap styles for navbar links in custom CSS: [CodePen](https://codepen.io/skde/pen/ExyrBYg)
+
 ### Content References
 MS Copilot was used to generate much of the homepage and blog content.
 
