@@ -60,7 +60,7 @@
                                 {% if user.is_authenticated and post.author == user %}
                                 <a class="text-decoration-none icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 196, 115, 53;" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}">
                                 {% endif %}                                    
-                                <h5 class="card-title linked-title">{{ post.title }}</h5>
+                                <h5 class="card-title {% if user.is_authenticated and post.author == user %}linked-title{% endif %}">{{ post.title }}</h5>
                                 {% if user.is_authenticated and post.author == user %}
                                 </a>
                                 {% endif %}                                    

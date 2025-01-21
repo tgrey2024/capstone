@@ -29,11 +29,28 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Navbar */
 #navbar {
-    background-color: #c47335;
+    background-color: #ae5a19;
 }
 
 #navbar .navbar-brand{
     display: none;
+}
+
+.header .navbar-nav .nav-link {
+    color: #dab597;
+    }
+
+.header .navbar-nav .nav-link:hover {
+    color: #efcb6f;
+    transition: color 0.2s ease-in-out;
+}
+
+.header .navbar-nav .active {
+    color: #ffffff;
+}
+
+.header .navbar-nav .active:hover, .header .navbar-nav .active:active {
+    color: #ffffff;
 }
 
 #navbar .logo {
@@ -53,10 +70,24 @@ h1, h2, h3, h4, h5, h6 {
     height: 300px;
     object-fit: cover;
 }
+.card-title {
+    color: #797878;
+}
+
+.date-time {
+    color: #797878;
+    font-size: 0.8rem; 
+}
 
 .linked-title {
     color: #174f11;
     text-decoration: none;
+}
+
+.linked-title:hover {
+    color: #c47335;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
 }
 
 .card-body > a:hover {
@@ -122,7 +153,7 @@ h1, h2, h3, h4, h5, h6 {
 #footer .social-links i {
     color: #c47335;
     font-size: 1rem;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.2s ease-in-out;
 }
 
 #footer .social-links i:hover {
