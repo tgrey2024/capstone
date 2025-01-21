@@ -33,7 +33,7 @@
                                     <a class="text-decoration-none linked-title" href="{% url 'scrapbook_detail' scrapbook.slug %}">
                                         <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
                                     <!-- Author and Status icon conditionals -->
-                                    <h6 class="card-subtitle mb-2 text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
+                                    <h6 class="card-subtitle text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
                                     {% if scrapbook.status == 2 %}
                                         <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
                                     {% endif %}

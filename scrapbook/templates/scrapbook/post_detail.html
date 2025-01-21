@@ -31,10 +31,10 @@
                 <!-- Post author | the post's last updated date -->
                 <p class="scrapbook-subtitle date-time">{{ post.author }} | Updated: {{ post.updated_on }}</p>
                 <div class="text-center">
-                    <img src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
+                    <img id="post-image" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                 </div>
                 <!-- Filter to mark content as safe for rendering as HTML -->
-                <div class="lead">{{ post.content | safe }}</div>
+                <div id="post-content">{{ post.content | safe }}</div>
             </div>
             <div>
                 <!-- Edit post if the user is authenticated -->

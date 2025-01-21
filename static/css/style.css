@@ -70,15 +70,12 @@ h1, h2, h3, h4, h5, h6 {
     height: 300px;
     object-fit: cover;
 }
+/* Disabled link title */
 .card-title {
     color: #797878;
 }
 
-.date-time {
-    color: #797878;
-    font-size: 0.8rem; 
-}
-
+/* Active link title */
 .linked-title {
     color: #174f11;
     text-decoration: none;
@@ -98,7 +95,8 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 17rem;
 }
 
-.card-body .metadata {
+.card-body .date-time {
+    color: #797878;
     font-size: 0.8rem;
 }
 
@@ -110,6 +108,17 @@ h1, h2, h3, h4, h5, h6 {
 .card-text {
     margin-top: 0.8rem;
     margin-bottom: 1rem;
+}
+/* Post Detail page */
+#post-image {
+    width: 80%;
+    min-width: 50vw;
+    object-fit: cover;
+}
+
+#post-content {
+    margin: 0.5rem;
+    font-size: calc(1rem + 0.5vw);
 }
 
 /* Create/Edit Form */
