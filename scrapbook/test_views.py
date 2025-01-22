@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Scrapbook, Post
+from .models import Scrapbook, Post, SharedAccess
 
 class ScrapbookViewsTest(TestCase):
 
@@ -166,3 +166,44 @@ class ScrapbookViewsTest(TestCase):
         self.assertEqual(Post.objects.count(), 1)
         response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
         self.assertContains(response, 'Test Post')
+
+class ScrapbookMyListViewTest(TestCase):
+
+    def setUp(self):
+        # Create a client for testing
+        self.client = Client()
+        
+        # Create users for testing
+        self.user1 = User.objects.create_user(username='user1', password='testpass')
+        self.user2 = User.objects.create_user(username='user2', password='testpass')
+        
+        # Create scrapbooks for testing
+        self.scrapbook1 = Scrapbook.objects.create(title='Scrapbook 1', author=self.user1)
+        self.scrapbook2 = Scrapbook.objects.create(title='Scrapbook 2', author=self.user2)
+        
+        # Share scrapbook2 with user1
+        SharedAccess.objects.create(user=self.user1, scrapbook=self.scrapbook2, shared_by=self.user2)
+
+    def test_my_scrapbooks_view(self):
+        # Test the view for the user's own scrapbooks
+        pass
+
+    def test_shared_scrapbooks_view(self):
+        # Test the view for scrapbooks shared with the user
+        pass
+
+    def test_shared_scrapbooks_not_in_my_scrapbooks(self):
+        # Test that shared scrapbooks do not appear in the user's own scrapbooks list
+        pass
+
+    def test_my_scrapbooks_not_in_shared_scrapbooks(self):
+        # Test that the user's own scrapbooks do not appear in the shared scrapbooks list
+        pass
+
+    def test_shared_scrapbooks_access(self):
+        # Test that the user can access shared scrapbooks
+        pass
+
+    def test_shared_scrapbooks_no_access(self):
+        # Test that the user cannot access scrapbooks not shared with them
+        pass

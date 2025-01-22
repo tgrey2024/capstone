@@ -2,8 +2,8 @@ import re
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db.utils import IntegrityError
-from .models import Scrapbook, Post
+from django.db import IntegrityError
+from .models import Scrapbook, Post, SharedAccess
 
 class ScrapbookModelTest(TestCase):
 
@@ -252,3 +252,55 @@ class PostModelTest(TestCase):
         post = Post(slug=slug, author=self.user)
         with self.assertRaises(ValidationError):
             post.full_clean()  # This will run the model's validation
+
+class SharedAccessModelTest(TestCase):
+
+    def setUp(self):
+        # Create users for testing
+        self.user1 = User.objects.create_user(username='user1', password='testpass')
+        self.user2 = User.objects.create_user(username='user2', password='testpass')
+        
+        # Create a scrapbook for testing
+        self.scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user1)
+        
+        # Create a post for testing
+        self.post = Post.objects.create(title='Test Post', author=self.user1, scrapbook=self.scrapbook, status=1)
+
+    def test_shared_access_creation(self):
+        # Test the creation of a SharedAccess instance
+        self.assertEqual(SharedAccess.objects.count(), 0)
+        shared_access = SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        self.assertEqual(SharedAccess.objects.count(), 1)
+        self.assertEqual(shared_access.user, self.user2)
+        self.assertEqual(shared_access.scrapbook, self.scrapbook)
+
+    def test_shared_access_user_relationship(self):
+        # Test the relationship between SharedAccess and User
+        shared_access = SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        self.assertEqual(shared_access.user, self.user2)
+        self.assertEqual(list(self.user1.shared_accesses_shared_by.all()), [shared_access])
+        
+
+    def test_shared_access_scrapbook_relationship(self):
+        # Test the relationship between SharedAccess and Scrapbook
+        shared_access = SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        self.assertEqual(shared_access.scrapbook, self.scrapbook)
+        self.assertEqual(list(self.scrapbook.sharedaccess_set.all()), [shared_access])
+
+
+    def test_shared_access_post_relationship(self):
+        # Test the relationship between SharedAccess and Post
+        shared_access = SharedAccess.objects.create(user=self.user2, post=self.post, shared_by=self.user1)
+        self.assertEqual(shared_access.post, self.post)
+
+
+    def test_shared_access_shared_by_relationship(self):
+        # Test the relationship between SharedAccess and the user who shared the content
+        shared_access = SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        self.assertEqual(shared_access.shared_by, self.user1)
+        self.assertEqual(list(self.user1.shared_accesses_shared_by.all()), [shared_access])
+
+    def test_shared_access_str_method(self):
+        # Test the __str__ method of the SharedAccess model
+        shared_access = SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        self.assertEqual(str(shared_access), 'user2 | Test Scrapbook')

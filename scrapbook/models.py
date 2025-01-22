@@ -95,7 +95,12 @@ class SharedAccess(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     scrapbook = models.ForeignKey(Scrapbook, on_delete=models.CASCADE, null=True, blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True)
-    shared_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shared_by')
+    shared_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shared_accesses_shared_by')
 
     class Meta:
-        unique_together = ('user', 'scrapbook', 'post')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'scrapbook', 'post'], name='unique_shared_access')
+        ]
+    
+    def __str__(self):
+        return f"{self.user.username} | {self.scrapbook.title if self.scrapbook else 'No Scrapbook'}"
