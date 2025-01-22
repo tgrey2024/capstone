@@ -1,14 +1,16 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from .models import Scrapbook, Post
-from .forms import PostForm, ScrapbookForm
+from .models import Scrapbook, Post, SharedAccess
+from .forms import PostForm, ScrapbookForm, ShareContentForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.exceptions import PermissionDenied
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -31,6 +33,9 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['post_count'] = Post.objects.filter(
             scrapbook__in=self.get_queryset()).count()
+        # Get scrapbooks shared with the user
+        shared_scrapbooks = Scrapbook.objects.filter(sharedaccess__user=self.request.user).distinct()
+        context['shared_scrapbooks'] = shared_scrapbooks
         return context
 
     
@@ -38,6 +43,14 @@ class ScrapbookDetailView(generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
     context_object_name = 'scrapbook'
+    login_url = '/accounts/login/'
+    
+    def get_object(self):
+        scrapbook = super().get_object()
+        if scrapbook.status != 2 and scrapbook.author != self.request.user:
+            if not SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists():
+                raise PermissionDenied("You do not have permission to view this scrapbook.")
+        return scrapbook
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -215,12 +228,17 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 class PostDetailView(generic.DetailView):
     model = Post
     template_name = 'scrapbook/post_detail.html'
-    
+    login_url = '/accounts/login/'
+
     def get_object(self):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_slug = self.kwargs['post_slug']
-        return get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
-
+        post = get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
+        if post.status != 2 and post.author != self.request.user:
+            if not SharedAccess.objects.filter(user=self.request.user, post=post).exists():
+                raise PermissionDenied("You do not have permission to view this post.")
+        return post
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['scrapbook'] = self.object.scrapbook
@@ -235,3 +253,28 @@ def create_scrapbook(request):
     else:
         form = ScrapbookForm()
     return render(request, 'scrapbook/scrapbook_form.html', {'form': form})
+
+@login_required
+def share_content(request):
+    scrapbook_id = request.GET.get('scrapbook_id')
+    
+    if request.method == 'POST':
+        form = ShareContentForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            try:
+                user = User.objects.get(username=username)
+                if scrapbook_id:
+                    scrapbook = Scrapbook.objects.get(id=scrapbook_id)
+                    SharedAccess.objects.create(user=user, scrapbook=scrapbook, shared_by=request.user)
+                    messages.success(request, "Scrapbook shared successfully.")
+                else:
+                    messages.error(request, "Scrapbook does not exist.")
+            except User.DoesNotExist:
+                messages.error(request, "User does not exist.")
+            except (Scrapbook.DoesNotExist, Post.DoesNotExist):
+                messages.error(request, "Scrapbook does not exist.")
+        return redirect('home')
+    else:
+        form = ShareContentForm(initial={'scrapbook_id': scrapbook_id, 'post_id': post_id})
+    return render(request, 'scrapbook/share_content.html', {'form': form})

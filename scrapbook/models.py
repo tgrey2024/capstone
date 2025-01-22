@@ -90,3 +90,12 @@ class Post(models.Model):
             if Post.objects.filter(slug=self.slug).exists():
                 self.slug = f"{self.slug}-{uuid.uuid4().hex[:8]}"
         super().save(*args, **kwargs)
+
+class SharedAccess(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    scrapbook = models.ForeignKey(Scrapbook, on_delete=models.CASCADE, null=True, blank=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True)
+    shared_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shared_by')
+
+    class Meta:
+        unique_together = ('user', 'scrapbook', 'post')

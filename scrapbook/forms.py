@@ -1,4 +1,5 @@
 from .models import Post, Scrapbook
+from django.contrib.auth.models import User
 from django import forms
 from cloudinary.forms import CloudinaryFileField
 from cloudinary import CloudinaryResource
@@ -94,3 +95,7 @@ class ScrapbookForm(forms.ModelForm):
             except Exception as e:
                 raise forms.ValidationError("Upload a valid image. The file you uploaded was either not an image or a corrupted image.")
         return image
+
+class ShareContentForm(forms.Form):
+    username = forms.CharField(max_length=150, help_text="Enter the username of the user you want to share with.")
+    scrapbook_id = forms.IntegerField(required=False, widget=forms.HiddenInput())

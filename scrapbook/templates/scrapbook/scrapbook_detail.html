@@ -33,7 +33,7 @@
                 </div>
                 <!-- Allow user to see button to create a post if the user is authenticated -->
                 <div class="col-sm-12 col-md-6">
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated and scrapbook.author == user %}
                     <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Add a Post <i class="fa-regular fa-square-plus"></i></a>
                     {% endif %}
                 </div>
@@ -84,6 +84,7 @@
                                     {% if user.is_authenticated and post.author == user %}
                                         <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-lg-inline" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                                         <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-xl-inline" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                        <a href="{% url 'share_content' %}?scrapbook_id={{ scrapbook.id }}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Share Scrapbook">Share <i class="fa-solid fa-share-nodes"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
