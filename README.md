@@ -15,20 +15,45 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 - [Design](#design)
     - [Colour Scheme](#colour-scheme)
     - [Typography](#typography)
+    - [Mockups](#mockups)
     - [Imagery](#imagery)
+    - [Responsive Design](#responsive-design)
 - [Key Features](#key-features)
-    - [Nav Bar](#nav-bar)
-    - [Footer](#footer)
-- [Responsive Design](#responsive-design)
-- [Future Features](#future-features)
-- [Technologies Used](#technologies-used)
+    - [Authentication](#authentication)
+    - [Header and Footer Navigation](#header-and-footer-navigation)
+    - [Homepage and Published Scrapbooks](#homepage-and-published-scrapbooks)
+    - [Accounts Management](#accounts-management)
+    - [Log in Status](#log-in-status)
+    - [CRUD Functions](#crud-functions)
+    - [Access Control](#access-control)
+    - [Create and Edit Scrapbooks](#create-and-edit-scrapbooks)
+    - [Create and Edit Posts](#create-and-edit-posts)
+    - [Post Detail](#post-detail)
+    - [Delete Scrapbook or Post](#delete-scrapbook-or-post)
+    - [My Scrapbooks](#my-scrapbooks)
+    - [Publish Status](#publish-status)
+    - [Notifications](#notifications)
+    - [Admin Panel](#admin-panel)
+    - [Inclusivity Notes](#inclusivity-notes)
 - [Deployment](#deployment)
     - [Platform](#platform)
     - [High Level Deployment Steps](#high-level-deployment-steps)
     - [Verification and Validation](#verification-and-validation)
     - [Security Measures](#security-measures)
-- [Testing](#testing)
+- [Testing Summary](#testing-summary)
+- [Future Enhancements](#future-enhancements)
+- [Technologies Used](#technologies-used)
+- [AI Implementation and Orchestration](#ai-implementation-and-orchestration)
+    - [Planning](#planning)
+    - [Code Generation](#code-generation)
+    - [Content Creation](#content-creation) 
+    - [Debugging](#debugging)
+    - [Performance and UX Optimisation](#performance-and-ux-optimisation)
+    - [Automated Unit Testing](#automated-unit-testing)
+    - [Impact on Workflow](#impact-on-workflow)
+    - [Use Cases and Reflections](#use-cases-and-reflections)
 - [Credits](#credits)
+
 
 <p align="right"><a href="#top">Back to top</a></p>
 <hr/>
@@ -123,7 +148,7 @@ For the paragraph and menu text, I have picked the widely-available and reliable
   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
 
 
-### Mockup
+### Mockups
   - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
 - **Design Rationale:**
   - [Explain key design decisions, such as layout, colour scheme, typography, and how accessibility guidelines (e.g., WCAG) were integrated.]
@@ -131,12 +156,72 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 - **Reasoning For Any Final Changes:**
   - [Summarise significant changes made to the design during development and the reasons behind them.]
   - [Reflect on how these changes enhance inclusivity and accessibility.]
-<p align="right"><a href="#top">Back to top</a></p>
 
+
+### Imagery
+add AI and Pexels imagery
+
+### Responsive Design
+add amiresponsive screenshot
+
+<p align="right"><a href="#top">Back to top</a></p>
 ## Key Features
-- **Feature 1:** [Briefly describe the implemented feature.]
-- **Feature 2:** [Briefly describe the implemented feature.]
-- **Inclusivity Notes:** 
+### Authentication
+Parts of the site are only accessible when users are registered and logged in:
+
+| Features                           | Unauthenticated Users     |  Authenticated Users |
+| ---------------------------------- |:-------------------------:| --------------------:|
+| Homepage                           |           Yes             |          Yes         |
+| About                              |           Yes             |          Yes         |
+| My Scrapbooks                      |           No              |          Yes         |
+| Register                           |           Yes             |          No          |
+| Login                              |           Yes             |          No          |
+| Logout                             |           No              |          Yes         |
+
+### Header and Footer Navigation
+[add screenshots, show how they use the base template, how they change for logged in and unlogged in users]
+
+### Homepage and Published Scrapbooks
+### Accounts Management
+[add screenshots, show how they use the same template, register and cancel buttons]
+### Log in Status
+[add screenshots of logged in status text with icon, plus shortened version for small screens]
+### CRUD Functions
+
+Here is a summary of the CRUD functionalities implemented. 
+|     Features          |     Create    |      Read      |     Update     |      Delete     |
+| --------------------- |:-------------:|---------------:|---------------:| ---------------:|
+| Draft Scrapbook       |Logged-in users|   Author only  |   Author only  |   Author only   |
+| Private Scrapbook     |Logged-in users|   Author only  |   Author only  |   Author only   |
+| Published Scrapbook   |Logged-in users|   All users    |   Author only  |   Author only   |
+| Draft Post            |Logged-in users|   Author only  |   Author only  |   Author only   |
+| Private Post          |Logged-in users|   Author only  |   Author only  |   Author only   |
+| Published Post        |Logged-in users|   All users    |   Author only  |   Author only   |
+
+All users, logged-in or not, can read published scrapbooks and posts. All other CRUD functions are all only accessible to logged-in users.
+
+### Access Control
+### Create and Edit Scrapbooks
+[add screenshots to show they use the same template, context passed from each view to determine and dynamically change content for better UI]
+### Create and Edit Posts
+[add screenshots to show they use the same template, context passed from each view to determine and dynamically change content for better UI]
+### Post Detail
+[add screenshots, set size for photo but max-width limited on very large screens]
+
+### Delete Scrapbook or Post
+[add screenshots, show how they use the same template, confirmation and cancel buttons]
+
+### My Scrapbooks
+### Publish Status
+[add screenshots, show how they are set and updated, icons, how it determines whether they can be accessed]
+
+### Notifications
+[add screenshots, list which messages get sent to alert, disappear after 15s if not closed]
+
+### Admin Panel
+[add screenshots, show which columns were added]
+
+### Inclusivity Notes
   - [Mention how the features address the needs of diverse users, including those with SEND.]
 <p align="right"><a href="#top">Back to top</a></p>
 
@@ -194,34 +279,13 @@ Add details of CSS validation:
 
 <p align="right"><a href="#top">Back to top</a></p>
 
-## AI Implementation and Orchestration
-
-### Use Cases and Reflections:
-(Highlight how prompts, such as reverse, question-and-answer or multi-step, were used to support learners with SEND or ALN where relevant.)
-
-  - **Code Creation:** 
-    - Reflection: Strategic use of AI allowed for rapid prototyping, with minor adjustments for alignment with project goals. 
-    - Examples: Reverse prompts for alternative code solutions and question-answer prompts for resolving specific challenges.
-  - **Debugging:** 
-    - Reflection: Key interventions included resolving logic errors and enhancing maintainability, with a focus on simplifying complex logic to make it accessible.
-  - **Performance and UX Optimization:** 
-    - Reflection: Minimal manual adjustments were needed to apply AI-driven improvements, which enhanced application speed and user experience for all users.
-  - **Automated Unit Testing:**
-    - Reflection: Adjustments were made to improve test coverage and ensure alignment with functionality. Prompts were used to generate inclusive test cases that considered edge cases for accessibility.
-
-- **Overall Impact:**
-  - AI tools streamlined repetitive tasks, enabling focus on high-level development.
-  - Efficiency gains included faster debugging, comprehensive testing, and improved code quality.
-  - Challenges included contextual adjustments to AI-generated outputs, which were resolved effectively, enhancing inclusivity.
-<p align="right"><a href="#top">Back to top</a></p>
-
 ## Testing Summary
 
-- **Manual Testing:**
+### Manual Testing
   - **Devices and Browsers Tested:** [List devices and browsers, ensuring testing was conducted with assistive technologies such as screen readers or keyboard-only navigation.]
   - **Features Tested:** [Summarise features tested manually, e.g., CRUD operations, navigation.]
   - **Results:** [Summarise testing results, e.g., "All critical features worked as expected, including accessibility checks."]
-- **Automated Testing:**
+### Automated Testing
   - Tools Used: [Mention any testing frameworks or tools, e.g., Django TestCase.]
   - Features Covered: [Briefly list features covered by automated tests.]
   - Adjustments Made: [Describe any manual corrections to AI-generated test cases, particularly for accessibility.]
@@ -247,10 +311,14 @@ DB PostgreSQL
 Whitenoise
 AllAuth
 
-### Libraries
+### Libraries and Frameworks
 ![Static Badge](https://img.shields.io/badge/Bootstrap-5.3-purple)
 ![Static Badge](https://img.shields.io/badge/FontAwesome-icons-navy)
 ![Static Badge](https://img.shields.io/badge/GoogleFonts-Typography-blue)
+
+Django, AllAuth, Whitenoise, Crispy Forms, Crispy Bootstrap, Summernote, Pillow
+All Django packages installed is listed in requirements.txt(add link).
+
 ### Tools and Programs
 ![Static Badge](https://img.shields.io/badge/LogoAI-LogoGenerator-red)
 ![Static Badge](https://img.shields.io/badge/Favicon.io-icons-navy)
@@ -260,8 +328,59 @@ AllAuth
 ![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI-orange)
 Perplexity AI
 DiagramGPT/Eraser
+Coolers
+WCAG
 
 <p align="right"><a href="#top">Back to top</a></p>
+
+## AI Implementation and Orchestration
+### Planning
+[user stories, identify entities and relationships, generate initial ERD]
+### Code Generation
+[review below before deadline]
+The GitHub Copilot extension was installed in our local versions of Visual Studio Code. We were therefore able to write prompts or highlight functions in pseudocode and ask Copilot to suggest code snippets. Suggestions needed to be reviewed before they were included, as occassionally code may refer to e.g. variables that have not been declared or not yet been imported.
+
+Copilot was also able to suggest higher-level implementation ideas, e.g. when I was researching options for sharing content between users privately. Copilot was prompted for options suitable for a junior developer to implement, and it provided three options including pros and cons, and suggested reading on the subject.
+
+When I come across suggested code that I don't understand, I prompted Copilot for an explanation of the selected code with a breakdown of each step and a concise summary. 
+
+Occassionally it can be annoying when Copilot suggests code in ghost text unnecessarily, or introduces additional closing tags or brackets unnecessarily. Nonetheless, when used with specific prompts and context, some of the results provided by Copilot have been mostly usable, thus speeding up development.
+
+[    - Reflection: Strategic use of AI allowed for rapid prototyping, with minor adjustments for alignment with project goals. 
+    - Examples: Reverse prompts for alternative code solutions and question-answer prompts for resolving specific challenges.]
+
+### Content Creation
+[DALL-E images, post text]
+### Debugging
+Copilot was regularly used for debugging code, either by highlighting specific code in the inline editor, or using @workspace if Copilot needs more context. During automated testing, any failure errors are copied into the Copilot chat to give AI a better idea of what needs to be fixed.
+
+When using Chrome DevTools to inspect the preview or deployed pages, Chrome DevTools AI Assistance panel was also used to explain the errors raised in the Console.
+
+[    - Reflection: Key interventions included resolving logic errors and enhancing maintainability, with a focus on simplifying complex logic to make it accessible.]
+
+### Performance and UX Optimisation
+While learning to write class-based views, apart from reading Django references and documentation, I also prompted Copilot to debug the class-based views that were written. Once tested to run correctly, Copilot was prompted to optimise on the code. 
+[give outcome]
+Again, this needed to be tested fully before it was incorporated into the code. Running the resultant code produces the same result as before.
+
+[    - Reflection: Minimal manual adjustments were needed to apply AI-driven improvements, which enhanced application speed and user experience for all users.]
+
+### Automated Unit Testing
+Automated tests were written by prompting Copilot for test skeletons for unit tests and edge tests without implementation. I selected the relevant test cases to include and Copilot suggested ghost text for each one which I accepted using the Tab key or Ctrl+-> key. Each test case had to be reviewed and tested separately, and Copilot also helped with suggesting fixes to the models, views and forms, although it was also important to test that the changes hasn't broken any functions in the affected part of the app.
+[    - Reflection: Adjustments were made to improve test coverage and ensure alignment with functionality. Prompts were used to generate inclusive test cases that considered edge cases for accessibility.]
+
+### Impact on Workflow
+On the whole, it has been useful to pair program with Copilot and use it for debugging and testing as we code. Due to the tight timescale of the project, I used AI wherever possible to reduce development time, from creating user stories to suggesting commit messages. When 
+[  - AI tools streamlined repetitive tasks, enabling focus on high-level development.
+  - Efficiency gains included faster debugging, comprehensive testing, and improved code quality.
+  - Challenges included contextual adjustments to AI-generated outputs, which were resolved effectively, enhancing inclusivity.]
+  - 
+### Use Cases and Reflections
+[Highlight how prompts, such as reverse, question-and-answer or multi-step, were used to support learners with SEND or ALN where relevant.]
+
+<p align="right"><a href="#top">Back to top</a></p>
+
+
 
 ## Credits
 ### Code References
