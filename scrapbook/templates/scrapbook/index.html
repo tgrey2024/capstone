@@ -1,62 +1,110 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% url 'account_signup' as signup_url %}
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-    
-    <div class="container move-up">
-        <div class="row">
-            <div class="col-12">
-                <h1>Published Scrapbooks <i class="fa-solid fa-globe"></i></h1>
-                <p id="subtitle">Shared scrapbooks can be viewed by all users.</p>
-                <!-- Create a new scrapbook if the user is authenticated -->
-                {% if user.is_authenticated %}
-                <a href="{% url 'create-scrapbook' %}" class="btn btn-info scrapbook-link mx-auto my-2"  aria-label="Go to add a New Scrapbook">Add a New Scrapbook <i class="fa-regular fa-square-plus"></i></a>
-                {% endif %}
+    <!-- Hero section -->
+    <section class="hero bg-light text-center">
+        <div class="container ms-auto">
+            <div class="text-start">
+                <h1>Start sharing today!</h1>
+                <p class="lead">create | share | connect</p>
+                <a href="{% url 'account_signup' %}" class="btn btn-info scrapbook-link" aria-label="Go to the Signup page">Sign Up <i class="fa-solid fa-user-plus"></i></a>
             </div>
         </div>
-        <div class="row">
-            <!-- Scrapbook Entries Column -->
-            <div class="col-12 mt-3 left">
-                <div class="row">
-                    {% for scrapbook in scrapbook_list %}
-                    <!-- don't show a scrapbook if its status is not Public -->
-                    <div class="col-md-4 {% if not scrapbook.status == 2 %}d-none{% endif %}">
-                        <!-- Bootstrap 5 card for each scrapbook -->
-                        <div class="card mb-4">
-                            <div class="text-center">
-                                <img src="{{ scrapbook.image.url}}" class="card-img-top" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
-                            </div>
-                            <div class="card-body px-3">
-                                <div class="{% if user.is_authenticated and scrapbook.author == user and scrapbook.status == 0 %}opacity-50{% endif %}">
-                                    <a class="text-decoration-none linked-title" href="{% url 'scrapbook_detail' scrapbook.slug %}" aria-label="Go to the Scrapbook Detail page">
-                                        <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
-                                    <!-- Author and Status icon conditionals -->
-                                    <h6 class="card-subtitle text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
-                                    {% if scrapbook.status == 2 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
-                                    {% endif %}
-                                    <!-- Last Updated -->
-                                    <p class="card-subtitle date-time mb-2">Updated: {{ scrapbook.updated_on }}</p>
+    </section>
+    <!-- Published Scrapbooks section -->
+    <section id="published" class="published my-3 py-5">
+        <div class="container move-up">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Published Scrapbooks <i class="fa-solid fa-globe"></i></h2>
+                    <p id="subtitle">Shared scrapbooks can be viewed by all users.</p>
+                    <!-- Create a new scrapbook if the user is authenticated -->
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create-scrapbook' %}" class="btn btn-info scrapbook-link mx-auto my-2"  aria-label="Go to add a New Scrapbook">Add a New Scrapbook <i class="fa-regular fa-square-plus"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <!-- Scrapbook Entries Column -->
+                <div class="col-12 mt-3 left">
+                    <div class="row">
+                        {% for scrapbook in scrapbook_list %}
+                        <!-- don't show a scrapbook if its status is not Public -->
+                        <div class="col-md-4 {% if not scrapbook.status == 2 %}d-none{% endif %}">
+                            <!-- Bootstrap 5 card for each scrapbook -->
+                            <div class="card mb-4">
+                                <div class="text-center">
+                                    <img src="{{ scrapbook.image.url}}" class="card-img-top" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
                                 </div>
-                                <!-- Open, Edit and Delete Buttons -->
-                                <div class="text-end mb-1">
-                                    <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>
-                                    <!-- if logged in user is the post author, show edit and delete buttons -->
-                                {% if user.is_authenticated and scrapbook.author == user %}
-                                    <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" aria-label="Go to the Scrapbook Edit page" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                    {% endif %}
+                                <div class="card-body px-3">
+                                    <div class="{% if user.is_authenticated and scrapbook.author == user and scrapbook.status == 0 %}opacity-50{% endif %}">
+                                        <a class="text-decoration-none linked-title" href="{% url 'scrapbook_detail' scrapbook.slug %}" aria-label="Go to the Scrapbook Detail page">
+                                            <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
+                                        <!-- Author and Status icon conditionals -->
+                                        <h6 class="card-subtitle text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
+                                        {% if scrapbook.status == 2 %}
+                                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                        {% endif %}
+                                        <!-- Last Updated -->
+                                        <p class="card-subtitle date-time mb-2">Updated: {{ scrapbook.updated_on }}</p>
+                                    </div>
+                                    <!-- Open, Edit and Delete Buttons -->
+                                    <div class="text-end mb-1">
+                                        <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>
+                                        <!-- if logged in user is the post author, show edit and delete buttons -->
                                     {% if user.is_authenticated and scrapbook.author == user %}
-                                    <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
-                                    {% endif %}
+                                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" aria-label="Go to the Scrapbook Edit page" class="btn btn-info btn-edit scrapbook-link mx-auto my-2">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                        {% endif %}
+                                        {% if user.is_authenticated and scrapbook.author == user %}
+                                        <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials py-3">
+        <div class="container">
+            <h2>Testimonials</h2>
+            <div id="testimonial-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active text-center">
+                        <img src="{% static 'images/carousel1.png' %}" class="testimonial-img d-block mx-auto" alt="A grandad sharing his scrapbook with his two grand-daughters" data-bs-interval="12000">
+                        <blockquote class="blockquote">
+                            <p class="testimonial-quote">"I love the simplicity of Remineez. It's easy to use and I can share my scrapbooks with my friends and family."</p>
+                        </blockquote>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="{% static 'images/carousel2.png' %}" class="testimonial-img d-block mx-auto" alt="A patient laughing while sharing her scrapbook with a nurse" data-bs-interval="12000">
+                        <blockquote class="blockquote">
+                            <p class="testimonial-quote">"My scrapbooks have brought my memories to life in a way I never thought possible."</p>
+                        </blockquote>
+                    </div>
+                    <div class="carousel-item text-center">
+                        <img src="{% static 'images/carousel3.png' %}" class="testimonial-img d-block mx-auto" alt="A family member browsing through a scrapbook while holding hands with their loved one" data-bs-interval="12000">
+                        <blockquote class="blockquote">
+                                <p class="testimonial-quote">"Before scrapbooking, I couldn't find the words to explain what was important to people around me."</p>
+                        </blockquote>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" data-bs-interval="10000">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
 {% endblock %}

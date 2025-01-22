@@ -76,6 +76,55 @@ h1, h2, h3, h4, h5, h6 {
     top: -45px;
 }
 
+/* Hero section */
+.hero {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 183, 183, 0.5)), url('/static/images/placeholder.jpg');
+    background-size: cover;
+    background-position: left;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #56351e;
+    font-size: 1.8rem;
+    text-align: right;
+    padding: 4rem 0;
+}
+
+.hero h1 {
+    color: #174f11;
+}
+
+/* Testimonials */
+.testimonials {
+    background-color: #174f11;
+    padding: 2rem 0;
+    margin-top: -4rem;
+    margin-bottom: 3rem;
+}
+
+.testimonials h2 {
+    color:#f7f7de;
+}
+
+.testimonial {
+    background-color: #174f11;
+    padding: 2rem 0;
+    margin-top: -4rem;
+}
+
+.testimonial-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.testimonial-quote {
+    text-align: center;
+    font-style: italic;
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 1.2rem;
+}
+
 /* Scrapbook and Post content */
 .post-image {
     width: 100%;
