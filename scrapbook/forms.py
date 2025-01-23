@@ -99,3 +99,4 @@ class ScrapbookForm(forms.ModelForm):
 class ShareContentForm(forms.Form):
     username = forms.CharField(max_length=150, help_text="Enter the username of the user you want to share with.")
     scrapbook_id = forms.IntegerField(required=False, widget=forms.HiddenInput())
+    post_id = forms.IntegerField(required=False, widget=forms.HiddenInput())  # Add post_id field

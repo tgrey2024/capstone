@@ -46,7 +46,7 @@
             <div class="row">
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
-                 <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
+                <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
                 <div id="post{{ post.id }}" class="col-12 col-md-4 {% if not post.status == 2 and not post.author == user %}d-none{% endif %}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
                         <div class="text-center">

@@ -4,6 +4,7 @@ from django.urls import path
 urlpatterns = [
     path("", views.ScrapbookListView.as_view(), name="home"),
     path("my-scrapbooks/", views.ScrapbookMyListView.as_view(), name="my_scrapbook_list"),
+    path("shared-scrapbooks/", views.ScrapbookSharedListView.as_view(), name="shared_scrapbook_list"),
     path('share/', views.share_content, name='share_content'),
     path('create-scrapbook/', views.ScrapbookCreateView.as_view(), name="create-scrapbook"),
     path('<slug:slug>/', views.ScrapbookDetailView.as_view(), name='scrapbook_detail'),

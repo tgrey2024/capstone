@@ -143,7 +143,6 @@ class ScrapbookViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
 
-
     def test_post_update_view_with_special_characters_in_title(self):
         # Edge Test: Test the PostUpdateView with special characters in the title
         self.client.login(username='testuser', password='testpass')
@@ -178,32 +177,72 @@ class ScrapbookMyListViewTest(TestCase):
         self.user2 = User.objects.create_user(username='user2', password='testpass')
         
         # Create scrapbooks for testing
-        self.scrapbook1 = Scrapbook.objects.create(title='Scrapbook 1', author=self.user1)
-        self.scrapbook2 = Scrapbook.objects.create(title='Scrapbook 2', author=self.user2)
+        self.scrapbook1 = Scrapbook.objects.create(title='Scrapbook 1', author=self.user1, status=1)
+        self.scrapbook2 = Scrapbook.objects.create(title='Scrapbook 2', author=self.user2, status=1)
+        
+        # Create posts for testing
+        self.post1 = Post.objects.create(title='Post 1', status=1, author=self.user1, scrapbook=self.scrapbook1)
+        self.post2 = Post.objects.create(title='Post 2', status=1, author=self.user2, scrapbook=self.scrapbook2)
         
         # Share scrapbook2 with user1
         SharedAccess.objects.create(user=self.user1, scrapbook=self.scrapbook2, shared_by=self.user2)
+        posts = Post.objects.filter(scrapbook=self.scrapbook2)
+        for post in posts:
+            SharedAccess.objects.create(user=self.user1, scrapbook=self.scrapbook2, post=post, shared_by=self.user2)
 
     def test_my_scrapbooks_view(self):
         # Test the view for the user's own scrapbooks
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('my_scrapbook_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'scrapbook/scrapbook_mylist.html')
+        
+        # Check that 'Scrapbook 1' is in the #my-scrapbooks section
+        self.assertContains(response, 'Scrapbook 1')
+        self.assertNotContains(response, 'Scrapbook 2')
 
     def test_shared_scrapbooks_view(self):
         # Test the view for scrapbooks shared with the user
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('shared_scrapbook_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'scrapbook/scrapbook_sharedlist.html')
+        
+        # Check that 'Scrapbook 2' is in the #shared-scrapbooks section
+        self.assertContains(response, 'Scrapbook 2')
+        self.assertNotContains(response, 'Scrapbook 1')
 
     def test_shared_scrapbooks_not_in_my_scrapbooks(self):
         # Test that shared scrapbooks do not appear in the user's own scrapbooks list
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('my_scrapbook_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'scrapbook/scrapbook_mylist.html')
+        
+        # Check that 'Scrapbook 2' is not in the #my-scrapbooks section
+        self.assertNotContains(response, 'Scrapbook 2')
 
     def test_my_scrapbooks_not_in_shared_scrapbooks(self):
         # Test that the user's own scrapbooks do not appear in the shared scrapbooks list
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('shared_scrapbook_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'scrapbook/scrapbook_sharedlist.html')
+        
+        # Check that 'Scrapbook 1' is not in the #shared-scrapbooks section
+        self.assertNotContains(response, 'Scrapbook 1')
 
     def test_shared_scrapbooks_access(self):
         # Test that the user can access shared scrapbooks
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('scrapbook_detail', kwargs={'slug': self.scrapbook2.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'scrapbook/scrapbook_detail.html')
+        self.assertContains(response, 'Scrapbook 2')
 
     def test_shared_scrapbooks_no_access(self):
         # Test that the user cannot access scrapbooks not shared with them
-        pass
+        self.client.login(username='user1', password='testpass')
+        response = self.client.get(reverse('scrapbook_detail', kwargs={'slug': self.scrapbook1.slug}))
+        print(response.content)  # Add this line to print the response content for debugging
+        self.assertEqual(response.status_code, 403)

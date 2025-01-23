@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <h1>My Scrapbooks</h1>
-                <p id="subtitle">Here are all my draft, private and public scrapbooks.</p>
+                <p>Here are all my draft, private and public scrapbooks.</p>
                 <!-- Create a new scrapbook if the user is authenticated -->
                 {% if user.is_authenticated %}
                 <a href="{% url 'create-scrapbook' %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Scrapbook page">Add a New Scrapbook <i class="fa-regular fa-square-plus"></i></a>
@@ -66,54 +66,4 @@
         </div>
     </div>
 </section>
-<!-- Shared Scrapbooks section -->
-<section id="shared-scrapbooks" class="shared-scrapbooks my-3 py-5">    
-    <div class="container move-up">
-        <div class="row">
-            <div class="col-12">
-                <h1>Shared Scrapbooks</h1>
-                <p id="subtitle">Here are all draft, private and public scrapbooks by others shared with me.</p>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Shared Scrapbook Entries Column -->
-            <div class="col-12 mt-3 left">
-                <div class="row">
-                    {% for scrapbook in shared_scrapbooks %}
-                    <div class="col-md-4">
-                        <!-- Bootstrap 5 card for each shared scrapbook -->
-                        <div class="card mb-4">
-                            <div class="text-center">
-                                <img src="{{ scrapbook.image.url}}" class="card-img-top  {% if user.is_authenticated and scrapbook.author == user and scrapbook.status == 0 %}opacity-50{% endif %}" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
-                            </div>
-                            <div class="card-body px-3">
-                                <a class="text-decoration-none" href="{% url 'scrapbook_detail' scrapbook.slug %}" aria-label="Go to Scrapbook Detail page">
-                                    <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
-                                <!-- Author and Status icon conditionals -->
-                                <h6 class="card-subtitle text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
-                                {% if user.is_authenticated and scrapbook.author == user %}
-                                        {% if scrapbook.status == 0 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
-                                        {% elif scrapbook.status == 1 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
-                                        {% elif scrapbook.status == 2 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
-                                    {% endif %}
-                                {% endif %}
-                                <!-- Last Updated -->
-                                <p class="card-subtitle date-time mb-2">Updated: {{ scrapbook.updated_on }}</p>
-                                <!-- Open Button -->
-                                <div class="text-end mb-1">
-                                    <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{% endblock %}
+{% endblock content %}

@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+import logging
 from django.core.exceptions import PermissionDenied
 
 class ScrapbookListView(generic.ListView):
@@ -29,17 +30,29 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
     template_name = "scrapbook/scrapbook_mylist.html"
     login_url = '/accounts/login/'
 
+    def get_queryset(self):
+        # Filter scrapbooks to only show the user's own scrapbooks
+        queryset = Scrapbook.objects.filter(author=self.request.user)
+        return queryset
+
+class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
+    model = Scrapbook
+    ordering = ["-created_on"]
+    template_name = "scrapbook/scrapbook_sharedlist.html"
+    login_url = '/accounts/login/'
+
+    def get_queryset(self):
+        # Filter scrapbooks to only show the shared scrapbooks
+        queryset = Scrapbook.objects.filter(sharedaccess__user=self.request.user).distinct()
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['post_count'] = Post.objects.filter(
-            scrapbook__in=self.get_queryset()).count()
-        # Get scrapbooks shared with the user
-        shared_scrapbooks = Scrapbook.objects.filter(sharedaccess__user=self.request.user).distinct()
-        context['shared_scrapbooks'] = shared_scrapbooks
+        context['shared_scrapbooks'] = self.get_queryset()
         return context
 
     
-class ScrapbookDetailView(generic.DetailView):
+class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
     context_object_name = 'scrapbook'
@@ -64,11 +77,15 @@ class ScrapbookDetailView(generic.DetailView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         
+        # Get shared access for the current user and scrapbook
+        sharedaccess = SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists()
+        
         context.update({
             'posts': page_obj,
             'post_form': post_form,
             'is_paginated': page_obj.has_other_pages(),
             'page_obj': page_obj,
+            'sharedaccess': sharedaccess,
         })
         return context
     
@@ -257,6 +274,7 @@ def create_scrapbook(request):
 @login_required
 def share_content(request):
     scrapbook_id = request.GET.get('scrapbook_id')
+    post_id = request.GET.get('post_id')
     
     if request.method == 'POST':
         form = ShareContentForm(request.POST)
@@ -266,8 +284,13 @@ def share_content(request):
                 user = User.objects.get(username=username)
                 if scrapbook_id:
                     scrapbook = Scrapbook.objects.get(id=scrapbook_id)
+                    # Create a SharedAccess entry for the scrapbook
                     SharedAccess.objects.create(user=user, scrapbook=scrapbook, shared_by=request.user)
-                    messages.success(request, "Scrapbook shared successfully.")
+                    # Share all posts within the scrapbook
+                    posts = Post.objects.filter(scrapbook=scrapbook)
+                    for post in posts:
+                        SharedAccess.objects.create(user=user, scrapbook=scrapbook, post=post, shared_by=request.user)
+                    messages.success(request, "Scrapbook and its posts shared successfully.")
                 else:
                     messages.error(request, "Scrapbook does not exist.")
             except User.DoesNotExist:

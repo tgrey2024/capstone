@@ -68,7 +68,7 @@ class Post(models.Model):
 
     # returns f-string with title, scrapbook title and author from dataset
     def __str__(self):
-        return self.title   
+        return f"{self.title} | by {self.author.username}"  
 
     def save(self, *args, **kwargs):
         """
