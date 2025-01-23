@@ -4,15 +4,17 @@ body {
     font-family: "Lucida Sans Unicode", sans-serif;
     background-color: #f7f7de;
     padding-top: 70.15px; /* pushes the top of the header down under fixed navbar */
+    z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #56351e;
+    z-index: 1;
 }
 
 h1, h2, h3, h4, h5, h6, .logo {
     font-family: 'Philosopher', sans-serif, 'Open Sans', sans-serif;
     font-weight: 700;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #56351e;
 }
 
 #subtitle {
@@ -25,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #2660a4;
     border: none;
     color: white;
+    margin: 0.5rem;
 }
 
 /* Navbar */
@@ -63,6 +66,8 @@ h1, h2, h3, h4, h5, h6 {
 #msg {
     color: #56351e;
     background-color: #ffffa7;
+    border-color:#56351e;
+    opacity: 0.9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
