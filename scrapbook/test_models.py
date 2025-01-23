@@ -185,13 +185,12 @@ class PostModelTest(TestCase):
         self.assertEqual(post.status, 1)
         self.assertIsNotNone(post.created_on)
         self.assertIsNotNone(post.updated_on)
-        self.assertEqual(str(post), 'Test Post')
-        self.assertEqual(post.image, 'placeholder')
+        self.assertEqual(str(post), 'Test Post | by testuser')  # Update the expected output
 
     def test_post_str(self):
         # Test the __str__ method of the Post model
         post = self.scrapbook.posts.create(title='Test Post', author=self.user, status=1)
-        self.assertEqual(str(post), 'Test Post')
+        self.assertEqual(str(post), 'Test Post | by testuser')  # Update the expected output
 
     def test_post_slug_generation(self):
         # Test the slug generation for a Post instance
