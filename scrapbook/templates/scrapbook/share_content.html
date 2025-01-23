@@ -5,17 +5,27 @@
 {% block content %}
 <div class="container">
     <h1>Share Content</h1>
-    <form method="post">
-        <p>You want to share the scrapbook, "<strong>{{ object.title }}</strong>". Who do you want to share it with?</p>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p>The following posts will be shared:</p>
-        <ul>
-            {% for post in posts %}
-                <li>{{ post.title }}</li>
-            {% endfor %}
-        </ul>
-        <button type="submit" class="btn btn-info">Share</button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form method="post">
+                <p>You want to share the scrapbook, "<strong>{{ object.title }}</strong>". Who do you want to share it with?</p>
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+                <p>The following posts will be shared:</p>
+                <ul>
+                    {% for post in posts %}
+                        <li>{{ post.title }}</li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-info" aria-label="Share Scrapbook">Share</button>
+                <a href="javascript:history.back()" class="btn btn-secondary" aria-label="Cancel">Cancel</a>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

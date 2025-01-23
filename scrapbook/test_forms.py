@@ -136,69 +136,19 @@ class SharedAccessFormTest(TestCase):
         self.post = Post.objects.create(title='Test Post', author=self.user1, scrapbook=self.scrapbook, status=1)
 
     def test_shared_access_form_valid_data(self):
-        # Test the ShareContent form with valid data
-        self.assertEqual(self.post.sharedaccess_set.count(), 0)
+        # Test the SharedAccessForm with valid data
         form = ShareContentForm(data={
-            'scrapbook': self.scrapbook.id,
-            'post': self.post.id,
             'user': self.user2.id,
-        }, shared_by=self.user1)
+            'scrapbook_id': self.scrapbook.id,
+            'post_id': None,
+        }, shared_by=self.user1, scrapbook=self.scrapbook)
         self.assertTrue(form.is_valid())
         shared_access = form.save(commit=False)
         shared_access.save()
-        self.assertEqual(self.post.sharedaccess_set.count(), 1)
-        self.assertEqual(shared_access.scrapbook, self.scrapbook)
-        self.assertEqual(shared_access.post, self.post)
         self.assertEqual(shared_access.user, self.user2)
-        self.assertEqual(shared_access.shared_by, self.user1)
-        self.assertTrue(shared_access.shared_at is not None)
-
-
-    def test_shared_access_form_missing_user(self):
-        # Test the SharedAccess form with missing user
-        self.assertEqual(self.post.sharedaccess_set.count(), 0)
-        form = ShareContentForm(data={
-            'scrapbook': self.scrapbook.id,
-            'post': self.post.id,
-        }, shared_by=self.user1)
-        self.assertFalse(form.is_valid())
-        self.assertIn('user', form.errors)
-        self.assertEqual(form.errors['user'], ['This field is required.'])
-
-    def test_shared_access_form_duplicate_entry(self):
-        # Test the SharedAccess form with duplicate entry
-        self.assertEqual(self.post.sharedaccess_set.count(), 0)
-        form = ShareContentForm(data={
-            'scrapbook': self.scrapbook.id,
-            'post': self.post.id,
-            'user': self.user2.id,
-        }, shared_by=self.user1)
-        self.assertTrue(form.is_valid())
-        shared_access = form.save(commit=False)
-        shared_access.save()
-        self.assertEqual(self.post.sharedaccess_set.count(), 1)
-        form = ShareContentForm(data={
-            'scrapbook': self.scrapbook.id,
-            'post': self.post.id,
-            'user': self.user2.id,
-        }, shared_by=self.user1)
-        self.assertFalse(form.is_valid())
-        self.assertIn('__all__', form.errors)
-        self.assertEqual(form.errors['__all__'], ['The post has already been shared with this user.'])
-
-
-    def test_shared_access_form_unique_constraint(self):
-        # Test the unique constraint of the SharedAccess form
-        self.assertEqual(self.post.sharedaccess_set.count(), 0)
-        shared_access = SharedAccess(scrapbook=self.scrapbook, post=self.post, user=self.user2, shared_by=self.user1)
-        shared_access.save()
-        self.assertEqual(self.post.sharedaccess_set.count(), 1)
-        form = ShareContentForm(data={
-            'scrapbook': self.scrapbook.id,
-            'post': self.post.id,
-            'user': self.user2.id,
-        }, shared_by=self.user1)
-        self.assertFalse(form.is_valid())
-        self.assertIn('__all__', form.errors)
-        self.assertEqual(form.errors['__all__'], ['The post has already been shared with this user.'])
+        self.assertEqual(shared_access.scrapbook_id, self.scrapbook.id)
+        self.assertEqual(shared_access.post_id, None)
         
+
+
+

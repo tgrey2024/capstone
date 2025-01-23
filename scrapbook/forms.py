@@ -119,6 +119,15 @@ class ShareContentForm(forms.ModelForm):
             self.fields['scrapbook_id'].initial = scrapbook.id
         self.fields['post_id'].initial = None  # Hide post_id as all posts in the scrapbook are automatically shared
 
+    def clean(self):
+        cleaned_data = super().clean()
+        user = cleaned_data.get('user')
+        scrapbook_id = cleaned_data.get('scrapbook_id')
+        if user and scrapbook_id:
+            if SharedAccess.objects.filter(user=user, scrapbook_id=scrapbook_id).exists():
+                raise forms.ValidationError("This scrapbook has already been shared with the selected user.")
+        return cleaned_data
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         instance.scrapbook = Scrapbook.objects.get(id=self.cleaned_data['scrapbook_id'])
