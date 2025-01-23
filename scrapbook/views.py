@@ -14,6 +14,12 @@ import logging
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 
+def custom_permission_denied_view(request, exception):
+    return render(request, '403.html', status=403)
+
+def custom_csrf_failure_view(request, reason=""):
+    return render(request, '403_csrf.html', status=403)
+
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
@@ -94,7 +100,11 @@ class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
             'permission_denied': not sharedaccess and scrapbook.author != self.request.user and scrapbook.status != 2,
         })
         return context
-    
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         return handle_post_request(request, self.object)

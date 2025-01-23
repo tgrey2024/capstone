@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}403 Forbidden{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>403 Forbidden</h1>
+    <p>You do not have permission to view this scrapbook.</p>
+    <p>If you believe this is an error, please contact the scrapbook owner or try logging in with a different account.</p>
+    <a href="{% url 'home' %}" class="btn btn-info">Go to Homepage</a>
+</div>
+{% endblock %}

@@ -173,3 +173,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+CSRF_FAILURE_VIEW = 'scrapbook.views.custom_csrf_failure_view'

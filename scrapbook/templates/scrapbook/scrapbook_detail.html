@@ -29,12 +29,7 @@
                     {% if user.is_authenticated and scrapbook.author == user %}
                         <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                         <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
-                    {% endif %}
-                </div>
-                <!-- Allow user to see button to create a post if the user is authenticated -->
-                <div class="col-sm-12 col-md-6">
-                    {% if user.is_authenticated and scrapbook.author == user %}
-                    <a href="{% url 'scrapbook:create-post' slug=scrapbook.slug %}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Add a Post <i class="fa-regular fa-square-plus"></i></a>
+                        <a href="{% url 'create-post' scrapbook.slug %}" class="btn btn-success scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Create Post <i class="fa-regular fa-plus"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -44,6 +39,13 @@
         <!-- Post Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
+                {% if permission_denied %}
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        You do not have permission to view this scrapbook.
+                    </div>
+                </div>
+                {% else %}
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
                 <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
@@ -84,7 +86,6 @@
                                     {% if user.is_authenticated and post.author == user %}
                                         <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-lg-inline" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                                         <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-xl-inline" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
-                                        <a href="{% url 'share_content' %}?scrapbook_id={{ scrapbook.id }}" class="btn btn-info scrapbook-link mx-auto my-2" aria-label="Share Scrapbook">Share <i class="fa-solid fa-share-nodes"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -92,10 +93,11 @@
                     </div>
                 </div>
                 {% if forloop.counter|divisibleby:6 %}
-            </div>
-            <div class="row">
+                </div>
+                <div class="row">
                 {% endif %}
                 {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -113,5 +115,4 @@
     </nav>
     {% endif %}
 </div>
-
-{% endblock %}
+{% endblock content %}
