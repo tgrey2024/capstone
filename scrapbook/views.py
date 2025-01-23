@@ -14,11 +14,11 @@ import logging
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 
-def custom_permission_denied_view(request, exception):
-    return render(request, '403.html', status=403)
-
 def custom_csrf_failure_view(request, reason=""):
     return render(request, '403_csrf.html', status=403)
+
+def custom_permission_denied_view(request, exception):
+    return render(request, '403.html', status=403)
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
