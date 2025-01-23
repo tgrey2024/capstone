@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import logging
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseForbidden
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -55,16 +56,20 @@ class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
 class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
-    context_object_name = 'scrapbook'
     login_url = '/accounts/login/'
-    
-    def get_object(self):
-        scrapbook = super().get_object()
+
+    def get_object(self, queryset=None):
+        scrapbook = super().get_object(queryset)
         if scrapbook.status != 2 and scrapbook.author != self.request.user:
             if not SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists():
                 raise PermissionDenied("You do not have permission to view this scrapbook.")
         return scrapbook
-    
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return redirect('account_login')
+        return HttpResponseForbidden("You do not have permission to view this scrapbook.")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         scrapbook = self.get_object()
@@ -86,6 +91,7 @@ class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
             'is_paginated': page_obj.has_other_pages(),
             'page_obj': page_obj,
             'sharedaccess': sharedaccess,
+            'permission_denied': not sharedaccess and scrapbook.author != self.request.user and scrapbook.status != 2,
         })
         return context
     
