@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .forms import PostForm
-from .models import Scrapbook, Post
+from .forms import PostForm, ShareContentForm
+from .models import Scrapbook, Post, SharedAccess
 from django.contrib.auth.models import User
 from PIL import Image
 from PIL import ImageFile
@@ -126,3 +126,65 @@ class PostFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('image', form.errors)
         self.assertEqual(form.errors['image'], ['Image file too large. Size should not exceed 2.0 MB.'])
+
+class SharedAccessFormTest(TestCase):
+
+    def setUp(self):
+        self.user1 = User.objects.create_user(username='user1', password='testpass')
+        self.user2 = User.objects.create_user(username='user2', password='testpass')
+        self.scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user1)
+        self.post = Post.objects.create(title='Test Post', author=self.user1, scrapbook=self.scrapbook, status=1)
+
+    def test_shared_access_form_valid_data(self):
+        # Test the ShareContent form with valid data
+        self.assertEqual(self.post.sharedaccess_set.count(), 0)
+        form = ShareContentForm(data={
+            'user': self.user2.id,
+            'scrapbook_id': self.scrapbook.id,
+            'post_id': self.post.id,
+        }, shared_by=self.user1)
+        if not form.is_valid():
+            print(form.errors)  # Debug statement to print form errors
+        self.assertTrue(form.is_valid())
+        shared_access = form.save(commit=False)
+        shared_access.shared_by = self.user1
+        shared_access.save()
+        self.assertEqual(self.post.sharedaccess_set.count(), 1)
+
+    def test_shared_access_form_invalid_data(self):
+        # Test the SharedAccess form with invalid data
+        pass
+
+    def test_shared_access_form_missing_user(self):
+        # Test the SharedAccess form with missing user
+        self.assertEqual(self.post.sharedaccess_set.count(), 0)
+        form = ShareContentForm(data={
+            'scrapbook': self.scrapbook.id,
+            'post': self.post.id,
+        }, shared_by=self.user1)
+        self.assertFalse(form.is_valid())
+        self.assertIn('user', form.errors)
+        self.assertEqual(form.errors['user'], ['This field is required.'])
+
+    def test_shared_access_form_missing_scrapbook(self):
+        # Test the SharedAccess form with missing scrapbook
+        pass
+
+    def test_shared_access_form_missing_post(self):
+        # Test the SharedAccess form with missing post
+        self.assertEqual(self.post.sharedaccess_set.count(), 0)
+        form = ShareContentForm(data={
+            'user': self.user2.id,
+            'scrapbook_id': self.scrapbook.id,
+        }, shared_by=self.user1)
+        self.assertFalse(form.is_valid())
+        self.assertIn('post', form.errors)
+        self.assertEqual(form.errors['post'], ['This field is required.'])
+
+    def test_shared_access_form_duplicate_entry(self):
+        # Test the SharedAccess form with duplicate entry
+        pass
+
+    def test_shared_access_form_unique_constraint(self):
+        # Test the unique constraint of the SharedAccess form
+        pass
