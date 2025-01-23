@@ -110,11 +110,11 @@ class ShareContentForm(forms.ModelForm):
         fields = ['user', 'scrapbook_id', 'post_id']
 
     def __init__(self, *args, **kwargs):
-        shared_by = kwargs.pop('shared_by', None)
+        self.shared_by = kwargs.pop('shared_by', None)
         scrapbook = kwargs.pop('scrapbook', None)
         super().__init__(*args, **kwargs)
-        if shared_by:
-            self.fields['user'].queryset = User.objects.exclude(id=shared_by.id)
+        if self.shared_by:
+            self.fields['user'].queryset = User.objects.exclude(id=self.shared_by.id)
         if scrapbook:
             self.fields['scrapbook_id'].initial = scrapbook.id
         self.fields['post_id'].initial = None  # Hide post_id as all posts in the scrapbook are automatically shared
@@ -132,6 +132,7 @@ class ShareContentForm(forms.ModelForm):
         instance = super().save(commit=False)
         instance.scrapbook = Scrapbook.objects.get(id=self.cleaned_data['scrapbook_id'])
         instance.post = None  # Set post to None as all posts in the scrapbook are automatically shared
+        instance.shared_by = self.shared_by  # Set the shared_by field
         if commit:
             instance.save()
             # Create SharedAccess instances for each post in the scrapbook

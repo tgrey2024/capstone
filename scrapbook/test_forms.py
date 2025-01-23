@@ -148,7 +148,35 @@ class SharedAccessFormTest(TestCase):
         self.assertEqual(shared_access.user, self.user2)
         self.assertEqual(shared_access.scrapbook_id, self.scrapbook.id)
         self.assertEqual(shared_access.post_id, None)
-        
+        self.assertEqual(shared_access.shared_by, self.user1)
+
+    def test_shared_access_form_invalid_data(self):
+        # Test the SharedAccessForm with invalid data
+        form = ShareContentForm(data={})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 2)
+
+    def test_shared_access_form_missing_user(self):
+        # Test the SharedAccessForm with missing user
+        form = ShareContentForm(data={'scrapbook_id': self.scrapbook.id, 'post_id': None}, shared_by=self.user1, scrapbook=self.scrapbook)
+        self.assertFalse(form.is_valid())
+        self.assertIn('user', form.errors)
+        self.assertEqual(form.errors['user'], ['This field is required.'])
+
+    def test_shared_access_form_existing_shared_access(self):
+        # Test the SharedAccessForm with existing shared access
+        SharedAccess.objects.create(user=self.user2, scrapbook=self.scrapbook, shared_by=self.user1)
+        form = ShareContentForm(data={
+            'user': self.user2.id,
+            'scrapbook_id': self.scrapbook.id,
+            'post_id': None,
+        }, shared_by=self.user1, scrapbook=self.scrapbook)
+        self.assertFalse(form.is_valid())
+        self.assertIn('__all__', form.errors)
+        self.assertEqual(form.errors['__all__'], ['This scrapbook has already been shared with the selected user.'])
+
+
+
 
 
 
