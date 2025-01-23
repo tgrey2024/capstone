@@ -6,15 +6,15 @@
 <div class="container">
     <h1>Share Content</h1>
     <form method="post">
-        <p>Are you sure you want to share your scrapbook, "<strong>{{ object.title }}</strong>"?</p>
+        <p>You want to share the scrapbook, "<strong>{{ object.title }}</strong>". Who do you want to share it with?</p>
+        {% csrf_token %}
+        {{ form.as_p }}
         <p>The following posts will be shared:</p>
         <ul>
             {% for post in posts %}
                 <li>{{ post.title }}</li>
             {% endfor %}
         </ul>
-        {% csrf_token %}
-        {{ form.as_p }}
         <button type="submit" class="btn btn-info">Share</button>
     </form>
 </div>

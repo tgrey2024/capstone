@@ -1,10 +1,11 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
+from django.views import generic, View
 from .models import Scrapbook, Post, SharedAccess
 from .forms import PostForm, ScrapbookForm, ShareContentForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -258,19 +259,24 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 
-class PostDetailView(generic.DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'scrapbook/post_detail.html'
     login_url = '/accounts/login/'
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_slug = self.kwargs['post_slug']
         post = get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
         if post.status != 2 and post.author != self.request.user:
-            if not SharedAccess.objects.filter(user=self.request.user, post=post).exists():
+            if not SharedAccess.objects.filter(user=self.request.user, scrapbook=post.scrapbook, post=post).exists():
                 raise PermissionDenied("You do not have permission to view this post.")
         return post
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return redirect('account_login')
+        return HttpResponseForbidden("You do not have permission to view this post.")
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -287,33 +293,70 @@ def create_scrapbook(request):
         form = ScrapbookForm()
     return render(request, 'scrapbook/scrapbook_form.html', {'form': form})
 
-@login_required
-def share_content(request):
-    scrapbook_id = request.GET.get('scrapbook_id')
-    post_id = request.GET.get('post_id')
-    
-    if request.method == 'POST':
-        form = ShareContentForm(request.POST)
+@method_decorator(login_required, name='dispatch')
+class ShareContentView(View):
+    def get(self, request, *args, **kwargs):
+        scrapbook_id = request.GET.get('scrapbook_id')
+        scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
+        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        form = ShareContentForm(initial={'scrapbook_id': scrapbook.id}, shared_by=request.user, scrapbook=scrapbook)
+        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
+
+    def post(self, request, *args, **kwargs):
+        scrapbook_id = request.GET.get('scrapbook_id')
+        scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
+        form = ShareContentForm(request.POST, shared_by=request.user, scrapbook=scrapbook)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            try:
-                user = User.objects.get(username=username)
-                if scrapbook_id:
-                    scrapbook = Scrapbook.objects.get(id=scrapbook_id)
-                    # Create a SharedAccess entry for the scrapbook
-                    SharedAccess.objects.create(user=user, scrapbook=scrapbook, shared_by=request.user)
-                    # Share all posts within the scrapbook
-                    posts = Post.objects.filter(scrapbook=scrapbook)
-                    for post in posts:
-                        SharedAccess.objects.create(user=user, scrapbook=scrapbook, post=post, shared_by=request.user)
-                    messages.success(request, "Scrapbook and its posts shared successfully.")
-                else:
-                    messages.error(request, "Scrapbook does not exist.")
-            except User.DoesNotExist:
-                messages.error(request, "User does not exist.")
-            except (Scrapbook.DoesNotExist, Post.DoesNotExist):
-                messages.error(request, "Scrapbook does not exist.")
-        return redirect('home')
-    else:
-        form = ShareContentForm(initial={'scrapbook_id': scrapbook_id, 'post_id': post_id})
-    return render(request, 'scrapbook/share_content.html', {'form': form})
+            shared_access = form.save(commit=False)
+            shared_access.shared_by = request.user
+            shared_access.save()
+            messages.success(request, "Scrapbook and its posts shared successfully.")
+            return redirect('scrapbook_detail', slug=scrapbook.slug)
+        else:
+            messages.error(request, "Failed to share the scrapbook.")
+        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
+    
+class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Scrapbook
+    template_name = 'scrapbook/scrapbook_shareddetail.html'
+    login_url = '/accounts/login/'
+
+    def get_object(self, queryset=None):
+        scrapbook = super().get_object(queryset)
+        if scrapbook.status != 2 and scrapbook.author != self.request.user:
+            if not SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists():
+                raise PermissionDenied("You do not have permission to view this scrapbook.")
+        return scrapbook
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return redirect('account_login')
+        return HttpResponseForbidden("You do not have permission to view this scrapbook.")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        scrapbook = self.get_object()
+        posts = scrapbook.posts.exclude(status=0)  # Exclude draft posts
+        ordering = ["-created_on"]
+        post_form = PostForm()
+        
+        # Pagination
+        paginator = Paginator(posts, 6)  # Show 6 posts per page
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        
+        # Get shared access for the current user and scrapbook
+        sharedaccess = SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists()
+        shared_posts = SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).values_list('post', flat=True)
+        
+        context.update({
+            'posts': page_obj,
+            'post_form': post_form,
+            'is_paginated': page_obj.has_other_pages(),
+            'page_obj': page_obj,
+            'sharedaccess': sharedaccess,
+            'shared_posts': shared_posts,
+            'permission_denied': not sharedaccess and scrapbook.author != self.request.user and scrapbook.status != 2,
+        })
+        return context

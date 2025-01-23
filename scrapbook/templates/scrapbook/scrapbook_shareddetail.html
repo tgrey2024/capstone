@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Scrapbook Detail{% endblock %}
+
+{% block content %}
+<div class="container with-backbtn">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <!-- Back to Shared Scrapbook List -->
+            <a href="{% url 'shared_scrapbook_list' %}" class="btn btn-info" aria-label="Go back to Shared Scrapbook List"><i class="fa-solid fa-arrow-left"></i></a>
+            <br>
+            <div class="row">
+                <div class="mt-1 pt-3 col-sm-12 col-md-8">
+                    <!-- Scrapbook title -->
+                    <div class="col-sm-12 col-md-6">
+                        <h3 class="d-inline">{{ scrapbook.title }}</h3>
+                        <!-- Status icon conditionals -->
+                        {% if scrapbook.status == 0 %}
+                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                        {% elif scrapbook.status == 1 %}
+                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                        {% elif scrapbook.status == 2 %}
+                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                        {% endif %}
+                    </div>
+                    <!-- Scrapbook author | the scrapbook's created date goes after -->
+                    <div class="col-sm-12 col-md-6">
+                        <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Post Entries Column -->
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                {% if permission_denied %}
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        You do not have permission to view this scrapbook.
+                    </div>
+                </div>
+                {% else %}
+                {% for post in posts %}
+                <!-- add cards for each post in this scrapbook -->
+                <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
+                    <div class="card mb-4">
+                        <div class="text-center">
+                            <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
+                        </div>
+                        <div class="card-body px-3">
+                            <div>
+                            <!-- if user has shared access to the post, make the title a link -->
+                                {% if post.id in shared_posts %}
+                                <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" aria-label="Go to Post Detail page">
+                                {% endif %}                                    
+                                <h5 class="card-title d-inline {% if post.id in shared_posts %}linked-title{% endif %}">{{ post.title }}</h5>
+                                {% if post.id in shared_posts %}
+                                </a>
+                                {% endif %}                                    
+                                <!-- Status icon conditionals -->
+                                {% if post.status == 0 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                                {% elif post.status == 1 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                                {% elif post.status == 2 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                {% endif %}
+                                <!-- Last Updated -->
+                                <p class="card-subtitle date-time mb-2">Updated: {{ post.updated_on }}</p>
+                                <p class="card-text">{{ post.content|truncatechars:72|safe }}</p>
+                            </div>
+                            <div>
+                                <!-- Open Button -->
+                                <div class="text-center mt-4">
+                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link mx-auto mt-3 d-none d-sm-inline d-md-block d-lg-inline" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:6 %}
+                </div>
+                <div class="row">
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Go to previous page"> &laquo; PREV</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Go to next page"> NEXT &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock content %}
