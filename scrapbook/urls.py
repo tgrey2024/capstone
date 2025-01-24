@@ -2,7 +2,6 @@ from . import views
 from django.urls import path
 
 handler403 = 'scrapbook.views.custom_permission_denied_view'
-# handler404 = 'config.views.custom_page_not_found_view'
 
 urlpatterns = [
     path("", views.ScrapbookListView.as_view(), name="home"),

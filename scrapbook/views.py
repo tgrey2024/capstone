@@ -21,6 +21,9 @@ def custom_csrf_failure_view(request, reason=""):
 def custom_permission_denied_view(request, exception):
     return render(request, '403.html', status=403)
 
+def custom_page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
