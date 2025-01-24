@@ -108,19 +108,46 @@ As well as using the Project Board to track progress on our project, I also used
 
 ## Design
 ### Wireframes
+Based on the user stories, I used Balsamiq to design the wireframes for the main UI, starting with mobile first.
+
 <details>
   <summary>Mobile devices</summary>
-  ![mobile](https://github.com/user-attachments/assets/c668523a-b7b0-46ca-9401-1489da1ae9bb)
+    Here are the wireframes for mobile devices:
+    
+![mobile](https://github.com/user-attachments/assets/c668523a-b7b0-46ca-9401-1489da1ae9bb)
+
 </details>
 <details>
   <summary>iPad screens</summary>
-  ![ipads](https://github.com/user-attachments/assets/83e3f658-86aa-46b5-b37b-e7dc06da84bd)
+    Here are the wireframes for tablets and iPads:
+    
+![ipads](https://github.com/user-attachments/assets/83e3f658-86aa-46b5-b37b-e7dc06da84bd)
+
 </details>
 <details>
   <summary>Laptop and larger screens</summary>
-  ![laptops](https://github.com/user-attachments/assets/1f76da7f-b9d3-4ddb-8175-a4e849c5b015)
+    Here are the wireframes for larger screens and laptops:
+    
+![laptops](https://github.com/user-attachments/assets/1f76da7f-b9d3-4ddb-8175-a4e849c5b015)
+
 </details>
-  
+
+### User Flow
+
+To better understand how users would need to navigate through the webapp for different use cases, I mapped the different user journeys in a user flow diagram as shown below:
+<details>
+  <summary>User Flow Diagram</summary>
+
+An unregistered site user would be able to visit the Homepage and About page, but in order to use the system fully they would need to either Register on the Signup page or Login if they have already signed up. These are indicated by the pink arrows in the diagram.
+
+Once the user has logged in, the navbar offers more options. The blue arrows show how logged-in users can go to My Scrapbooks to access their own scrapboooks, or go to Shared Scrapbooks to see any scrapbooks that have been shared with them.
+
+The purple arrows show the user flows for the creation, updating and deleting of both Scrapbooks and the Posts within them. They also show how users can share access to their own scrapbooks with specific users.
+    
+![userflow](https://github.com/user-attachments/assets/304aee1f-f7c7-418b-9a85-0b2bca4cab89)
+
+</details>
+
 
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
@@ -172,8 +199,7 @@ add AI and Pexels imagery
 ### Responsive Design
 add amiresponsive screenshot
 
-### User Flow Diagram
-![userflow](https://github.com/user-attachments/assets/3160f3e7-d2a1-4cb3-8c15-6a4332774e83)
+
 
 <p align="right"><a href="#top">Back to top</a></p>
 
