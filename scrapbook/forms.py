@@ -1,7 +1,7 @@
 from django import forms
 from .models import Post, Scrapbook, SharedAccess
 from django.contrib.auth.models import User
-from cloudinary.forms import CloudinaryFileField
+# from cloudinary.forms import CloudinaryFileField
 from cloudinary import CloudinaryResource
 from PIL import Image
 
