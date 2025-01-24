@@ -1,4 +1,4 @@
-# AI Augmented FullStack Bootcamp - Individual Capstone Project <a id="top"/>
+# AI Augmented FullStack Bootcamp - Individual Capstone Project - Remineez Digital Scrapbooks <a id="top"/>
 ![logoWithTitle_small](https://github.com/user-attachments/assets/7346270b-a846-4ff9-bfc9-d2c90da22432)
 
 ## Overview
@@ -98,6 +98,8 @@ Here are all the user stories that have been prioritised (all must have and some
 | User Authentication                             | must have                 |   Done  |
 | Change Post and Scrapbook Status                | must have                 |   Done  |
 | Post and Scrapbook Access Control               | must have                 |   Done  |
+| Give Shared Access to Nominated Users           | should have               |   Done  |
+| View About Page                                 | should have               |   Done  |
 
 All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
 
@@ -332,6 +334,14 @@ Add details of CSS validation:
 ## Future Enhancements
 - [List potential improvements or additional features for future development.]
 - Consider enhancements to improve accessibility further, such as voice input capabilities or additional language support.
+- Manage Shared Access:
+  - in addition to creating shared access, users could also have finer control of shared access so they can:
+      - see who they have given access to
+      - update or remove the access so they can manage who has access to their creations and when
+      - manage permissions by family or friend groups
+- Incorporate links, videos and audio clips in their scrapbook posts, as multimedia content such as songs, soundbytes, music and contemporary video footage can all enrich the experience of reminiscencing and make the experience more immersive.
+- Audio input as a means of scrapbooking, whether as sound clips or through voice-to-text input, making it easier for users to enter content about their memories and emotions, thus encouraging users to express themselves through speech.
+
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Technologies Used
