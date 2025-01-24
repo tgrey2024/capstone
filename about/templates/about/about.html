@@ -1,10 +1,113 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}About{% endblock %}
 
 {% block content %}
-<div class="container move-up">
-    <h1>About Us</h1>
-    <p>Welcome to the About page. Here you can find information about our project.</p>
-</div>
+<!-- Hero section -->
+<section id="about-hero" class="hero bg-light text-center">
+    <div class="container ms-auto">
+        <div class="text-center"></div>
+            <h1>Let your Memories do the Talking</h1>
+            <p class="lead">create | share | connect</p>
+            <a href="{% url 'account_signup' %}" class="btn btn-info scrapbook-link" aria-label="Go to the Signup page">Sign Up <i class="fa-solid fa-user-plus"></i></a>
+        </div>
+    </div>
+</section>
+<!-- What is section -->
+<section id="what-is" class="what-is my-3 py-5">
+    <div class="container mt-3 py-5">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4">
+                <img src="{% static 'images/placeholder.webp' %}" class="card-img-top" alt="Collection of old childhood photos">                
+            </div>
+            <div class="col-sm-12 col-lg-8">
+                <h2>What is Reminiscence Therapy?</h2>
+                <p>Reminiscence Therapy is a form of therapy that uses prompts such as photographs, music, or familiar items to encourage individuals, particularly the elderly, to recall and share memories from their past. Remineez can support this process and help to improve mood, cognitive function and overall well-being by fostering a sense of identity and connection. This can be particularly valuable to patients with dementia or other cognitive challenges with inhibited speech.</p>
+                <p>Key benefits:<br>
+                    <ul>
+                        <li>Enhances mood and reduces depression</li>
+                        <li>Improves cognitive function and memory recall</li>
+                        <li>Strengthens personal identity and sense of self</li>
+                        <li>Encourages social interaction and reduces isolation</li>
+                        <li>Provides a focus to initiate meaningful conversation</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+</section>
+<!-- Benefits section -->
+<section id="benefits" class="benefits my-3 py-5">
+    <div class="container move-up">
+        <div class="row">
+            <div class="col-12 mt-3 left">
+            <div class="row">
+                <div class="col-md-4">
+                <!-- Row of 3 benefits in cards -->
+                <div class="card mb-4">
+                    <div class="text-center">
+                    <img src="{% static 'images/carousel1.png' %}" class="card-img-top" alt="A grandad sharing his scrapbook with his two grand-daughters">
+                    </div>
+                    <div class="card-body px-3">
+                        <div>
+                            <h5 class="card-title d-inline linked-title">Improve Memory and Speech</h5>
+                            <p class="card-text">Digital scrapbooks make powerful memory aids. Reminiscing can evoke positive emotions and spark neural connections for memory and language.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="text-center">
+                    <img src="{% static 'images/carousel2.png' %}" class="card-img-top" alt="A group of friends looking at a scrapbook together">
+                    </div>
+                    <div class="card-body px-3">
+                        <div>
+                            <h5 class="card-title d-inline linked-title">Share Precious Memories</h5>
+                            <p class="card-text">By curating meaningful content, users can share their memories with carers and loved ones, fostering more meaningful conversations.</p>
+                        </div>
+                        <!-- <div class="text-end mb-1">
+                            <a href="#" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">More <i class="fa-solid fa-book-open"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="text-center">
+                    <img src="{% static 'images/carousel3.png' %}" class="card-img-top" alt="A woman showing her scrapbook to her family">
+                    </div>
+                    <div class="card-body px-3">
+                        <div>
+                            <h5 class="card-title d-inline linked-title">User-Friendly and Intuitive</h5>
+                            <p class="card-text">The simple design encourages users to actively preserve and celebrate their memories, promoting a positive and fulfilling experience.</p>
+                        </div>
+                        <!-- <div class="text-end mb-1">
+                            <a href="#" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">More <i class="fa-solid fa-book-open"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div></div>
+    </div>
+</section>
+<!-- FAQ section -->
+<section>
+    <div class="container mt-3 py-5">
+        <div class="row">
+            <div class="col-sm-12 col-lg-8">
+                <h2>Frequently asked questions</h2>
+                <h6>How do I create a digital scrapbook?</h6>
+                <p>To create a digital scrapbook, you need to register and log in to your account. Once logged in, you can start uploading photos, songs, maps, and other media to create your personalized scrapbook. You can also add titles, descriptions, and tags to your posts.</p>
+                <h6>Can I share my scrapbook with others?</h6>
+                <p>Yes! You can share your digital scrapbook with family members and friends by adjusting the privacy settings of your posts. You can choose to make posts public, private, or visible only to specific registered users.</p>
+                <h6>Is the platform secure?</h6>
+                <p>We take your privacy and security seriously. Our platform uses secure authentication methods. Your data is stored securely and only accessible to you and those you choose to share it with.</p>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <img src="{% static 'images/about.webp' %}" class="card-img-top" alt="A family looking at old family photos">                
+            </div>
+        </div>
+</section>
 {% endblock %}

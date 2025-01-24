@@ -81,7 +81,6 @@ h1, h2, h3, h4, h5, h6, .logo {
 
 /* Hero section */
 .hero {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 183, 183, 0.5)), url('/static/images/placeholder.jpg');
     background-size: cover;
     background-position: left;
     background-attachment: fixed;
@@ -89,11 +88,23 @@ h1, h2, h3, h4, h5, h6, .logo {
     color: #56351e;
     font-size: 1.8rem;
     text-align: right;
-    padding: 4rem 0;
+    padding: 2rem 0;
+}
+
+#index-hero {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 183, 183, 0.5)), url('/static/images/placeholder.webp');
+}
+
+#about-hero {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 183, 183, 0.5)), url('/static/images/about.webp');
 }
 
 .hero h1 {
     color: #174f11;
+}
+
+.hero p {
+    margin-top: -1rem;
 }
 
 /* Testimonials */
@@ -126,6 +137,19 @@ h1, h2, h3, h4, h5, h6, .logo {
     font-size: 1rem;
     color: #ffffff;
     margin: 1.2rem;
+}
+
+/* Benefits */
+.benefits {
+    background-color: #df6305;
+    padding: 2rem 0;
+    margin-top: -4rem;
+}
+
+/* What is */
+.what-is ul{
+    list-style-type: circle;
+    padding-left: 5px;
 }
 
 /* Scrapbook and Post content */
