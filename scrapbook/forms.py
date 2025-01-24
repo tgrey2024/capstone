@@ -1,27 +1,32 @@
 from django import forms
 from .models import Post, Scrapbook, SharedAccess
 from django.contrib.auth.models import User
-# from cloudinary.forms import CloudinaryFileField
+from cloudinary.forms import CloudinaryFileField
 from cloudinary import CloudinaryResource
 from PIL import Image
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(
+        label="Post Title",
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control'}), required=True,
         error_messages={'max_length': "The title cannot be more than 100 characters."}
     )
     image = forms.FileField(
-        label="Post Image*",
+        label="Post Image",
         widget=forms.FileInput(attrs={'class': 'form-control'}),
+        required=True,
+    )
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}),
+        label="Post Content",
         required=False,
     )
-    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
         model = Post
         fields = ('scrapbook', 'title', 'content', 'status', 'image')
         widgets = {
+            'scrapbook': forms.HiddenInput(),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
@@ -73,9 +78,9 @@ class ScrapbookForm(forms.ModelForm):
         error_messages={'max_length': "The title cannot be more than 100 characters."}
     )
     image = forms.FileField(
-        label="Scrapbook Cover Image*",
+        label="Scrapbook Cover Image",
         widget=forms.FileInput(attrs={'class': 'form-control'}),
-        required=False,
+        required=True,
     )
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 

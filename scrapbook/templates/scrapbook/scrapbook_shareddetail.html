@@ -26,7 +26,8 @@
                     </div>
                     <!-- Scrapbook author | the scrapbook's created date goes after -->
                     <div class="col-sm-12 col-md-6">
-                        <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+                        <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | </p>
+                        <p class="scrapbook-subtitle d-inline">created on: {{ scrapbook.created_on }}</p>
                     </div>
                 </div>
             </div>
@@ -45,7 +46,7 @@
                 {% else %}
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
-                <div id="post{{ post.id }}" class="col-12 col-md-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
+                <div id="post{{ post.id }}" class="col-md-6 col-lg-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
                         <div class="text-center">
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
@@ -74,8 +75,8 @@
                             </div>
                             <div>
                                 <!-- Open Button -->
-                                <div class="text-center mt-4">
-                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link mx-auto mt-3 d-none d-sm-inline d-md-block d-lg-inline" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
+                                <div class="d-grid gap-2 d-md-block text-center mb-1">
+                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link " aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
                                 </div>
                             </div>
                         </div>

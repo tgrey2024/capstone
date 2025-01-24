@@ -203,6 +203,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['action'] = 'create'
+        context['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
         return context
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):

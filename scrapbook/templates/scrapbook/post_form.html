@@ -4,25 +4,35 @@
 
 {% block content %}
 <div class="container move-up">
-    <h3>
-        {% if action == 'create' %}
-            Create Post Content
-        {% else %}
-            Edit Post Content
-        {% endif %} <i class="fa-regular fa-pen-to-square"></i>
-    </h3>
-    <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <!-- Render the form fields with crispy -->
-    {{ form|crispy }}
-    <!-- Current image preview -->
-    {% if action == 'edit' and form.instance.image %}
-    <div class="mb-3 current-image">
-        <img src="{{ form.instance.image.url }}" alt="Thumbnail preview of Post Image" style="max-width: 200px;">
-        <p>{{ form.instance.image.name }}</p>
+    <div class="row">
+        <div class="col-12 col-lg-8 mx-auto">
+            <h3>
+                {% if action == 'create' %}
+                    Create Post Content
+                {% else %}
+                    Edit Post Content
+                {% endif %} <i class="fa-regular fa-pen-to-square"></i>
+            </h3>
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Feedback to user on scrapbook to be changed -->
+            <p>You want to {% if action == 'create' %}add{% else %}edit{% endif %} a post in the scrapbook, <strong>{{ scrapbook.title }}</strong>.</p>
+            <!-- Render the form fields with crispy -->
+            {{ form|crispy }}
+            <!-- Current image preview -->
+            {% if action == 'edit' and form.instance.image %}
+            <div class="mb-3 current-image">
+                <img src="{{ form.instance.image.url }}" alt="Thumbnail preview of Post Image" style="max-width: 200px;">
+                <p>{{ form.instance.image.name }}</p>
+            </div>
+            {% endif %}
+            <!-- Submit button -->
+            <div class="col-sm-12 col-md-6 col-lg-4 text-start mb-1 pb-4">
+                <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}" aria-label="Update Post Button">
+                <a class="btn btn-secondary" href="javascript:history.back()" aria-label="Cancel {% if action == 'create' %}Create{% else %}Edit{% endif %} and go back a page">Cancel</a>
+            </div>
+            </form>
+        </div>
     </div>
-    {% endif %}
-    <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}" aria-label="Update Post Button">
-</form>
 </div>
 {% endblock content %}

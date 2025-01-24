@@ -5,14 +5,20 @@
     
 {% block content %}
 <div class="container move-up">
-    <h3>
-        Confirm Delete <i class="fa-regular fa-trash-can"></i>
-    </h3>
-    <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "<strong>{{ object }}</strong>"?</p>
-        {{ form }}
-        <input class="btn btn-info" type="submit" value="Confirm" aria-label="Confirm the Delete">
-        <a class="btn btn-secondary" href="javascript:history.back()" aria-label="Cancel Delete and go back a page">Cancel</a>
-    </form>
+    <div class="row">
+        <div class="col-12 col-lg-8 mx-auto">
+            <h3>
+                Confirm Delete <i class="fa-regular fa-trash-can"></i>
+            </h3>
+            <form method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "<strong>{{ object }}</strong>"?</p>
+                {{ form }}
+                <div class="col-sm-12 col-md-6 col-lg-4 text-start mb-1 pb-4">
+                    <input class="btn btn-info" type="submit" value="Confirm" aria-label="Confirm the Delete">
+                    <a class="btn btn-secondary" href="javascript:history.back()" aria-label="Cancel Delete and go back a page">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}

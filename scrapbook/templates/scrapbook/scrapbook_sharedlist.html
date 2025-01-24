@@ -9,14 +9,14 @@
     <div class="container move-up">
         <div class="row">
             <div class="col-12">
-                <h1>Shared Scrapbooks</h1>
+                <h3>Shared Scrapbooks</h3>
                 <p>Here are all draft, private and public scrapbooks by others shared with me.</p>
             </div>
         </div>
         <div class="row">
             <!-- Shared Scrapbook Entries Column -->
             {% for scrapbook in shared_scrapbooks %}
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <!-- Bootstrap 5 card for each shared scrapbook -->
                 <div class="card mb-4">
                     <div class="text-center">
@@ -39,7 +39,7 @@
                         <!-- Last Updated -->
                         <p class="card-subtitle date-time mb-2">Updated: {{ scrapbook.updated_on }}</p>
                         <!-- Open Button -->
-                        <div class="text-end mb-1">
+                        <div class="d-grid gap-2 d-md-block text-center mb-1">
                             <a href="{% url 'shared_scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>
                         </div>
                     </div>

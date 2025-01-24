@@ -8,28 +8,31 @@
     <div class="row">
         <div class="col-12 mt-3">
             <!-- Back to Scrapbook List -->
-            <a href="{% url 'home' %}" class="btn btn-info" aria-label="Go back to Home page"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="javascript:history.back()" class="btn btn-info" aria-label="Go back to previous page"><i class="fa-solid fa-arrow-left"></i></a>
             <br>
             <div class="row">
-                <div class="mt-1 pt-3 col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-10 col-lg-8 mt-1 pt-3 ">
                     <!-- Scrapbook title -->
                     <div class="col-sm-12 col-md-6">
                         <h3>{{ scrapbook.title }}</h3>
                     </div>
                     <!-- Scrapbook author | the scrapbook's created date goes after -->
                     <div class="col-sm-12 col-md-6">
-                        <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | {{ scrapbook.created_on }}</p>
+                        <p class="scrapbook-subtitle d-inline">{{ scrapbook.author }} | </p>
+                        <p class="scrapbook-subtitle d-inline">created on: {{ scrapbook.created_on }}</p>
                     </div>
                     <!-- Filter to mark content as safe for rendering as HTML -->
-                    <div class="col-sm-12">
+                    <div class="d-grid gap-2 d-md-block mb-1">
                         <p>{{ scrapbook.content | safe }}</p>
+                        {% if user.is_authenticated and scrapbook.author == user %}
+                        <a href="{% url 'create-post' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Create Post page">Add a new Post <i class="fa-regular fa-plus"></i></a>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 pb-4">
+                <div class="col-sm-12 col-md-2 col-lg-4 text-center mb-1 pb-4">
                     {% if user.is_authenticated and scrapbook.author == user %}
                         <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                         <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link mx-auto my-2" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
-                        <a href="{% url 'create-post' scrapbook.slug %}" class="btn btn-success scrapbook-link mx-auto my-2" aria-label="Go to Create Post page">Create Post <i class="fa-regular fa-plus"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -49,7 +52,7 @@
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
                 <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
-                <div id="post{{ post.id }}" class="col-12 col-md-4 {% if not post.status == 2 and not post.author == user %}d-none{% endif %}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
+                <div id="post{{ post.id }}" class="col-md-6 col-lg-4 {% if not post.status == 2 and not post.author == user %}d-none{% endif %}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
                     <div class="card mb-4">
                         <div class="text-center">
                             <img class="card-img-top {% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
@@ -80,12 +83,12 @@
                             </div>
                             <div>
                                 <!-- Open, Edit and Delete Buttons -->
-                                <div class="text-center mt-4">
-                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link mx-auto mt-3 d-none d-sm-inline d-md-block d-lg-inline" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
+                                <div class="d-grid gap-2 d-md-block text-center mb-1">
+                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
                                     <!-- if logged in user is the post author, show edit and delete buttons -->
                                     {% if user.is_authenticated and post.author == user %}
-                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-lg-inline" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link mx-auto mt-3 d-sm-inline d-md-block d-xl-inline" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
