@@ -108,11 +108,19 @@ As well as using the Project Board to track progress on our project, I also used
 
 ## Design
 ### Wireframes
-  - [Attach or link to accessible wireframes used in the design process, ensuring high colour contrast and alt text for visual elements.]
 <details>
-  <summary>More wireframes</summary>
-  <b>Add other wireframes</b>
+  <summary>Mobile devices</summary>
+  ![image](https://github.com/user-attachments/assets/f1bf887f-9341-484e-a081-3a3110fe5d1f)
 </details>
+<details>
+  <summary>iPad screens</summary>
+  ![image](https://github.com/user-attachments/assets/2e1e57fa-21a0-4c16-a59e-8fc22e9f068a)
+</details>
+<details>
+  <summary>Laptop and larger screens</summary>
+  ![image](https://github.com/user-attachments/assets/0f03b3f8-59ec-4ef2-ad48-67622544ea11)
+</details>
+  
 
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
@@ -164,7 +172,11 @@ add AI and Pexels imagery
 ### Responsive Design
 add amiresponsive screenshot
 
+### User Flow Diagram
+![userflow](https://github.com/user-attachments/assets/3160f3e7-d2a1-4cb3-8c15-6a4332774e83)
+
 <p align="right"><a href="#top">Back to top</a></p>
+
 ## Key Features
 ### Authentication
 Parts of the site are only accessible when users are registered and logged in:
