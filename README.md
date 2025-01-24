@@ -110,15 +110,15 @@ As well as using the Project Board to track progress on our project, I also used
 ### Wireframes
 <details>
   <summary>Mobile devices</summary>
-  ![image](https://github.com/user-attachments/assets/f1bf887f-9341-484e-a081-3a3110fe5d1f)
+  ![mobile](https://github.com/user-attachments/assets/c668523a-b7b0-46ca-9401-1489da1ae9bb)
 </details>
 <details>
   <summary>iPad screens</summary>
-  ![image](https://github.com/user-attachments/assets/2e1e57fa-21a0-4c16-a59e-8fc22e9f068a)
+  ![ipads](https://github.com/user-attachments/assets/83e3f658-86aa-46b5-b37b-e7dc06da84bd)
 </details>
 <details>
   <summary>Laptop and larger screens</summary>
-  ![image](https://github.com/user-attachments/assets/0f03b3f8-59ec-4ef2-ad48-67622544ea11)
+  ![laptops](https://github.com/user-attachments/assets/1f76da7f-b9d3-4ddb-8175-a4e849c5b015)
 </details>
   
 
