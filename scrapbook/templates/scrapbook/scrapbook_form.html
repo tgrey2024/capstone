@@ -13,14 +13,18 @@
     </h3>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        <!-- Render the form fields with crispy -->
         {{ form|crispy }}
+
+        <!-- Current image preview -->
         {% if action == 'edit' and form.instance.image %}
         <div class="mb-3 current-image">
-            <label>Current Scrapbook Cover Image:</label><br>
-            <img src="{{ form.instance.image.url }}" alt="Current Scrapbook Cover Image" style="max-width: 200px;">
-            <p>{{ form.instance.image.name }}</p>
+            <img src="{{ form.instance.image.url }}" alt="Thumbnail preview of Scrapbook Cover Image" style="max-width: 200px; margin-top: 10px; margin-bottom: 10px;">
+            <p><em>{{ form.instance.image.public_id }}.{{ form.instance.image.format }}</em></p>
         </div>
         {% endif %}
+        
+        <!-- Submit button -->
         <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}" aria-label="Update Scrapbook button">
     </form>
 </div>

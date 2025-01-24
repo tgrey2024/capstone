@@ -11,7 +11,10 @@ class PostForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}), required=True,
         error_messages={'max_length': "The title cannot be more than 100 characters."}
     )
-    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
+    image = forms.FileField(
+        label="Post Image*",
+        widget=forms.FileInput(attrs={'class': 'form-control'})
+    )
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
@@ -67,6 +70,11 @@ class ScrapbookForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         error_messages={'max_length': "The title cannot be more than 100 characters."}
     )
+    image = forms.FileField(
+        label="Scrapbook Cover Image*",
+        widget=forms.FileInput(attrs={'class': 'form-control'})
+    )
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
         model = Scrapbook
@@ -76,7 +84,7 @@ class ScrapbookForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),            
+            'image': forms.FileInput(attrs={'class': 'form-control'}),            
         }
 
     def clean_image(self):
@@ -95,10 +103,6 @@ class ScrapbookForm(forms.ModelForm):
             except Exception as e:
                 raise forms.ValidationError("Upload a valid image. The file you uploaded was either not an image or a corrupted image.")
         return image
-
-from django import forms
-from .models import SharedAccess, Scrapbook, Post
-from django.contrib.auth.models import User
 
 class ShareContentForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.none(), widget=forms.Select(attrs={'class': 'form-control'}))

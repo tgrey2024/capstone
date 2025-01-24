@@ -13,11 +13,12 @@
     </h3>
     <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <!-- Render the form fields with crispy -->
     {{ form|crispy }}
+    <!-- Current image preview -->
     {% if action == 'edit' and form.instance.image %}
     <div class="mb-3 current-image">
-        <label>Current Image:</label><br>
-        <img src="{{ form.instance.image.url }}" alt="Current Image" style="max-width: 200px;">
+        <img src="{{ form.instance.image.url }}" alt="Thumbnail preview of Post Image" style="max-width: 200px;">
         <p>{{ form.instance.image.name }}</p>
     </div>
     {% endif %}
