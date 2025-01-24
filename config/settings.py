@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-tgrey2024-capstone-vwz9ad2eczu.ws.codeinstitute-ide.net',
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'scrapbook',
+    'about',
 ]
 
 SITE_ID = 1
