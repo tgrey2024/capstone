@@ -13,7 +13,8 @@ class PostForm(forms.ModelForm):
     )
     image = forms.FileField(
         label="Post Image*",
-        widget=forms.FileInput(attrs={'class': 'form-control'})
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+        required=False,
     )
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
@@ -68,11 +69,13 @@ class ScrapbookForm(forms.ModelForm):
     title = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=True,
         error_messages={'max_length': "The title cannot be more than 100 characters."}
     )
     image = forms.FileField(
         label="Scrapbook Cover Image*",
-        widget=forms.FileInput(attrs={'class': 'form-control'})
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+        required=False,
     )
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
