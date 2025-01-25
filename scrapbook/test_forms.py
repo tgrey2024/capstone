@@ -44,7 +44,7 @@ class PostFormTest(TestCase):
         # Test the PostForm with invalid data
         form = PostForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 3)
+        self.assertEqual(len(form.errors), 4)
 
     def test_post_form_missing_title(self):
         # Test the PostForm with missing title
@@ -55,12 +55,14 @@ class PostFormTest(TestCase):
 
     def test_post_form_max_length_title(self):
         # Edge Test: Test the PostForm with maximum length title
+        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        image = SimpleUploadedFile(name='test_image.jpg', content=image_content, content_type='image/jpeg')
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
             'title': 'a' * 100,
             'content': 'Test Post Content',
             'status': 1,
-        })
+        }, files={'image': image})
         self.assertTrue(form.is_valid())
 
     def test_post_form_exceed_length_title(self):
@@ -78,12 +80,14 @@ class PostFormTest(TestCase):
 
     def test_post_form_special_characters(self):
         # Edge Test: Test the PostForm with special characters in title and content
+        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        image = SimpleUploadedFile(name='test_image.jpg', content=image_content, content_type='image/jpeg')
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
             'title': 'Test Post! @#%^&*()_+{}:"<>?',
             'content': 'Test Post Content! @#%^&*()_+{}:"<>?',
             'status': 1,
-        })
+        }, files={'image': image})
         self.assertTrue(form.is_valid())
         post = form.save(commit=False)
         post.author = self.user

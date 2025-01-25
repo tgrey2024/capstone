@@ -175,13 +175,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
+        kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['scrapbook_slug'])
         return kwargs
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.scrapbook = get_object_or_404(
-            Scrapbook, slug=self.kwargs['slug'])
+            Scrapbook, slug=self.kwargs['scrapbook_slug'])
         messages.success(self.request, "Post created successfully.")
         return super().form_valid(form)
 
@@ -192,7 +192,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['action'] = 'create'
-        context['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
+        context['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['scrapbook_slug'])
         return context
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -201,33 +201,26 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'scrapbook/post_form.html'
     login_url = '/accounts/login/'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['slug'])
-        return kwargs
-
-    def get_object(self):
-        scrapbook_slug = self.kwargs['slug']
+    def get_object(self, queryset=None):
+        scrapbook_slug = self.kwargs['scrapbook_slug']
         post_id = self.kwargs['post_id']
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        form.instance.author = self.request.user
+        form.instance.scrapbook = get_object_or_404(
+            Scrapbook, slug=self.kwargs['scrapbook_slug'])
         messages.success(self.request, "Post updated successfully.")
-        return response
-    
-    def form_invalid(self, form):
-        print("Form is invalid")
-        print(form.errors)
-        return super().form_invalid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail',
                             kwargs={'slug': self.object.scrapbook.slug})
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['action'] = 'edit'
+        context['scrapbook'] = get_object_or_404(Scrapbook, slug=self.kwargs['scrapbook_slug'])
         return context
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
