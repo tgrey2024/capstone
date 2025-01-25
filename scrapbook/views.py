@@ -63,15 +63,14 @@ class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
         return context
 
     
-class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
+class ScrapbookDetailView(generic.DetailView):
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
-    login_url = '/accounts/login/'
 
     def get_object(self, queryset=None):
         scrapbook = super().get_object(queryset)
         if scrapbook.status != 2 and scrapbook.author != self.request.user:
-            if not SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists():
+            if not self.request.user.is_authenticated or not SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists():
                 raise PermissionDenied("You do not have permission to view this scrapbook.")
         return scrapbook
 
@@ -85,23 +84,10 @@ class ScrapbookDetailView(LoginRequiredMixin, generic.DetailView):
         scrapbook = self.get_object()
         posts = scrapbook.posts.all()
         ordering = ["-created_on"]
-        post_form = PostForm()
-        
-        # Pagination
-        paginator = Paginator(posts, 6)  # Show 6 posts per page
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        
-        # Get shared access for the current user and scrapbook
-        sharedaccess = SharedAccess.objects.filter(user=self.request.user, scrapbook=scrapbook).exists()
-        
         context.update({
-            'posts': page_obj,
-            'post_form': post_form,
-            'is_paginated': page_obj.has_other_pages(),
-            'page_obj': page_obj,
-            'sharedaccess': sharedaccess,
-            'permission_denied': not sharedaccess and scrapbook.author != self.request.user and scrapbook.status != 2,
+            'scrapbook': scrapbook,
+            'posts': posts,
+            'ordering': ordering,
         })
         return context
 
@@ -250,7 +236,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/accounts/login/'
 
     def get_object(self):
-        scrapbook_slug = self.kwargs['slug']
+        scrapbook_slug = self.kwargs['scrapbook_slug']
         post_id = self.kwargs['post_id']
         return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
 
@@ -263,17 +249,16 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(generic.DetailView):
     model = Post
     template_name = 'scrapbook/post_detail.html'
-    login_url = '/accounts/login/'
 
     def get_object(self, queryset=None):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_slug = self.kwargs['post_slug']
         post = get_object_or_404(Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
         if post.status != 2 and post.author != self.request.user:
-            if not SharedAccess.objects.filter(user=self.request.user, scrapbook=post.scrapbook, post=post).exists():
+            if not self.request.user.is_authenticated or not SharedAccess.objects.filter(user=self.request.user, scrapbook=post.scrapbook, post=post).exists():
                 raise PermissionDenied("You do not have permission to view this post.")
         return post
 
