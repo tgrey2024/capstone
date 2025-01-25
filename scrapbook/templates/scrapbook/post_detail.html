@@ -21,11 +21,11 @@
                 <!-- Status icon conditionals -->
                 {% if user.is_authenticated and post.author == user %}
                     {% if post.status == 0 %}
-                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-pen"></i></div>
                     {% elif post.status == 1 %}
-                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-lock"></i></div>
                     {% elif post.status == 2 %}
-                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-globe"></i></div>
                     {% endif %}
                 {% endif %}
                 <!-- Post author | the post's last updated date -->
