@@ -35,7 +35,7 @@
                         <!-- don't show a scrapbook if its status is not Public -->
                         <div class="col-md-6 col-lg-4 {% if not scrapbook.status == 2 %}d-none{% endif %}">
                             <!-- Bootstrap 5 card for each scrapbook -->
-                            <div class="card mb-4">
+                            <div class="card fixed-card mb-4">
                                 <div class="text-center">
                                     <img src="{{ scrapbook.image.url}}" class="card-img-top" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
                                 </div>

@@ -163,6 +163,14 @@ h1, h2, h3, h4, h5, h6, .logo {
     transition: .5s;
 }
 
+/* Card Collapse icon rotate */
+.card-header .fa-chevron-down {
+    transition: .3s transform ease-in-out;
+}
+.card-header .collapsed .fa-chevron-down {
+    transform: rotate(90deg);
+}
+
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -189,7 +197,7 @@ h1, h2, h3, h4, h5, h6, .logo {
     color: #a15317;
 }
 
-.card {
+.fixed-card {
     min-height: 30rem;
 }
 
@@ -302,7 +310,7 @@ h1, h2, h3, h4, h5, h6, .logo {
         min-height: 22rem;
     }
 
-    .card {
+    .fixed-card {
         min-height: 31rem;
     }
 
@@ -317,14 +325,14 @@ h1, h2, h3, h4, h5, h6, .logo {
         width: 750px;
     }
 
-    .card {
+    .fixed-card {
         min-height: 30rem;
     }
 }
 
 /* Media query: larger screens (1400px and up) */
 @media screen and (min-width: 1400px) {
-    .card {
+    .fixed-card {
         min-height: 33rem;
     }
 }

@@ -47,7 +47,7 @@
                 {% for post in posts %}
                 <!-- add cards for each post in this scrapbook -->
                 <div id="post{{ post.id }}" class="col-md-6 col-lg-4" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
-                    <div class="card mb-4">
+                    <div class="card fixed-card mb-4">
                         <div class="text-center">
                             <img class="card-img-top" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>

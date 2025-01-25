@@ -18,7 +18,7 @@
             {% for scrapbook in shared_scrapbooks %}
             <div class="col-md-6 col-lg-4">
                 <!-- Bootstrap 5 card for each shared scrapbook -->
-                <div class="card mb-4">
+                <div class="card fixed-card mb-4">
                     <div class="text-center">
                         <img src="{{ scrapbook.image.url}}" class="card-img-top  {% if user.is_authenticated and scrapbook.status == 0 %}opacity-50{% endif %}" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
                     </div>

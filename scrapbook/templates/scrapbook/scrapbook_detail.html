@@ -53,13 +53,13 @@
                 <!-- add cards for each post in this scrapbook -->
                 <!-- don't show a post if its status is not Public and its author is not the logged-in user -->
                 <div id="post{{ post.id }}" class="col-md-6 col-lg-4 {% if not post.status == 2 and not post.author == user %}d-none{% endif %}" data-title="{{ post.title }}" data-content="{{ post.content }}" data-image-url="{% if post.images.all %}{{ post.images.all.0.featured_image.url }}{% endif %}">
-                    <div class="card mb-4">
+                    <div class="card shadow-sm mb-4">
                         <div class="text-center">
                             <img class="card-img-top {% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
-                        <div class="card-body px-3">
-                            <div class="{% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}">
-                            <!-- if logged in user is the post author, make the title a link -->
+                        <div class="card-header collapsible cursor-pointer collapsed" data-bs-toggle="collapse" data-bs-target="#card-collapsible-{{ post.id }}" aria-controls="collapse-collapsed" aria-expanded="false" id="heading-collapsed">
+                            <h5 class="card-title d-inline">
+                                <!-- if logged in user is the post author, make the title a link -->
                                 {% if user.is_authenticated and post.author == user %}
                                 <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" aria-label="Go to Post Detail page">
                                 {% endif %}                                    
@@ -77,19 +77,26 @@
                                         <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
                                     {% endif %}
                                 {% endif %}
-                                <!-- Last Updated -->
-                                <p class="card-subtitle date-time mb-2">Updated: {{ post.updated_on }}</p>
-                                <p class="card-text">{{ post.content|truncatechars:72|safe }}</p>
-                            </div>
-                            <div>
-                                <!-- Open, Edit and Delete Buttons -->
-                                <div class="d-grid gap-2 d-md-block text-center mb-1">
-                                    <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
-                                    <!-- if logged in user is the post author, show edit and delete buttons -->
-                                    {% if user.is_authenticated and post.author == user %}
-                                        <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                        <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
-                                    {% endif %}
+                            </h5>
+                            <div class="card-toolbar d-inline"><i class="fa fa-chevron-down pull-right"></i></div>
+                        </div>
+                        <div id="card-collapsible-{{ post.id }}" class="collapse" aria-labelledby="heading-collapsed">
+                            <div class="card-body px-3">
+                                <div class="{% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}">
+                                    <!-- Last Updated -->
+                                    <p class="card-subtitle date-time mb-2">Updated: {{ post.updated_on }}</p>
+                                    <p class="card-text">{{ post.content|truncatechars:72|safe }}</p>
+                                </div>
+                                <div>
+                                    <!-- Open, Edit and Delete Buttons -->
+                                    <div class="d-grid gap-2 d-md-block text-center mb-1">
+                                        <a href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Post Detail page">Open <i class="fa-regular fa-image"></i></a>
+                                        <!-- if logged in user is the post author, show edit and delete buttons -->
+                                        {% if user.is_authenticated and post.author == user %}
+                                            <a href="{% url 'edit-post' scrapbook.slug post.id %}" class="btn btn-info btn-edit scrapbook-link" aria-label="Go to Edit Post page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                                            <a href="{% url 'delete-post' scrapbook.slug post.id %}" class="btn btn-danger scrapbook-link" aria-label="Go to Delete Post page">Delete <i class="fa-regular fa-trash-can"></i></a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
