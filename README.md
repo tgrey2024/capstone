@@ -10,6 +10,7 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 - [User Experience Design Process](#user-experience-design-process)
 - [Project Brief](#project-brief)
 - [Users](#users)
+    - [Target User](#target-users)
     - [User Stories](#user-stories)
     - [Wireframes](#wireframes)
 - [Design](#design)
@@ -63,10 +64,21 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 <hr/>
 
 ## Project Brief
+### Problem Statement
+
+Someone with dementia or similar cognitive impairments may experience significant problems with memory and language, making it difficult to recall names, words and faces, which affects their daily tasks, their wellbeing and their self-esteem. Carers and loved ones find it difficult to understand and connect with the patient, which can impact on their well-being. Visual aids are often used in occupational therapy, but visual aids with personal meaning could encourage more neural connections to be made, thus can further enhance cognitive and speech development.
+
+### Purpose
+
+Research has shown that memory aids such as individualised photo memory books can improve communications between seniors with dementia and their family, and reminiscence therapy can stimulate memory function, enhance mood, increase social interaction and combat loneliness, low self-esteem and depression.
+
 <p align="right"><a href="#top">Back to top</a></p>
 <hr/>
 
 ## Users
+
+### Target Users
+
 <strong>Seniors with Memory and/or Language Problems:</strong> These are the primary users for whom the app is designed. These seniors may be dealing with conditions such as dementia or other cognitive impairments. The app aims to enhance their quality of life by providing a personalised digital space where they can compile cherished photos, favourite songs, newspaper articles, videos and other memory aids. This resource serves as a valuable tool to help them recall significant events, personal stories, maintain cognitive function and engage more actively with their surroundings. Colour blindness, in particular colour vision deterioration e.g. tritanopia ("blue-yellow" colour blindness) is also common in those aged 70 and over.
 
 <strong>Carers and Loved Ones:</strong> These users include family members, friends and caregivers who interact with the seniors on a daily basis. They may be helping the seniors to use the app to create, update and manage the individual memory books/blogs for their loved ones, or they may be the ones creating the blogs on behalf of the seniors. By incorporating familiar and beloved content, they can improve the quality and quantity of their conversations with the seniors. This process not only helps to strengthen emotional bonds but also provides carers with insights into the senior's life story, enabling more empathetic and tailored care.
@@ -199,9 +211,10 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 add AI and Pexels imagery
 
 ### Responsive Design
-add amiresponsive screenshot
 
+Since most users are expected to access the site on mobile devices, the UI has been designed with a mobile first approach. The site is responsive to different screen sizes as it was built using components from the Bootstrap Library.
 
+![image](https://github.com/user-attachments/assets/9395d64b-900e-418d-8304-81a7162ebb06)
 
 <p align="right"><a href="#top">Back to top</a></p>
 
