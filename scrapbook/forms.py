@@ -84,6 +84,12 @@ class ScrapbookForm(forms.ModelForm):
     )
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
+    description = forms.CharField(
+        label="Note to Self (Only you can see this)",
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        required=False,
+    )
+
     class Meta:
         model = Scrapbook
         fields = ('title', 'content', 'description', 'status', 'image')

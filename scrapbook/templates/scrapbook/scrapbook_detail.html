@@ -24,7 +24,8 @@
                     <!-- Filter to mark content as safe for rendering as HTML -->
                     <div class="d-grid gap-2 d-md-block mb-1">
                         <p>{{ scrapbook.content | safe }}</p>
-                        {% if user.is_authenticated and scrapbook.author == user %}
+                        {% if user.is_authenticated and scrapbook.author == user and not scrapbook.description == ""%}
+                        <p id="description">Note to Self: {{ scrapbook.description | safe }}</p>
                         <a href="{% url 'create-post' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Create Post page">Add a new Post <i class="fa-regular fa-plus"></i></a>
                         {% endif %}
                     </div>
@@ -69,16 +70,16 @@
                                 {% endif %}                                    
                                 <!-- Status icon conditionals -->
                                 {% if user.is_authenticated and post.author == user %}
-                                        {% if post.status == 0 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
-                                        {% elif post.status == 1 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
-                                        {% elif post.status == 2 %}
-                                        <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                    {% if post.status == 0 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                                    {% elif post.status == 1 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                                    {% elif post.status == 2 %}
+                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
                                     {% endif %}
                                 {% endif %}
                             </h5>
-                            <div class="card-toolbar d-inline"><i class="fa fa-chevron-down pull-right"></i></div>
+                            <div class="card-toolbar d-inline float-end"><i class="fa fa-chevron-down pull-right ms-auto"></i></div>
                         </div>
                         <div id="card-collapsible-{{ post.id }}" class="collapse" aria-labelledby="heading-collapsed">
                             <div class="card-body px-3">

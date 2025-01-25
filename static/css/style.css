@@ -152,6 +152,10 @@ h1, h2, h3, h4, h5, h6, .logo {
 }
 
 /* Scrapbook and Post content */
+#description {
+    font-size: 1.2rem;
+    color: #a15317;
+}
 .post-image {
     width: 100%;
     height: 300px;
@@ -165,10 +169,14 @@ h1, h2, h3, h4, h5, h6, .logo {
 
 /* Card Collapse icon rotate */
 .card-header .fa-chevron-down {
-    transition: .3s transform ease-in-out;
+    transition: 0.3s transform ease-in-out;
 }
 .card-header .collapsed .fa-chevron-down {
     transform: rotate(90deg);
+}
+
+.card-header:not(.collapsed) .fa-chevron-down {
+    transform: rotate(180deg);
 }
 
 .card:hover {
