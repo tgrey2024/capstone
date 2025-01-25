@@ -17,8 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-handler404 = 'scrapbook.views.custom_page_not_found_view'
-
 urlpatterns = [
     path('about/', include("about.urls")),
     path("accounts/", include("allauth.urls")),
