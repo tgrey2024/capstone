@@ -237,9 +237,6 @@ h1, h2, h3, h4, h5, h6, .logo {
     text-decoration: none;
 }
 
-
-
-
 /* Post Detail page */
 #post-image {
     width: 80%;
@@ -253,17 +250,10 @@ h1, h2, h3, h4, h5, h6, .logo {
 }
 
 /* Create/Edit Form */
-#image-preview-container {
-    max-width: 397.33px;
-}
-
-#image-preview-container img {
-    width: 100%;
-    height: auto;
-}
-
-#updateButton {
-    display: none;
+#current-image-preview {
+    max-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* Share Form */

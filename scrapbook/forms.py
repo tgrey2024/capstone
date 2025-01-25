@@ -30,7 +30,7 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control', 'id': 'id_image'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -98,7 +98,7 @@ class ScrapbookForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
-            'image': forms.FileInput(attrs={'class': 'form-control'}),            
+            'image': forms.FileInput(attrs={'class': 'form-control', 'id': 'id_image'}),            
         }
 
     def clean_image(self):

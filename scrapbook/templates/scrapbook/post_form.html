@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block title %}{% if action == 'create' %}Create{% else %}Edit{% endif %} Post Form{% endblock %}
 
@@ -20,12 +21,13 @@
             <!-- Render the form fields with crispy -->
             {{ form|crispy }}
             <!-- Current image preview -->
-            {% if action == 'edit' and form.instance.image %}
             <div class="mb-3 current-image">
-                <img src="{{ form.instance.image.url }}" alt="Thumbnail preview of Post Image" style="max-width: 200px;">
-                <p>{{ form.instance.image.name }}</p>
+                {% if action == 'create' %}
+                <img id="current-image-preview" src="{% static 'images/thumbnail.jpg' %}" alt="Placeholder preview of Post Image">
+                {% elif action == 'edit' and form.instance.image %}
+                <img id="current-image-preview" src="{{ form.instance.image.url }}" alt="Thumbnail preview of Post Image">
+                {% endif %}
             </div>
-            {% endif %}
             <!-- Submit button -->
             <div class="col-sm-12 col-md-6 col-lg-4 text-start mb-1 pb-4">
                 <input class="btn btn-info" type="submit" value="{% if action == 'create' %}Add{% else %}Update{% endif %}" aria-label="Update Post Button">
@@ -36,3 +38,7 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/thumbnail-image.js' %}"></script>
+{% endblock extra_js %}

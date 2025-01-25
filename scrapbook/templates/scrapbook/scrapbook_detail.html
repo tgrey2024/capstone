@@ -24,8 +24,10 @@
                     <!-- Filter to mark content as safe for rendering as HTML -->
                     <div class="d-grid gap-2 d-md-block mb-1">
                         <p>{{ scrapbook.content | safe }}</p>
-                        {% if user.is_authenticated and scrapbook.author == user and not scrapbook.description == ""%}
-                        <p id="description">Note to Self: {{ scrapbook.description | safe }}</p>
+                        {% if user.is_authenticated and scrapbook.author == user %}
+                            {% if not scrapbook.description == "" %}
+                            <p id="description">Note to Self: {{ scrapbook.description | safe }}</p>
+                            {% endif %}
                         <a href="{% url 'create-post' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to Create Post page">Add a new Post <i class="fa-regular fa-plus"></i></a>
                         {% endif %}
                     </div>

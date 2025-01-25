@@ -5,7 +5,7 @@ function hideMessages() {
             msg.classList.remove('show');
             msg.classList.add('fade');
         });
-    }, 15000);
+    }, 8000);
 }
 
 // Call the function to hide messages
