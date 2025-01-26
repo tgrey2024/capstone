@@ -668,38 +668,46 @@ Tests that the About page loads and contains the right content for authenticated
 
 ## Technologies Used
 ### Languages and Technologies
-![Static Badge](https://img.shields.io/badge/HTML5-Language-blue)
-![Static Badge](https://img.shields.io/badge/CSS3-Language-blue)
-![Static Badge](https://img.shields.io/badge/GitHub-RepoHosting-black)
-Heroku
-Cloudinary
+![Static Badge](https://img.shields.io/badge/HTML5-Language-red)
+![Static Badge](https://img.shields.io/badge/CSS3-Language-purple)
+![Static Badge](https://img.shields.io/badge/Javascript-Language-yellow)
+![Static Badge](https://img.shields.io/badge/Python-Language-blue)
+
+![Static Badge](https://img.shields.io/badge/Heroku-Deployment-purple)
+![Static Badge](https://img.shields.io/badge/GitHub-Repo_Hosting-black)
+![Static Badge](https://img.shields.io/badge/Cloudinary-Image_Hosting-black)
 ![Static Badge](https://img.shields.io/badge/Gitpod-IDE-yellow)
-Javascript
-Python
-Django
-DB PostgreSQL
-Whitenoise
-AllAuth
+![Static Badge](https://img.shields.io/badge/VS_Code-IDE-yellow)
+
+![Static Badge](https://img.shields.io/badge/PostgreSQL-DBMS-blue)
 
 ### Libraries and Frameworks
-![Static Badge](https://img.shields.io/badge/Bootstrap-5.3-purple)
-![Static Badge](https://img.shields.io/badge/FontAwesome-icons-navy)
-![Static Badge](https://img.shields.io/badge/GoogleFonts-Typography-blue)
+![Static Badge](https://img.shields.io/badge/Bootstrap-Frontend_Dev_Framework-purple)
+![Static Badge](https://img.shields.io/badge/FontAwesome-Icon_Library-navy)
+![Static Badge](https://img.shields.io/badge/GoogleFonts-Typography_Library-blue)
 
-Django, AllAuth, Whitenoise, Crispy Forms, Crispy Bootstrap, Summernote, Pillow
+![Static Badge](https://img.shields.io/badge/Django-Web_Framework-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_AllAuth-Authentication_Package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Whitenoise-Static_File_Serving_Package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_CrispyForms-Layouts_Package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_CrispyBootstrap-Layouts_Package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Summernote-Rich_Text_Editor_Package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Pillow-Imaging_Library_for_Testing-%23092e20)
+
 All Django packages installed is listed in requirements.txt(add link).
 
 ### Tools and Programs
 ![Static Badge](https://img.shields.io/badge/LogoAI-LogoGenerator-red)
-![Static Badge](https://img.shields.io/badge/Favicon.io-icons-navy)
-![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-green)
-![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-green)
+![Static Badge](https://img.shields.io/badge/Favicon.io-icons-red)
+![Static Badge](https://img.shields.io/badge/Coolers-colour_palette_testing-red)
+![Static Badge](https://img.shields.io/badge/WCAG-colour_contrast_testing-red)
+![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-brown)
+![Static Badge](https://img.shields.io/badge/Lucidchart-Diagramming-brown)
+
 ![Static Badge](https://img.shields.io/badge/MSCopilot-AI-orange)
 ![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI-orange)
-Perplexity AI
-DiagramGPT/Eraser
-Coolers
-WCAG
+![Static Badge](https://img.shields.io/badge/Perplexity_AI-DB_Design-orange)
+![Static Badge](https://img.shields.io/badge/Eraser_DiagramGPT-AI_generated_ERDs-orange)
 
 <p align="right"><a href="#top">Back to top</a></p>
 
