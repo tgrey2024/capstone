@@ -341,6 +341,127 @@ Add details of CSS validation:
 ### Automated Testing
   - Tools Used: [Mention any testing frameworks or tools, e.g., Django TestCase.]
   - Features Covered: [Briefly list features covered by automated tests.]
+
+#### test_models.py:
+
+##### Scrapbook Model
+<details>
+    <summary>Unit tests (8 tests passed)</summary>
+Unit tests on creating instances of Scrapbook, relationships, slug generation uniqueness, ordering and blank fields
+    
+![image](https://github.com/user-attachments/assets/350e714e-2b33-4ab3-aead-ad9436c955dc)
+</details>
+
+<details>
+    <summary>Edge tests (16 tests passed)</summary>
+Edge tests on max and exceeding lengths, trailing spaces, image file formats and special characters 
+
+![image](https://github.com/user-attachments/assets/7ecd8092-3e29-428c-ad50-f9be46c41c2d)
+
+</details>
+
+##### Post Model
+
+<details>
+    <summary>Unit tests (9 tests passed)</summary>
+Unit tests on creating instances of Posts, relationships, slug generation uniqueness, ordering, default values and blank fields
+    
+![image](https://github.com/user-attachments/assets/3ae01201-c76c-46c2-9cbf-e04f7ce0ffb1)
+
+</details>
+
+<details>
+    <summary>Edge tests (13 tests passed)</summary>
+Edge tests on max and exceeding lengths, trailing spaces, image file formats and special characters 
+
+![image](https://github.com/user-attachments/assets/97df4741-56fc-41c8-87eb-55317596e700)
+
+
+</details>
+
+##### SharedAccess Model
+
+<details>
+    <summary>Unit tests (6 tests passed)</summary>
+Unit tests on creating instances on SharedAccess using test instances of Scrapbook, Post and Users
+
+![image](https://github.com/user-attachments/assets/e2933049-0a6b-491d-8f20-092d208b4f74)
+
+</details>
+
+<details>
+    <summary>Edge tests (2 tests passed)</summary>
+Edge tests on missing user data and missing shared by field when creating instances of SharedAccess 
+
+![image](https://github.com/user-attachments/assets/cc81c1d2-6798-490c-82d6-8dd42b9b06cf)
+
+</details>
+
+#### test_views.py
+
+##### Scrapbook Views
+
+<details>
+    <summary>Unit tests (5 tests passed)</summary>
+Unit tests on Scrapbook List View, Detail View, Create View, Update View and Delete View
+    
+![image](https://github.com/user-attachments/assets/7c415079-ba67-43ee-8136-100f7bbeeada)
+
+</details>
+
+<details>
+    <summary>Edge tests (2 tests passed)</summary>
+Edge tests on creating scrapbook views with long titles and invalid image format 
+
+![image](https://github.com/user-attachments/assets/705e7d6a-c006-4e67-bf1b-f8ed6bb861d5)
+
+
+</details>
+
+##### Post Views
+
+<details>
+    <summary>Unit tests (4 tests passed)</summary>
+Unit tests on Post Detail View, Create View, Update View and Delete View
+    
+![image](https://github.com/user-attachments/assets/1b35328f-bc51-4c46-ada7-e5881b2f6e7c)
+
+
+</details>
+
+<details>
+    <summary>Edge tests (2 tests passed)</summary>
+Edge tests on updating post with special characters and deleting non-existent posts 
+
+![image](https://github.com/user-attachments/assets/0f67ce1c-2958-4ac9-912f-6d748eefd5da)
+
+
+
+</details>
+
+##### Access Control and SharedAccess Views
+
+<details>
+    <summary>Permissions for Access(2 tests passed)</summary>
+Tests whether users without permissions can access private scrapbooks, and whether a user can access a scrapbook shared with them
+    
+![image](https://github.com/user-attachments/assets/c3ec8c4a-a920-431e-8f97-9f0f6115ecb5)
+
+
+
+</details>
+
+<details>
+    <summary>SharedAccess Views(7 tests passed)</summary>
+Unit tests on SharedAccess and whether shared scrapbooks are segmented from the user's own scrapbooks.
+
+![image](https://github.com/user-attachments/assets/2f509c3c-1b8a-403b-b9ec-262c67a98ab9)
+
+
+
+
+</details>
+
   - Adjustments Made: [Describe any manual corrections to AI-generated test cases, particularly for accessibility.]
 <p align="right"><a href="#top">Back to top</a></p>
 
