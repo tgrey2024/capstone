@@ -277,7 +277,7 @@ Since most users are expected to access the site on mobile devices, the UI has b
 Parts of the site are only accessible when users are registered and logged in:
 
 | Features                           | Unauthenticated Users     |  Authenticated Users |
-| ---------------------------------- |:-------------------------:| --------------------:|
+|: ---------------------------------- |:-------------------------:|: --------------------:|
 | Homepage                           |           Yes             |          Yes         |
 | About                              |           Yes             |          Yes         |
 | My Scrapbooks                      |           No              |          Yes         |
@@ -365,7 +365,7 @@ Draft Scrapbooks and Posts are also displayed as cards with some opacity applied
 
 Here is a summary of the CRUD functionalities implemented. 
 |     Features          |     Create    |      Read      |     Update     |      Delete     |
-| --------------------- |:-------------:|---------------:|---------------:| ---------------:|
+| :--------------------- |:-------------:|:---------------:|:---------------:|:---------------:|
 | Draft Scrapbook       |Logged-in users|   Author only  |   Author only  |   Author only   |
 | Private Scrapbook     |Logged-in users|   Author & Users with Shared Access only  |   Author only  |   Author only   |
 | Published Scrapbook   |Logged-in users|   All users    |   Author only  |   Author only   |
@@ -669,11 +669,11 @@ Tests that the About page loads and contains the right content for authenticated
 ## Technologies Used
 ### Languages and Technologies
 ![Static Badge](https://img.shields.io/badge/HTML5-language-red)
-![Static Badge](https://img.shields.io/badge/CSS3-language-purple)
+![Static Badge](https://img.shields.io/badge/CSS3-language-%23663399)
 ![Static Badge](https://img.shields.io/badge/Javascript-language-yellow)
 ![Static Badge](https://img.shields.io/badge/Python-language-blue)
 
-![Static Badge](https://img.shields.io/badge/Heroku-deployment-purple)
+![Static Badge](https://img.shields.io/badge/Heroku-deployment-%2379589f)
 ![Static Badge](https://img.shields.io/badge/GitHub-repo_hosting-black)
 ![Static Badge](https://img.shields.io/badge/Cloudinary-image_hosting-black)
 ![Static Badge](https://img.shields.io/badge/Gitpod-IDE-yellow)
@@ -684,25 +684,26 @@ Tests that the About page loads and contains the right content for authenticated
 ### Libraries and Frameworks
 ![Static Badge](https://img.shields.io/badge/Bootstrap-frontend_dev_framework-purple)
 ![Static Badge](https://img.shields.io/badge/FontAwesome-icon_library-navy)
-![Static Badge](https://img.shields.io/badge/GoogleFonts-typography_Library-blue)
+![Static Badge](https://img.shields.io/badge/GoogleFonts-typography_library-blue)
 
-![Static Badge](https://img.shields.io/badge/Django-web_framework-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_AllAuth-authentication_package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Whitenoise-static_file_serving_package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_CrispyForms-layouts_package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_CrispyBootstrap-layouts_package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Summernote-rich_text_editor_package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Pillow-imaging_library_for_image_testing-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django-web_framework-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_AllAuth-authentication_package-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_Whitenoise-static_file_serving_package-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_CrispyForms-layouts_package-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_CrispyBootstrap-layouts_package-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_Summernote-rich_text_editor_package-%2311593e)
+![Static Badge](https://img.shields.io/badge/Django_Pillow-imaging_library_for_image_testing-%2311593e)
 
-All Django packages installed is listed in requirements.txt(add link).
+All Django packages installed is listed in [requirements.txt](https://github.com/tgrey2024/capstone/blob/main/requirements.txt)).
 
 ### Tools and Programs
-![Static Badge](https://img.shields.io/badge/LogoAI-LogoGenerator-red)
+![Static Badge](https://img.shields.io/badge/LogoAI-logo_generator-red)
 ![Static Badge](https://img.shields.io/badge/Favicon.io-icons-red)
 ![Static Badge](https://img.shields.io/badge/Coolers-colour_palette_testing-red)
 ![Static Badge](https://img.shields.io/badge/WCAG-colour_contrast_testing-red)
 
 ![Static Badge](https://img.shields.io/badge/Balsamiq-wireframes-brown)
+![Static Badge](https://img.shields.io/badge/Canva-mockups-brown)
 ![Static Badge](https://img.shields.io/badge/Lucidchart-diagramming-brown)
 
 ![Static Badge](https://img.shields.io/badge/MSCopilot-AI-orange)
@@ -714,46 +715,53 @@ All Django packages installed is listed in requirements.txt(add link).
 
 ## AI Implementation and Orchestration
 ### Planning
-[user stories, identify entities and relationships, generate initial ERD]
+
+During brainstorming, [MS Copilot](https://copilot.microsoft.com/) suggested 40+ ideas for a Django web-app that a beginner developer could build alone in two weeks. Having chosen the project and defined the project goals and scope, I prompted Copilot to suggest a list of user stories. These were reviewed and edited to meet the project goals. Then Copilot identified some relevant acceptance criteria and tasks for each one, which provided the basis for planning each user story.
+
+Using the user stories, [Perplexity AI](https://www.perplexity.ai/) gave me a schema of the entities, fields and relationships. Having made some adjustments, I put this schema into [Eraser DiagramGPT](https://www.eraser.io/diagramgpt) which then provided me with an initial ERD for my initial database design, which later evolved into the [final database ERD](#database).
+
+The [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) extension was installed in my local version of Visual Studio Code. In the planning stages, Copilot was prompted to suggest implementation ideas, e.g. when I was researching options for sharing content between users privately. Copilot was asked for options suitable for a junior developer to implement, and it provided two options including pros and cons, and suggested reading on the subject.
+
 ### Code Generation
-[review below before deadline]
-The GitHub Copilot extension was installed in our local versions of Visual Studio Code. We were therefore able to write prompts or highlight functions in pseudocode and ask Copilot to suggest code snippets. Suggestions needed to be reviewed before they were included, as occassionally code may refer to e.g. variables that have not been declared or not yet been imported.
 
-Copilot was also able to suggest higher-level implementation ideas, e.g. when I was researching options for sharing content between users privately. Copilot was prompted for options suitable for a junior developer to implement, and it provided three options including pros and cons, and suggested reading on the subject.
+Using the Github Copilot extension, I was able to write prompts or highlight functions in pseudocode and ask Copilot to suggest code snippets. Suggestions needed to be reviewed before they were included, as code may refer to e.g. variables that have not been declared or not yet been imported.
 
-When I come across suggested code that I don't understand, I prompted Copilot for an explanation of the selected code with a breakdown of each step and a concise summary. 
+GitHub Copilot helped to generate model fields and CRUD views, which were adjusted to fit the project requirements. It also helped to speed up the building of Bootstrap components like the navbar, grid, cards and testimonials, which were then adjusted and tested for functionality, usability and responsiveness. Copilot suggested CSS and Bootstrap enhancements to the cards, but these did not work, so they were adjusted after I found code references on the required effects.
 
-Occassionally it can be annoying when Copilot suggests code in ghost text unnecessarily, or introduces additional closing tags or brackets unnecessarily. Nonetheless, when used with specific prompts and context, some of the results provided by Copilot have been mostly usable, thus speeding up development.
+When I come across suggested code that I don't understand, I used the inline editor to ask for an explanation of the selected code with a breakdown of each step and a concise summary. With larger sections of code suggestions, the chat provided more space for me to question specific parts of functions so Copilot could adjust the recommendations to accommodate my specific requirements. 
 
-[    - Reflection: Strategic use of AI allowed for rapid prototyping, with minor adjustments for alignment with project goals. 
-    - Examples: Reverse prompts for alternative code solutions and question-answer prompts for resolving specific challenges.]
+Reverse prompting was used when asking for recommendations to be refined, e.g. when Copilot asked me a series of questions about uploading images, whether I wanted to upload multiple images per post, etc. Once an approach was agreed, Copilot was prompted to provide a checklist of steps and walked through the process incrementally.
+
+Occasionally Copilot suggested code in ghost text unnecessarily, introduced extraneous closing tags in its code suggestions, or even removing code it thinks is unnecessary. It is important to keep a close eye on what is changed, but on the whole using AI as a pair programmer has allowed me to write code faster and learn more efficiently.
 
 ### Content Creation
-[DALL-E images, post text]
+
+MS Copilot provided textual content for scrapbooks and posts based on a selection of themes that were commonly used in reminiscence therapy. It also provided content for the About page, which only required minor adjustments.
+
+DALL-E helped generate images for the About page, but only some of the images were useful due to biases, misinterpretation of prompts or incorrect limbs, so I only used a small selection of the AI-generated images that were appropriate.
+
+Github Copilot suggested the testimonials in ghost text while suggesting code for building the Bootstrap carousel.
+
 ### Debugging
-Copilot was regularly used for debugging code, either by highlighting specific code in the inline editor, or using @workspace if Copilot needs more context. During automated testing, any failure errors are copied into the Copilot chat to give AI a better idea of what needs to be fixed.
+
+Copilot was regularly used for debugging code, either by highlighting specific code in the inline editor, or using @workspace if Copilot needs more context. Copilot suggested debugging code to help identify issues in the code, which helped to resolve issues much faster. Copilot also proposed ways to fix errors. These did not always work, and when questioned about any inconsistencies, the revised solution was much more suitable. This paired programming approach was generally faster and more effective than searching through documentation alone to find potential fixes.
 
 When using Chrome DevTools to inspect the preview or deployed pages, Chrome DevTools AI Assistance panel was also used to explain the errors raised in the Console.
 
-[    - Reflection: Key interventions included resolving logic errors and enhancing maintainability, with a focus on simplifying complex logic to make it accessible.]
-
 ### Performance and UX Optimisation
-While learning to write class-based views, apart from reading Django references and documentation, I also prompted Copilot to debug the class-based views that were written. Once tested to run correctly, Copilot was prompted to optimise on the code. 
-[give outcome]
-Again, this needed to be tested fully before it was incorporated into the code. Running the resultant code produces the same result as before.
 
-[    - Reflection: Minimal manual adjustments were needed to apply AI-driven improvements, which enhanced application speed and user experience for all users.]
+While learning to write class-based views, apart from reading Django references and documentation, I also prompted Copilot to debug the class-based views that were written. Once tested to run correctly, Copilot was prompted to optimise the code. It was important to keep a version of the original code commented out while testing that the optimised code produced the same result before incorporating it into the code. 
 
 ### Automated Unit Testing
-Automated tests were written by prompting Copilot for test skeletons for unit tests and edge tests without implementation. I selected the relevant test cases to include and Copilot suggested ghost text for each one which I accepted using the Tab key or Ctrl+-> key. Each test case had to be reviewed and tested separately, and Copilot also helped with suggesting fixes to the models, views and forms, although it was also important to test that the changes hasn't broken any functions in the affected part of the app.
-[    - Reflection: Adjustments were made to improve test coverage and ensure alignment with functionality. Prompts were used to generate inclusive test cases that considered edge cases for accessibility.]
+
+Automated tests were written by prompting Copilot for test skeletons for unit tests without implementation. Copilot also suggested edge test cases that were beyond what I could have considered on my own.
+
+Having chosen the relevant test cases to include, I used Copilot to suggest ghost text to implement each one. Each test case was reviewed and tested separately, and Copilot also helped with suggesting necessary fixes resolve any failures, although it was also important to test that the changes have not broken any functions in the affected part of the app.
 
 ### Impact on Workflow
-On the whole, it has been useful to pair program with Copilot and use it for debugging and testing as we code. Due to the tight timescale of the project, I used AI wherever possible to reduce development time, from creating user stories to suggesting commit messages. When 
-[  - AI tools streamlined repetitive tasks, enabling focus on high-level development.
-  - Efficiency gains included faster debugging, comprehensive testing, and improved code quality.
-  - Challenges included contextual adjustments to AI-generated outputs, which were resolved effectively, enhancing inclusivity.]
-  - 
+
+On the whole, it has been useful to pair program with Copilot and use it for suggest and explain code while learning as a junior developer. Due to the tight timescale of the project, I used AI where possible to streamline development, from brainstorming solutions to suggesting commit messages. 
+
 ### Use Cases and Reflections
 [Highlight how prompts, such as reverse, question-and-answer or multi-step, were used to support learners with SEND or ALN where relevant.]
 
@@ -763,18 +771,38 @@ On the whole, it has been useful to pair program with Copilot and use it for deb
 
 ## Credits
 ### Code References
+
 [Classy Class-Based Views](https://ccbv.co.uk/) - references to Django class-based views with examples and links to Django documentation
-Example of how to override Bootstrap styles for navbar links in custom CSS: [CodePen](https://codepen.io/skde/pen/ExyrBYg)
+
+Override Bootstrap styles in navbar links - [CodePen](https://codepen.io/skde/pen/ExyrBYg)
+
+Collapsible Bootstrap cards: [Examples](https://preview.keenthemes.com/html/metronic/docs/base/cards#collapsible%20)
+
+[Card Collapse Tricks](https://disjfa.github.io/bootstrap-tricks/card-collapse-tricks/)
+
+Animate Bootstrap Cards using CSS: [YouTube video](https://www.youtube.com/watch?v=WihYWBf9FmI)
+
+[UNRESOLVED] Deprecation of Chrome support of third-party cookies: [Cloudinary response](https://community.cloudinary.com/discussion/596/third-party-cookies-will-be-blocked-how-to-solve-it)
+
+[Mark Down guide](https://www.markdownguide.org/)
+
+[Static.io](https://shields.io/badges) for making static badges
 
 ### Content References
-MS Copilot was used to generate much of the homepage and blog content.
 
-### Media References
-#### Photos:
+MS Copilot was used to generate much of the homepage, about page and blog content.
+
+### Image References
+
 * Pexels - [https://www.pexels.com/](https://www.pexels.com/)
+* DALL-E - AI-generated images
 
 #### Acknowledgements
-Many thanks to my patient testers for helping me test throughout development, 
-Everyone in my WECA group who have been so helpful and supportive leading up to this project, and
-Code Institute tutors (Dillon, Mark and Roo) for answering my endless questions
+
+Many heartfelt thanks to:
+* everyone in my WECA group who has been so helpful and supportive leading up to and throughout this project,
+* Code Institute tutors (Dillon, Mark and Roo) for your patience and answering my endless questions,
+* my patient in-house testers (aka my family) for giving me feedback on requirements, colour choice, usabilty, etc. throughout development,
+* and my parents who gave me the inspiration for this project (much better than the 40+ AI-generated ideas), and spent hours reminiscing over photos of old Hong Kong, family and friends, 60s icons, comfort food...just to test the product.
+
 <p align="right"><a href="#top">Back to top</a></p>
