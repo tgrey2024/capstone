@@ -112,10 +112,25 @@ Here are all the user stories that have been prioritised (all must have and some
 | Post and Scrapbook Access Control               | must have                 |   Done  |
 | Give Shared Access to Nominated Users           | should have               |   Done  |
 | View About Page                                 | should have               |   Done  |
-
+[add Homepage, Card collapse and hover effect, custom error pages, image uploader preview]
 All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
 
 As well as using the Project Board to track progress on our project, I also used it during testing to log any significant bugs that need to be fixed before the project deadline. These were then assigned and prioritised alongside other issues and user stories.
+
+#### Project Schedule
+
+The broad plan for the project was to secure the MVP, fully tested and documented sufficiently before incorporating the optional should have and could have features.
+
+| Milestone |                      Scope                      |      Scheduled    |       Actual      |
+| ----------|:----------------------------------------------- |:-----------------:|------------------:|
+| v0.1      | Plan, design, Django and Heroku setup           |  Day 1-3          |  Day 1-2          |
+| v1.0      | MVP (all must-haves), automated tests           |  Day 1-7          |  Day 1-7          |
+| v1.0.1    | Initial validation, manual tests, bug fixes     |  Day 6-8          |  Day 6-9          |
+| v1.1      | Shared Access, unit tests and manual tests      |  Day 9-10         |  Day 9-12         |
+| v1.2      | Homepage Add-ons and About Page                 |  Day 10-11        |  Day 11           |
+| v1.2.1    | Animation and other UX enhancements             |  Day 12           |  Day 12           |
+| v1.2.2    | Polish, integration test, wrap up               |  Day 12-14        |  Day 12-14        |
+
 
 <p align="right"><a href="#top">Back to top</a></p>
 <hr/>
