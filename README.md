@@ -9,15 +9,20 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 ## Table of Contents
 - [User Experience Design Process](#user-experience-design-process)
 - [Project Brief](#project-brief)
-- [Users](#users)
-    - [Target User](#target-users)
+    - [Problem Statement](#problem-statement)
+    - [Use Case](#use-case)
+    - [Users](#users)
+- [Planning](#planning)
     - [User Stories](#user-stories)
-    - [Wireframes](#wireframes)
+    - [Project Scope and Schedule](#project-scope-and-schedule)
 - [Design](#design)
+    - [Wireframes](#wireframes)
+    - [User Flow](#user-flow)
+    - [Database](#database)
     - [Colour Scheme](#colour-scheme)
     - [Typography](#typography)
-    - [Mockups](#mockups)
     - [Imagery](#imagery)
+    - [Mockups](#mockups)
     - [Responsive Design](#responsive-design)
 - [Key Features](#key-features)
     - [Authentication](#authentication)
@@ -64,20 +69,19 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 <hr/>
 
 ## Project Brief
+The site user's goal is to create and use personal digital scrapbooks of photos of their mementos as a means of recalling their memories for cognitive development, and a means of communicating valued thoughts and emotions with their loved ones, carers and therapists.
+
+The project goal is to produce a functional prototype of a user-friendly scrapbook web app which facilitates publishing and private-sharing of scrapbooks, that can be tested with users as a proof of concept and to further define user requirements.
+
 ### Problem Statement
 
 Someone with dementia or similar cognitive impairments may experience significant problems with memory and language, making it difficult to recall names, words and faces, which affects their daily tasks, their wellbeing and their self-esteem. Carers and loved ones find it difficult to understand and connect with the patient, which can impact on their well-being. Visual aids are often used in occupational therapy, but visual aids with personal meaning could encourage more neural connections to be made, thus can further enhance cognitive and speech development.
 
-### Purpose
+### Use Case
 
-Research has shown that memory aids such as individualised photo memory books can improve communications between seniors with dementia and their family, and reminiscence therapy can stimulate memory function, enhance mood, increase social interaction and combat loneliness, low self-esteem and depression.
+Research has shown that memory aids such as individualised photo memory books can improve communications between seniors with dementia and their family, and reminiscence therapy can stimulate memory function, enhance mood, increase social interaction and combat loneliness, low self-esteem and depression. 
 
-<p align="right"><a href="#top">Back to top</a></p>
-<hr/>
-
-## Users
-
-### Target Users
+### Users
 
 <strong>Seniors with Memory and/or Language Problems:</strong> These are the primary users for whom the app is designed. These seniors may be dealing with conditions such as dementia or other cognitive impairments. The app aims to enhance their quality of life by providing a personalised digital space where they can compile cherished photos, favourite songs, newspaper articles, videos and other memory aids. This resource serves as a valuable tool to help them recall significant events, personal stories, maintain cognitive function and engage more actively with their surroundings. Colour blindness, in particular colour vision deterioration e.g. tritanopia ("blue-yellow" colour blindness) is also common in those aged 70 and over.
 
@@ -85,9 +89,10 @@ Research has shown that memory aids such as individualised photo memory books ca
 
 <strong>Developer/Admin:</strong> This superuser is responsible for developing, maintaining and updating the web app. They ensure the app is functional, secure, user friendly and handles any user support and content issues.
 
-
 <p align="right"><a href="#top">Back to top</a></p>
 <hr/>
+
+## Planning
 
 ### User Stories
 
@@ -118,9 +123,9 @@ All user stories were logged on the [Kanban Project Board](https://github.com/us
 
 As well as using the Project Board to track progress on our project, I also used it during testing to log any significant bugs that need to be fixed before the project deadline. These were then assigned and prioritised alongside other issues and user stories.
 
-#### Project Schedule
+### Project Scope and Schedule
 
-The broad plan for the project was to secure the MVP, fully tested and documented sufficiently before incorporating the optional should have and could have features.
+The broad project plan was to secure the MVP, fully tested and documented sufficiently before incorporating the optional should have and could have features.
 
 | Milestone |                      Scope                      |      Scheduled    |       Actual      |
 | ----------|:----------------------------------------------- |:-----------------:|------------------:|
@@ -178,6 +183,12 @@ The purple arrows show the user flows for the creation, updating and deleting of
 
 </details>
 
+### Database
+Using the user stories, Perplexity gave me a schema of the entities, fields and relationships. Using this, Eraser DiagramGPT provided an initial ERD from which I built the initial models.
+
+Here is the ERD of the final model:
+
+![image](https://github.com/user-attachments/assets/17122097-8c80-448c-b793-34b1e681ce11)
 
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
@@ -212,6 +223,28 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 
   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
 
+### Imagery
+
+On Pexels, I found a collection of old photos on Pexels that provided a good sample of the range of photos that might be added to a digital scrapbook by the target users, as well as images that could be used to draw users to share and connect with loved ones.
+![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
+
+![placeholder](https://github.com/user-attachments/assets/6772097c-88b1-421e-a4e5-063ebba69c4e)
+![pexels-rdne-6148985](https://github.com/user-attachments/assets/e6764bd1-6b77-4146-9116-772fb6a34910)
+
+MS Copilot and DALL-E also provided some AI generated imagery.
+
+<details>
+    <summary>AI generated images</summary>
+    
+![carousel1](https://github.com/user-attachments/assets/ffa8f5b1-cbc5-4971-b464-e00984c0dc3c)
+    
+![close-up of old photos and letters with less clutter](https://github.com/user-attachments/assets/2a2e83f2-bfe9-4f83-a027-5acc42b74ac7)
+    
+![carousel2](https://github.com/user-attachments/assets/64257867-a7b3-40a5-91f0-d40384713619)
+    
+![elderly patients making a digital scrapbook](https://github.com/user-attachments/assets/a8fb5f42-843f-4d68-adb3-f624c2f26c73)
+
+</details>
 
 ### Mockups
   - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
@@ -221,10 +254,6 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 - **Reasoning For Any Final Changes:**
   - [Summarise significant changes made to the design during development and the reasons behind them.]
   - [Reflect on how these changes enhance inclusivity and accessibility.]
-
-
-### Imagery
-add AI and Pexels imagery
 
 ### Responsive Design
 
