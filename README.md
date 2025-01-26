@@ -668,31 +668,31 @@ Tests that the About page loads and contains the right content for authenticated
 
 ## Technologies Used
 ### Languages and Technologies
-![Static Badge](https://img.shields.io/badge/HTML5-Language-red)
-![Static Badge](https://img.shields.io/badge/CSS3-Language-purple)
-![Static Badge](https://img.shields.io/badge/Javascript-Language-yellow)
-![Static Badge](https://img.shields.io/badge/Python-Language-blue)
+![Static Badge](https://img.shields.io/badge/HTML5-language-red)
+![Static Badge](https://img.shields.io/badge/CSS3-language-purple)
+![Static Badge](https://img.shields.io/badge/Javascript-language-yellow)
+![Static Badge](https://img.shields.io/badge/Python-language-blue)
 
-![Static Badge](https://img.shields.io/badge/Heroku-Deployment-purple)
-![Static Badge](https://img.shields.io/badge/GitHub-Repo_Hosting-black)
-![Static Badge](https://img.shields.io/badge/Cloudinary-Image_Hosting-black)
+![Static Badge](https://img.shields.io/badge/Heroku-deployment-purple)
+![Static Badge](https://img.shields.io/badge/GitHub-repo_hosting-black)
+![Static Badge](https://img.shields.io/badge/Cloudinary-image_hosting-black)
 ![Static Badge](https://img.shields.io/badge/Gitpod-IDE-yellow)
 ![Static Badge](https://img.shields.io/badge/VS_Code-IDE-yellow)
 
 ![Static Badge](https://img.shields.io/badge/PostgreSQL-DBMS-blue)
 
 ### Libraries and Frameworks
-![Static Badge](https://img.shields.io/badge/Bootstrap-Frontend_Dev_Framework-purple)
-![Static Badge](https://img.shields.io/badge/FontAwesome-Icon_Library-navy)
-![Static Badge](https://img.shields.io/badge/GoogleFonts-Typography_Library-blue)
+![Static Badge](https://img.shields.io/badge/Bootstrap-frontend_dev_framework-purple)
+![Static Badge](https://img.shields.io/badge/FontAwesome-icon_library-navy)
+![Static Badge](https://img.shields.io/badge/GoogleFonts-typography_Library-blue)
 
-![Static Badge](https://img.shields.io/badge/Django-Web_Framework-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_AllAuth-Authentication_Package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Whitenoise-Static_File_Serving_Package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_CrispyForms-Layouts_Package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_CrispyBootstrap-Layouts_Package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Summernote-Rich_Text_Editor_Package-%23092e20)
-![Static Badge](https://img.shields.io/badge/Django_Pillow-Imaging_Library_for_Testing-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django-web_framework-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_AllAuth-authentication_package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Whitenoise-static_file_serving_package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_CrispyForms-layouts_package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_CrispyBootstrap-layouts_package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Summernote-rich_text_editor_package-%23092e20)
+![Static Badge](https://img.shields.io/badge/Django_Pillow-imaging_library_for_image_testing-%23092e20)
 
 All Django packages installed is listed in requirements.txt(add link).
 
@@ -701,11 +701,12 @@ All Django packages installed is listed in requirements.txt(add link).
 ![Static Badge](https://img.shields.io/badge/Favicon.io-icons-red)
 ![Static Badge](https://img.shields.io/badge/Coolers-colour_palette_testing-red)
 ![Static Badge](https://img.shields.io/badge/WCAG-colour_contrast_testing-red)
-![Static Badge](https://img.shields.io/badge/Balsamiq-Wireframes-brown)
-![Static Badge](https://img.shields.io/badge/Lucidchart-Diagramming-brown)
+
+![Static Badge](https://img.shields.io/badge/Balsamiq-wireframes-brown)
+![Static Badge](https://img.shields.io/badge/Lucidchart-diagramming-brown)
 
 ![Static Badge](https://img.shields.io/badge/MSCopilot-AI-orange)
-![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI-orange)
+![Static Badge](https://img.shields.io/badge/GitHubCopilot-AI_pair_programming-orange)
 ![Static Badge](https://img.shields.io/badge/Perplexity_AI-DB_Design-orange)
 ![Static Badge](https://img.shields.io/badge/Eraser_DiagramGPT-AI_generated_ERDs-orange)
 
