@@ -216,13 +216,6 @@ I have chosen Philosopher for my titles and headings, as it is more distinctive 
 ![LucidaExample](https://github.com/user-attachments/assets/8cc52d4c-1690-47b2-943c-1b9ea508e054)<br>
 For the paragraph and menu text, I have picked the widely-available and reliable Lucida Sans Unicode because of its legibility and support for different character sets.<br>
 
-
-
-
-
-
-  - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
-
 ### Imagery
 
 On Pexels, I found a collection of old photos on Pexels that provided a good sample of the range of photos that might be added to a digital scrapbook by the target users, as well as images that could be used to draw users to share and connect with loved ones.
@@ -248,10 +241,15 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 
 ### Mockups
   - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
-- **Design Rationale:**
+
+#### Design Rationale
   - [Explain key design decisions, such as layout, colour scheme, typography, and how accessibility guidelines (e.g., WCAG) were integrated.]
+  -   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
   - [Highlight any considerations made for users with disabilities, such as screen reader support.]
-- **Reasoning For Any Final Changes:**
+
+  - Design for Accessibility
+
+#### Reasoning For Any Final Changes
   - [Summarise significant changes made to the design during development and the reasons behind them.]
   - [Reflect on how these changes enhance inclusivity and accessibility.]
 
@@ -260,6 +258,13 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 Since most users are expected to access the site on mobile devices, the UI has been designed with a mobile first approach. The site is responsive to different screen sizes as it was built using components from the Bootstrap Library.
 
 ![image](https://github.com/user-attachments/assets/9395d64b-900e-418d-8304-81a7162ebb06)
+
+
+
+
+
+
+
 
 <p align="right"><a href="#top">Back to top</a></p>
 
@@ -272,6 +277,7 @@ Parts of the site are only accessible when users are registered and logged in:
 | Homepage                           |           Yes             |          Yes         |
 | About                              |           Yes             |          Yes         |
 | My Scrapbooks                      |           No              |          Yes         |
+| Shared Scrapbooks                  |           No              |          Yes         |
 | Register                           |           Yes             |          No          |
 | Login                              |           Yes             |          No          |
 | Logout                             |           No              |          Yes         |
@@ -279,7 +285,31 @@ Parts of the site are only accessible when users are registered and logged in:
 ### Header and Footer Navigation
 [add screenshots, show how they use the base template, how they change for logged in and unlogged in users]
 
+A Bootstrap Navbar has been implemented to ensure that the top navigation bar is responsive on all devices. On smaller screens a hamburger icon is used to expand the navbar options:
+
+![image](https://github.com/user-attachments/assets/845e02f2-a62a-4be9-b3a5-4f55f2617f4f)
+
+The midtone brown (#a15317) has been chosen from the colour palette for better contrast. To overcome the colour contrast issue described earlier, the colours for the Bootstrap link and hover have been overridden to use a white (#ffffff) and a brighter yellow (#ffffa7) which are more noticeable and have higher contrast against the navbar background colour.
+
+The Navbar items are different before and after logging in:
+
+For unauthenticated users:
+![image](https://github.com/user-attachments/assets/f48b3699-fae9-4926-a887-6b93e6943d5d)
+
+For authenticated users:
+![image](https://github.com/user-attachments/assets/2f91ae2b-d6a8-43ba-880f-fcf05c124377)
+
+A simple footer in dark brown(#56351e) has the brand and copyright, with links to social media in more subtle tones. This is also responsive to different screen sizes:
+
+![image](https://github.com/user-attachments/assets/6d3a5a5d-2ed5-402d-b99a-c52ddbb050f1)
+![image](https://github.com/user-attachments/assets/01b9771f-89b9-4aff-a1b3-71ce5f1da576)
+
+
+
 ### Homepage and Published Scrapbooks
+
+
+The higher priority sections of the homepage, namely the cards of published scrapbooks were implemented first.
 ### Accounts Management
 [add screenshots, show how they use the same template, register and cancel buttons]
 ### Log in Status
@@ -290,11 +320,11 @@ Here is a summary of the CRUD functionalities implemented.
 |     Features          |     Create    |      Read      |     Update     |      Delete     |
 | --------------------- |:-------------:|---------------:|---------------:| ---------------:|
 | Draft Scrapbook       |Logged-in users|   Author only  |   Author only  |   Author only   |
-| Private Scrapbook     |Logged-in users|   Author only  |   Author only  |   Author only   |
+| Private Scrapbook     |Logged-in users|   Author & Users with Shared Access only  |   Author only  |   Author only   |
 | Published Scrapbook   |Logged-in users|   All users    |   Author only  |   Author only   |
-| Draft Post            |Logged-in users|   Author only  |   Author only  |   Author only   |
-| Private Post          |Logged-in users|   Author only  |   Author only  |   Author only   |
-| Published Post        |Logged-in users|   All users    |   Author only  |   Author only   |
+| Draft Post            |Logged-in users| Same as its scrapbook |   Author only  |   Author only   |
+| Private Post          |Logged-in users| Same as its scrapbook |   Author only  |   Author only   |
+| Published Post        |Logged-in users| Same as its scrapbook |   Author only  |   Author only   |
 
 All users, logged-in or not, can read published scrapbooks and posts. All other CRUD functions are all only accessible to logged-in users.
 
