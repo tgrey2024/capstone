@@ -8,12 +8,19 @@ class ScrapbookViewsTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.user1 = User.objects.create_user(username='user1', password='testpass')
-        self.user2 = User.objects.create_user(username='user2', password='testpass')
-        self.scrapbook1 = Scrapbook.objects.create(title='Scrapbook 1', author=self.user1, status=1)
-        self.scrapbook2 = Scrapbook.objects.create(title='Scrapbook 2', author=self.user2, status=1)
-        self.scrapbook = Scrapbook.objects.create(title='Test Scrapbook', author=self.user1)
-        self.post = Post.objects.create(title='Test Post', author=self.user1, scrapbook=self.scrapbook, status=1)
+        self.user1 = User.objects.create_user(
+            username='user1', password='testpass')
+        self.user2 = User.objects.create_user(
+            username='user2', password='testpass')
+        self.scrapbook1 = Scrapbook.objects.create(
+            title='Scrapbook 1', author=self.user1, status=1)
+        self.scrapbook2 = Scrapbook.objects.create(
+            title='Scrapbook 2', author=self.user2, status=1)
+        self.scrapbook = Scrapbook.objects.create(
+            title='Test Scrapbook', author=self.user1)
+        self.post = Post.objects.create(
+            title='Test Post', author=self.user1, 
+            scrapbook=self.scrapbook, status=1)
         self.client.login(username='user1', password='testpass')
         self.scrapbook.save()
         self.post.save()
@@ -29,7 +36,9 @@ class ScrapbookViewsTest(TestCase):
 
     def test_scrapbook_detail_view(self):
         # Test the ScrapbookDetailView
-        response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
+        response = self.client.get(reverse(
+            'scrapbook:scrapbook_detail', 
+            kwargs={'slug': self.scrapbook.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'scrapbook/scrapbook_detail.html')
         self.assertContains(response, 'Test Scrapbook')
@@ -40,48 +49,98 @@ class ScrapbookViewsTest(TestCase):
         self.client.login(username='user1', password='testpass')
         response = self.client.post(reverse('scrapbook:create-scrapbook'), {
             'title': 'New Scrapbook',
-            'image': SimpleUploadedFile(name='test_image.jpg', content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
+            'image': SimpleUploadedFile(name='test_image.jpg', 
+                content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
             'status': 1,
             'content': 'New Scrapbook Content',
             'description': 'New Scrapbook Description',
         })
-        self.assertEqual(response.status_code, 302)  # Expect a redirect after successful creation
+        self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('scrapbook:home'))
         self.assertContains(response, 'New Scrapbook')
 
     def test_scrapbook_update_view(self):
         # Test the ScrapbookUpdateView
-        response = self.client.post(reverse('scrapbook:edit-scrapbook', kwargs={'slug': self.scrapbook.slug, 'scrapbook_id': self.scrapbook.id}), {
+        response = self.client.post(reverse(
+            'scrapbook:edit-scrapbook', kwargs={
+                'slug': self.scrapbook.slug, 
+                'scrapbook_id': self.scrapbook.id}), {
             'title': 'Updated Scrapbook',
-            'image': SimpleUploadedFile(name='test_image.jpg', content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
+            'image': SimpleUploadedFile(name='test_image.jpg', 
+                content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
             'status': 1,
             'content': 'Updated Scrapbook Content',
             'description': 'Updated Scrapbook Description',
         })
         self.assertEqual(response.status_code, 302)
-        response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
+        response = self.client.get(
+            reverse('scrapbook:scrapbook_detail', kwargs={
+                'slug': self.scrapbook.slug}))
         self.assertContains(response, 'Updated Scrapbook')
 
     def test_scrapbook_delete_view(self):
         # Test the ScrapbookDeleteView
-        response = self.client.post(reverse('scrapbook:delete-scrapbook', kwargs={'slug': self.scrapbook.slug, 'scrapbook_id': self.scrapbook.id}))
+        response = self.client.post(
+            reverse('scrapbook:delete-scrapbook', kwargs={
+                'slug': self.scrapbook.slug, 
+                'scrapbook_id': self.scrapbook.id}))
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('scrapbook:home'))
         self.assertNotContains(response, 'Test Scrapbook')
+    # Edge Tests
+    def test_scrapbook_create_view_with_long_title(self):
+        # Edge Test: Test the ScrapbookCreateView with a title that 
+        # exceeds the maximum length
+        self.client.login(username='user1', password='testpass')
+        response = self.client.post(reverse('scrapbook:create-scrapbook'), {
+            'title': 'a' * 101,
+            'image': 'placeholder',
+            'status': 1,
+            'content': 'New Scrapbook Content',
+            'description': 'New Scrapbook Description',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, 'The title cannot be more than 100 characters.')
+
+    def test_scrapbook_update_view_with_invalid_image_format(self):
+        # Edge Test: Test the ScrapbookUpdateView with an invalid image format
+        self.client.login(username='user1', password='testpass')
+        response = self.client.post(
+            reverse('scrapbook:edit-scrapbook', kwargs={
+            'slug': self.scrapbook.slug, 'scrapbook_id': self.scrapbook.id}), {
+            'title': 'Updated Scrapbook',
+            'image': SimpleUploadedFile(
+                name='test_image.gif', content=b'invalid_image',
+                content_type='image/gif'),
+            'status': 1,
+            'content': 'Updated Scrapbook Content',
+            'description': 'Updated Scrapbook Description',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, 
+            'Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
 
     def test_post_detail_view(self):
         # Test the PostDetailView
-        response = self.client.get(reverse('scrapbook:post_detail', kwargs={'scrapbook_slug': self.scrapbook.slug, 'post_slug': self.post.slug}))
+        response = self.client.get(
+            reverse('scrapbook:post_detail', kwargs={
+                'scrapbook_slug': self.scrapbook.slug, 
+                'post_slug': self.post.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'scrapbook/post_detail.html')
         self.assertContains(response, 'Test Post')
 
     def test_post_create_view(self):
         # Test the PostCreateView
-        response = self.client.post(reverse('create-post', kwargs={'scrapbook_slug': self.scrapbook.slug}), {
+        response = self.client.post(
+            reverse('create-post', kwargs={
+                'scrapbook_slug': self.scrapbook.slug}), {
             'scrapbook': self.scrapbook.id,
             'title': 'New Post',
-            'image': SimpleUploadedFile(name='test_image.jpg', content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
+            'image': SimpleUploadedFile(name='test_image.jpg', 
+                content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
             'status': 1,
             'content': 'New Post content',
         })
@@ -91,10 +150,13 @@ class ScrapbookViewsTest(TestCase):
     def test_post_update_view(self):
         # Test the PostUpdateView
         self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('edit-post', kwargs={'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}), {
+        response = self.client.post(
+            reverse('edit-post', kwargs={
+            'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}), {
             'scrapbook': self.scrapbook.id,
             'title': 'Updated Post',
-            'image': SimpleUploadedFile(name='test_image.jpg', content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
+            'image': SimpleUploadedFile(name='test_image.jpg', 
+                content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b', content_type='image/jpeg'),
             'status': 2,
             'content': 'Updated Post content',
         })
@@ -107,42 +169,23 @@ class ScrapbookViewsTest(TestCase):
     def test_post_delete_view(self):
         # Test the PostDeleteView
         self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('delete-post', kwargs={'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}))
+        response = self.client.post(
+            reverse('delete-post', kwargs={
+            'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Post.objects.count(), 0)
-        response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
+        response = self.client.get(
+            reverse('scrapbook:scrapbook_detail', kwargs={
+                'slug': self.scrapbook.slug}))
         self.assertNotContains(response, 'Test Post')
 
-    # Edge Test Skeletons
-    def test_scrapbook_create_view_with_long_title(self):
-        # Edge Test: Test the ScrapbookCreateView with a title that exceeds the maximum length
-        self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('scrapbook:create-scrapbook'), {
-            'title': 'a' * 101,
-            'image': 'placeholder',
-            'status': 1,
-            'content': 'New Scrapbook Content',
-            'description': 'New Scrapbook Description',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'The title cannot be more than 100 characters.')
-
-    def test_scrapbook_update_view_with_invalid_image_format(self):
-        # Edge Test: Test the ScrapbookUpdateView with an invalid image format
-        self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('scrapbook:edit-scrapbook', kwargs={'slug': self.scrapbook.slug, 'scrapbook_id': self.scrapbook.id}), {
-            'title': 'Updated Scrapbook',
-            'image': SimpleUploadedFile(name='test_image.gif', content=b'invalid_image', content_type='image/gif'),
-            'status': 1,
-            'content': 'Updated Scrapbook Content',
-            'description': 'Updated Scrapbook Description',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
-
+    # Edge Tests
     def test_post_update_view_with_special_characters_in_title(self):
-        # Edge Test: Test the PostUpdateView with special characters in the title
-        response = self.client.post(reverse('edit-post', kwargs={'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}), {
+        # Edge Test: Test the PostUpdateView with special characters 
+        # in the title
+        response = self.client.post(
+            reverse('edit-post', kwargs={
+            'scrapbook_slug': self.scrapbook.slug, 'post_id': self.post.id}), {
             'scrapbook': self.scrapbook.id,
             'title': 'Test Post! @#%^&*()_+{}:"<>?',
             'image': 'placeholder',
@@ -156,25 +199,34 @@ class ScrapbookViewsTest(TestCase):
     def test_post_delete_view_non_existent_post(self):
         # Edge Test: Test the PostDeleteView with a non-existent post
         self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('delete-post', kwargs={'scrapbook_slug': self.scrapbook.slug, 'post_id': 999}))
+        response = self.client.post(
+            reverse('delete-post', kwargs={
+                'scrapbook_slug': self.scrapbook.slug, 'post_id': 999}))
         self.assertEqual(response.status_code, 404)
         self.assertEqual(Post.objects.count(), 1)
-        response = self.client.get(reverse('scrapbook:scrapbook_detail', kwargs={'slug': self.scrapbook.slug}))
+        response = self.client.get(
+            reverse('scrapbook:scrapbook_detail', kwargs={
+                'slug': self.scrapbook.slug}))
         self.assertContains(response, 'Test Post')
 
     def test_user_without_permission_cannot_access_scrapbook(self):
         # Test that a user without permission cannot access a private scrapbook
         self.client.login(username='user1', password='testpass')
-        response = self.client.get(reverse('scrapbook_detail', kwargs={'slug': self.scrapbook2.slug}))
+        response = self.client.get(
+            reverse('scrapbook_detail', kwargs={'slug': self.scrapbook2.slug}))
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
-        self.assertContains(response, 'You do not have permission to view this scrapbook.', status_code=403)
+        self.assertContains(
+            response, 'You do not have permission to view this scrapbook.',
+              status_code=403)
 
     def test_user_with_permission_can_access_scrapbook(self):
         # Test that a user with permission can access a shared scrapbook
-        SharedAccess.objects.create(user=self.user1, scrapbook=self.scrapbook2, shared_by=self.user2)
+        SharedAccess.objects.create(
+            user=self.user1, scrapbook=self.scrapbook2, shared_by=self.user2)
         self.client.login(username='user1', password='testpass')
-        response = self.client.get(reverse('scrapbook_detail', kwargs={'slug': self.scrapbook2.slug}))
+        response = self.client.get(
+            reverse('scrapbook_detail', kwargs={'slug': self.scrapbook2.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'scrapbook/scrapbook_detail.html')
         self.assertContains(response, 'Scrapbook 2')
@@ -226,7 +278,8 @@ class ScrapbookMyListViewTest(TestCase):
         self.assertNotContains(response, 'Scrapbook 1')
 
     def test_shared_scrapbooks_not_in_my_scrapbooks(self):
-        # Test that shared scrapbooks do not appear in the user's own scrapbooks list
+        # Test that shared scrapbooks do not appear in the 
+        # user's own scrapbooks list
         self.client.login(username='user1', password='testpass')
         response = self.client.get(reverse('my_scrapbook_list'))
         self.assertEqual(response.status_code, 200)
@@ -236,7 +289,8 @@ class ScrapbookMyListViewTest(TestCase):
         self.assertNotContains(response, 'Scrapbook 2')
 
     def test_my_scrapbooks_not_in_shared_scrapbooks(self):
-        # Test that the user's own scrapbooks do not appear in the shared scrapbooks list
+        # Test that the user's own scrapbooks do not appear 
+        # in the shared scrapbooks list
         self.client.login(username='user1', password='testpass')
         response = self.client.get(reverse('shared_scrapbook_list'))
         self.assertEqual(response.status_code, 200)

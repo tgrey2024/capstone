@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 class AboutViewTests(TestCase):
     def setUp(self):
         # Set up any initial data or state needed for the tests
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser', 
+            password='testpass')
 
     def test_about_page_status_code(self):
         # Test that the about page returns a 200 status code
@@ -18,7 +20,8 @@ class AboutViewTests(TestCase):
         self.assertTemplateUsed(response, 'about/about.html')
 
     def test_about_page_for_unauthenticated_user(self):
-        # Test that the about page behaves correctly for an unauthenticated user
+        # Test that the about page behaves correctly for
+        # an unauthenticated user
         response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'about/about.html')

@@ -5,6 +5,54 @@ from cloudinary.forms import CloudinaryFileField
 from cloudinary import CloudinaryResource
 from PIL import Image
 
+class ScrapbookForm(forms.ModelForm):
+    title = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=True,
+        error_messages={'max_length': "The title cannot be more than 100 characters."}
+    )
+    image = forms.FileField(
+        label="Scrapbook Cover Image",
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+        required=True,
+    )
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+
+    description = forms.CharField(
+        label="Note to Self (Only you can see this)",
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        required=False,
+    )
+
+    class Meta:
+        model = Scrapbook
+        fields = ('title', 'content', 'description', 'status', 'image')
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control', 'id': 'id_image'}),            
+        }
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image and self.instance.pk:
+            return self.instance.image
+        if image:
+            if isinstance(image, CloudinaryResource):
+                return image
+            if hasattr(image, 'size'):
+                if image.size > 2 * 1024 * 1024:  # 2MB
+                    raise forms.ValidationError("Image file too large. Size should not exceed 2.0 MB.")
+            try:
+                img = Image.open(image)
+                img.verify()
+            except Exception as e:
+                raise forms.ValidationError("Upload a valid image. The file you uploaded was either not an image or a corrupted image.")
+        return image
+    
 class PostForm(forms.ModelForm):
     title = forms.CharField(
         label="Post Title",
@@ -69,54 +117,6 @@ class PostForm(forms.ModelForm):
         if not content:
             content = ''
         return content
-
-class ScrapbookForm(forms.ModelForm):
-    title = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        required=True,
-        error_messages={'max_length': "The title cannot be more than 100 characters."}
-    )
-    image = forms.FileField(
-        label="Scrapbook Cover Image",
-        widget=forms.FileInput(attrs={'class': 'form-control'}),
-        required=True,
-    )
-    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
-
-    description = forms.CharField(
-        label="Note to Self (Only you can see this)",
-        widget=forms.Textarea(attrs={'class': 'form-control'}),
-        required=False,
-    )
-
-    class Meta:
-        model = Scrapbook
-        fields = ('title', 'content', 'description', 'status', 'image')
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
-            'image': forms.FileInput(attrs={'class': 'form-control', 'id': 'id_image'}),            
-        }
-
-    def clean_image(self):
-        image = self.cleaned_data.get('image')
-        if not image and self.instance.pk:
-            return self.instance.image
-        if image:
-            if isinstance(image, CloudinaryResource):
-                return image
-            if hasattr(image, 'size'):
-                if image.size > 2 * 1024 * 1024:  # 2MB
-                    raise forms.ValidationError("Image file too large. Size should not exceed 2.0 MB.")
-            try:
-                img = Image.open(image)
-                img.verify()
-            except Exception as e:
-                raise forms.ValidationError("Upload a valid image. The file you uploaded was either not an image or a corrupted image.")
-        return image
 
 class ShareContentForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.none(), widget=forms.Select(attrs={'class': 'form-control'}))

@@ -58,7 +58,7 @@ class Post(models.Model):
     image = CloudinaryField('post_image', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=STATUS)
+    status = models.IntegerField(choices=STATUS, default=0)
     content = models.TextField(max_length=200, blank=True)
     approved = models.BooleanField(default=False)
     
@@ -84,6 +84,7 @@ class Post(models.Model):
         Returns:
             None
         """
+        self.title = self.title.strip()
         # Automatically generate a unique slug if it does not exist
         if not self.slug:
             self.slug = slugify(self.title)

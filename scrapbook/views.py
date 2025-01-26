@@ -238,14 +238,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, "Post deleted successfully.")
         return response
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object is None:
-            return render(request, '404.html', status=404)
-        success_url = self.get_success_url()
-        self.object.delete()
-        return redirect(success_url)
-    
+ 
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 
