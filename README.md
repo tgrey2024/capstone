@@ -142,6 +142,8 @@ The broad project plan was to secure the MVP, fully tested and documented suffic
 <hr/>
 
 ## Design
+When designing for the UI for Remineez, it was important to remember that our primary target users are seniors who may be diagnosed with dementia or other cognitive challenges. There may also be certain vision challenges due to the age of this user group, e.g. colour blindness. Many senior users may already use assistive tools on their devices, such as screen readers. It is important to design the site for accessibility. Semantic tags, image alt tags and ARIA labels help screen reader users to understand and navigate the content more easily. Font Awesome icons have been used to help remind users what each function does on the page. 
+
 ### Wireframes
 Based on the user stories, I used Balsamiq to design the wireframes for the main UI, starting with mobile first.
 
@@ -200,6 +202,9 @@ It is also important to design for a higher colour contrast, since many dementia
 
 Once I built the Bootstrap navbar, I tested with different shades of background colours (see middle screenshot below), but I found it difficult to find to get a contrast ratio higher than 4 with the Bootstrap default styles for nav links. By overriding the nav link styles and making the hover colours more vibrant, I managed to improve the WCAG colours above 5 (see below right screenshot).<br>
 
+| Bootstrap Navbar with light brown background | Bootstrap Navbar with mid brown background | Bootstrap Navbar with bespoke white text and yellow hover effect |
+|    :----:   |    :----:   |    :----:   |
+
 ![navbar test](https://github.com/user-attachments/assets/9a5ecb5c-364d-4efd-a2f6-68457dd29f5f)<br>
 <br>
 ![WCAG_navbar link text](https://github.com/user-attachments/assets/4a5dc435-642b-478c-b5d9-05b14abade01)
@@ -220,16 +225,15 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 
 On Pexels, I found a collection of old photos on Pexels that provided a good sample of the range of photos that might be added to a digital scrapbook by the target users, as well as images that could be used to draw users to share and connect with loved ones.
 ![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
-
 ![placeholder](https://github.com/user-attachments/assets/6772097c-88b1-421e-a4e5-063ebba69c4e)
 ![pexels-rdne-6148985](https://github.com/user-attachments/assets/e6764bd1-6b77-4146-9116-772fb6a34910)
 
 MS Copilot and DALL-E also provided some AI generated imagery.
 
-<details>
-    <summary>AI generated images</summary>
-    
 ![carousel1](https://github.com/user-attachments/assets/ffa8f5b1-cbc5-4971-b464-e00984c0dc3c)
+
+<details>
+    <summary>Other AI generated images</summary>
     
 ![close-up of old photos and letters with less clutter](https://github.com/user-attachments/assets/2a2e83f2-bfe9-4f83-a027-5acc42b74ac7)
     
@@ -243,11 +247,11 @@ MS Copilot and DALL-E also provided some AI generated imagery.
   - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
 
 #### Design Rationale
-  - [Explain key design decisions, such as layout, colour scheme, typography, and how accessibility guidelines (e.g., WCAG) were integrated.]
+  - [Explain key design decisions, how accessibility guidelines (e.g., WCAG) were integrated.]
   -   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
   - [Highlight any considerations made for users with disabilities, such as screen reader support.]
 
-  - Design for Accessibility
+
 
 #### Reasoning For Any Final Changes
   - [Summarise significant changes made to the design during development and the reasons behind them.]
@@ -307,13 +311,56 @@ A simple footer in dark brown(#56351e) has the brand and copyright, with links t
 
 
 ### Homepage and Published Scrapbooks
+The highest priority section of the homepage, namely the published scrapbooks, needed to be implemented first. Bootstrap cards have been used to ensure that the layout of the cards is responsive to different screen sizes. The same layout is used to list the scrapbooks on My Scrapbooks and Shared Scrapbooks.
+[include screenshots to show cards layout adapt to screen sizes, check pagination is working]
 
+#### Hero image
+In v1.2, the hero section was added with a call-to-action button, which changes depending on whether the user is logged in. This is mirrored in the hero section on the About page.
+![image](https://github.com/user-attachments/assets/49bc984c-4ef5-40a7-bf61-f46bb8fc09af)
+![image](https://github.com/user-attachments/assets/8afafe76-4dc2-4b88-8c55-60a9c18ba90c)
+The image of a scattered collection of old sepia photos brings to mind nostalgia and happy childhood memories which is aligned with the purpose of this app.
 
-The higher priority sections of the homepage, namely the cards of published scrapbooks were implemented first.
+#### Testimonials
+In v1.2, Github Copilot generated code for the Bootstrap Carousel, which was adapted to include thumbnail images generated by DALL-E and quotes generated by ghost text.
+
+![image](https://github.com/user-attachments/assets/2e2901ea-c9dc-4957-8994-c95a201cb48a)
+
+This provides user with more information on how other users feel about the product.
+
 ### Accounts Management
 [add screenshots, show how they use the same template, register and cancel buttons]
+
 ### Log in Status
-[add screenshots of logged in status text with icon, plus shortened version for small screens]
+The logged in status message and icon in the top right under the navbar tells users whether they are logged in or not.
+![image](https://github.com/user-attachments/assets/b956b0ab-b129-43de-82ce-799ec63a48e9)
+
+![image](https://github.com/user-attachments/assets/af166bfe-0684-409f-a949-adf94d4d26e8)
+
+On smaller screens, the message is shortened to fit on screen better:
+![image](https://github.com/user-attachments/assets/d4544e39-4150-4ff2-a216-c4391b60232d)
+
+### Publish Status
+<details>
+    <summary>When creating or editing scrapbooks, users can choose the status of their scrapbook. The same applies when creating/editing posts:
+</summary>
+    
+![image](https://github.com/user-attachments/assets/1550d47d-3f81-4146-a153-438bde61f17b)
+
+</details>
+
+* Draft: Users can save their work in progress and return to finish it another time. Only they can see any draft content.
+* Private: This may be content that users don't want to be published. Private scrapbooks can be shared with nominated users.
+* Public: Any scrapbooks set to Public status should be listed on the homepage for any users to see without logging in.
+
+The status of each scrapbook is denoted by the Font Awesome icons after the title:
+
+* Draft (icon: fa-solid fa-pen)
+* Private (icon: fa-solid fa-lock)
+* Public (icon: fa-solid fa-globe)
+
+Draft Scrapbooks and Posts are also displayed as cards with some opacity applied to the card body.
+![image](https://github.com/user-attachments/assets/a094f87f-cd0a-4dae-829b-849edb2430c7)
+
 ### CRUD Functions
 
 Here is a summary of the CRUD functionalities implemented. 
@@ -340,14 +387,18 @@ All users, logged-in or not, can read published scrapbooks and posts. All other 
 [add screenshots, show how they use the same template, confirmation and cancel buttons]
 
 ### My Scrapbooks
-### Publish Status
-[add screenshots, show how they are set and updated, icons, how it determines whether they can be accessed]
+
+
+
+
 
 ### Notifications
 [add screenshots, list which messages get sent to alert, disappear after 15s if not closed]
+![image](https://github.com/user-attachments/assets/a143f052-1054-45d3-8777-6586eafd6b3b)
 
 ### Admin Panel
 [add screenshots, show which columns were added]
+![image](https://github.com/user-attachments/assets/1d7f1767-c479-468d-a68c-6b83a74d202c)
 
 ### Inclusivity Notes
   - [Mention how the features address the needs of diverse users, including those with SEND.]
