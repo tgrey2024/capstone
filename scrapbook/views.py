@@ -149,12 +149,9 @@ class ScrapbookDetailView(generic.DetailView):
     def get_object(self, queryset=None):
         scrapbook = super().get_object(queryset)
         if scrapbook.status != 2 and scrapbook.author != self.request.user:
-            if (
-                not self.request.user.is_authenticated or
-                not SharedAccess.objects.filter(
-                    user=self.request.user, scrapbook=scrapbook
-                ).exists()
-            ):
+            if not SharedAccess.objects.filter(
+                user=self.request.user, scrapbook=scrapbook
+            ).exists():
                 raise PermissionDenied(
                     "You do not have permission to view this scrapbook."
                 )
@@ -175,22 +172,28 @@ class ScrapbookDetailView(generic.DetailView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         ordering = ["-created_on"]
+
+        # Get shared access for the current user and scrapbook
+        sharedaccess = SharedAccess.objects.filter(
+            user=self.request.user, scrapbook=scrapbook).exists()
+
         context.update({
             'scrapbook': scrapbook,
             'page_obj': page_obj,
             'posts': page_obj.object_list,
             'is_paginated': page_obj.has_other_pages(),
             'ordering': ordering,
+            'sharedaccess': sharedaccess,
         })
         return context
 
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     return super().get(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return handle_post_request(request, self.object)
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     return handle_post_request(request, self.object)
 
 
 def handle_post_request(request, scrapbook):
@@ -538,51 +541,24 @@ class ShareContentView(View):
     def get(self, request, *args, **kwargs):
         scrapbook_id = request.GET.get('scrapbook_id')
         scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
-        posts = Post.objects.filter(
-            scrapbook=scrapbook
-        ).exclude(status=0)  # Exclude draft posts
-        form = ShareContentForm(
-            initial={'scrapbook_id': scrapbook.id},
-            shared_by=request.user,
-            scrapbook=scrapbook
-        )
-        return render(
-            request,
-            'scrapbook/share_content.html',
-            {
-                'form': form,
-                'object': scrapbook,
-                'posts': posts
-            }
-        )
+        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        form = ShareContentForm(initial={'scrapbook_id': scrapbook.id}, shared_by=request.user, scrapbook=scrapbook)
+        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
 
     def post(self, request, *args, **kwargs):
         scrapbook_id = request.GET.get('scrapbook_id')
         scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
-        form = ShareContentForm(
-            request.POST, shared_by=request.user, scrapbook=scrapbook)
+        form = ShareContentForm(request.POST, shared_by=request.user, scrapbook=scrapbook)
         if form.is_valid():
             shared_access = form.save(commit=False)
             shared_access.shared_by = request.user
             shared_access.save()
-            messages.success(
-                request,
-                "Scrapbook and its posts shared successfully."
-            )
+            messages.success(request, "Scrapbook and its posts shared successfully.")
             return redirect('scrapbook_detail', slug=scrapbook.slug)
         else:
             messages.error(request, "Failed to share the scrapbook.")
-        posts = Post.objects.filter(
-            scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
-        return render(
-            request,
-            'scrapbook/share_content.html',
-            {
-                'form': form,
-                'object': scrapbook,
-                'posts': posts
-            }
-        )
+        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
 
 
 class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
@@ -628,33 +604,28 @@ class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         scrapbook = self.get_object()
         posts = scrapbook.posts.exclude(status=0)  # Exclude draft posts
-        ordering = ["-created_on"]
-        post_form = PostForm()
-
-        # Pagination
         paginator = Paginator(posts, 6)  # Show 6 posts per page
+
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
+        ordering = ["-created_on"]
 
         # Get shared access for the current user and scrapbook
         sharedaccess = SharedAccess.objects.filter(
             user=self.request.user, scrapbook=scrapbook).exists()
+
+        # Get shared posts for the current user and scrapbook
         shared_posts = SharedAccess.objects.filter(
-            user=self.request.user, scrapbook=scrapbook).values_list(
-                'post', flat=True)
+            user=self.request.user, scrapbook=scrapbook).values_list('post', flat=True)
 
         context.update({
-            'posts': page_obj,
-            'post_form': post_form,
-            'is_paginated': page_obj.has_other_pages(),
+            'scrapbook': scrapbook,
             'page_obj': page_obj,
+            'posts': page_obj.object_list,
+            'is_paginated': page_obj.has_other_pages(),
+            'ordering': ordering,
             'sharedaccess': sharedaccess,
             'shared_posts': shared_posts,
-            'permission_denied': (
-                not sharedaccess and
-                scrapbook.author != self.request.user and
-                scrapbook.status != 2
-            ),
         })
         return context
 

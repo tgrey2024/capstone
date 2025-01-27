@@ -441,7 +441,7 @@ class ShareContentViewTest(TestCase):
             status=1)
 
     def test_share_scrapbook_and_posts(self):
-        # Test sharing a scrapbook and all posts in the scrapbook
+        # Test sharing a scrapbook and all its posts with another user
         self.client.login(username='user1', password='testpass')
         response = self.client.post(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
             'user': self.user2.id,

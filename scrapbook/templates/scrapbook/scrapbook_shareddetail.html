@@ -37,7 +37,7 @@
         <!-- Post Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
-                {% if permission_denied %}
+                {% if not sharedaccess and scrapbook.author != user and scrapbook.status != 2 %}
                 <div class="col-12">
                     <div class="alert alert-danger" role="alert">
                         You do not have permission to view this scrapbook.
