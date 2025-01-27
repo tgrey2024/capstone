@@ -1,11 +1,26 @@
 from django import forms
 from django.contrib.auth.models import User
+from allauth.account.forms import SignupForm
 from cloudinary import CloudinaryResource
 from PIL import Image
 from .models import Post, Scrapbook, SharedAccess
 
 
 class ScrapbookForm(forms.ModelForm):
+    """
+    Form for creating and updating a scrapbook.
+
+    Fields:
+    title -- The title of the scrapbook.
+    image -- The cover image of the scrapbook.
+    content -- The content of the scrapbook.
+    description -- A note to self about the scrapbook.
+    status -- The status of the scrapbook (public or private).
+
+    Methods:
+    clean_image -- Validate the cover image.
+
+    """
     title = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control'}),
@@ -62,6 +77,20 @@ class ScrapbookForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    """
+    Form for creating and updating a post.
+
+    Fields:
+    title -- The title of the post.
+    image -- The image of the post.
+    content -- The content of the post.
+    status -- The status of the post (public or private).
+
+    Methods:
+    clean_image -- Validate the post image.
+    clean_title -- Validate the post title.
+    clean_content -- Validate the post content.
+    """
     title = forms.CharField(
         label="Post Title",
         max_length=100,
@@ -134,6 +163,19 @@ class PostForm(forms.ModelForm):
 
 
 class ShareContentForm(forms.ModelForm):
+    """
+    Form for sharing a scrapbook or post with another user.
+
+    Fields:
+    user -- The user to share the scrapbook or post with.
+    scrapbook_id -- The ID of the scrapbook to share.
+    post_id -- The ID of the post to share.
+
+    Methods:
+    clean -- Validate the user and scrapbook/post combination.
+    save -- Save the shared access instance and create shared access instances
+    for each post in the scrapbook.
+    """
     user = forms.ModelChoiceField(
         queryset=User.objects.none(), widget=forms.Select(attrs={
             'class': 'form-control'}))
@@ -188,3 +230,29 @@ class ShareContentForm(forms.ModelForm):
                     shared_by=instance.shared_by
                 )
         return instance
+
+
+class CustomSignupForm(SignupForm):
+    """
+    Custom signup form for the user registration page.
+
+    Fields:
+    username -- The username of the user.
+    email -- The email address of the user.
+
+    Methods:
+    save -- Save the user instance and perform any additional custom
+    processing.
+
+    """
+
+    email = forms.EmailField(
+        max_length=254,
+        required=True,
+        widget=forms.EmailInput(attrs={'placeholder': 'Email'})
+    )
+
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        # Add any additional custom processing here
+        return user

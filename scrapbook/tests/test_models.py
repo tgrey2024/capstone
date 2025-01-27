@@ -7,7 +7,33 @@ import re
 
 
 class ScrapbookModelTest(TestCase):
+    """
+    Test the Scrapbook model
 
+    The Scrapbook model is used to store information about a scrapbook
+    created by a user. The model has the following fields:
+    - title: The title of the scrapbook
+    - slug: A unique slug for the scrapbook
+    - author: The user who created the scrapbook
+    - status: The status of the scrapbook (draft, published, etc.)
+    - content: The content of the scrapbook
+    - description: A description of the scrapbook
+    - image: The cover image of the scrapbook
+    - created_on: The date and time the scrapbook was created
+    - updated_on: The date and time the scrapbook was last updated
+
+    The Scrapbook model has the following methods:
+    - __str__: Returns the title of the scrapbook
+    - save: Generates a unique slug for the scrapbook
+    - clean: Validates the length of the title and slug fields
+    - get_absolute_url: Returns the URL of the scrapbook detail page
+
+    The Scrapbook model has the following relationships:
+    - One-to-many relationship with the User model (author)
+    - One-to-many relationship with the Post model
+    - Many-to-many relationship with the User model (shared_with)
+
+    """
     def setUp(self):
         # Create a user for testing
         self.user = User.objects.create_user(
@@ -209,7 +235,31 @@ class ScrapbookModelTest(TestCase):
 
 
 class PostModelTest(TestCase):
+    """
+    Test the Post model
 
+    The Post model is used to store information about a post created by a user
+    in a scrapbook. The model has the following fields:
+    - title: The title of the post
+    - slug: A unique slug for the post
+    - author: The user who created the post
+    - scrapbook: The scrapbook to which the post belongs
+    - status: The status of the post (draft, published, etc.)
+    - content: The content of the post
+    - image: The image associated with the post
+    - created_on: The date and time the post was created
+    - updated_on: The date and time the post was last updated
+
+    The Post model has the following methods:
+    - __str__: Returns the title of the post
+    - save: Generates a unique slug for the post
+    - clean: Validates the length of the title and slug fields
+
+    The Post model has the following relationships:
+    - One-to-many relationship with the User model (author)
+    - One-to-many relationship with the Scrapbook model
+
+    """
     def setUp(self):
         # Create a user and a scrapbook for testing
         self.user = User.objects.create_user(
@@ -398,7 +448,27 @@ class PostModelTest(TestCase):
 
 
 class SharedAccessModelTest(TestCase):
+    """
+    Test the SharedAccess model
 
+    The SharedAccess model is used to store information about the shared access
+    of a scrapbook or post with another user. It has the following fields:
+    - user: The user who has access to the shared content
+    - scrapbook: The scrapbook that is shared
+    - post: The post that is shared
+    - shared_by: The user who shared the content
+    - created_on: The date and time the shared access was created
+
+    The SharedAccess model has the following methods:
+    - __str__: Returns the user and the shared content
+
+    The SharedAccess model has the following relationships:
+    - One-to-many relationship with the User model (user)
+    - One-to-many relationship with the Scrapbook model
+    - One-to-many relationship with the Post model
+    - One-to-many relationship with the User model (shared_by)
+
+    """
     def setUp(self):
         # Create users for testing
         self.user1 = User.objects.create_user(

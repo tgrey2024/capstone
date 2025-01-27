@@ -1,5 +1,4 @@
-from PIL import Image
-from PIL import ImageFile
+from PIL import Image, ImageFile
 from PIL.Image import DecompressionBombWarning
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile

@@ -4,6 +4,9 @@ from django.urls import reverse
 
 
 class AboutViewTests(TestCase):
+    """
+    Tests for the about app views.
+    """
     def setUp(self):
         # Set up any initial data or state needed for the tests
         self.user = User.objects.create_user(
