@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
 from PIL import Image
 from PIL import ImageFile
 from PIL.Image import DecompressionBombWarning
+from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
 import io
 import warnings
 from .forms import PostForm, ShareContentForm, ScrapbookForm
@@ -14,17 +14,31 @@ from .models import Scrapbook, Post, SharedAccess
 warnings.simplefilter('ignore', DecompressionBombWarning)
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
+
 class ScrapbookFormTest(TestCase):
-    
+    """
+    Test case for the ScrapbookForm.
+
+    This test case includes tests for validating the ScrapbookForm with
+    valid and invalid data, ensuring that the form behaves as expected.
+    """
+
     def setUp(self):
         self.user = User.objects.create_user(
             username='testuser', password='testpass')
 
     def test_scrapbook_form_valid_data(self):
         # Test the ScrapbookForm with valid data
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
-        image = SimpleUploadedFile(name='test_image.jpg', 
-            content=image_content, content_type='image/jpeg')
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
+        image = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = ScrapbookForm(data={
             'title': 'Test Scrapbook',
             'content': 'Test Scrapbook Content',
@@ -50,12 +64,15 @@ class ScrapbookFormTest(TestCase):
 
     def test_scrapbook_form_missing_title(self):
         # Test the ScrapbookForm with missing title
-        form = ScrapbookForm(data={'content': 'Test Scrapbook Content', 
-            'description': 'Test Scrapbook Description', 'status': 1})
+        form = ScrapbookForm(data={
+            'content': 'Test Scrapbook Content',
+            'description': 'Test Scrapbook Description',
+            'status': 1
+        })
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors)
         self.assertEqual(form.errors['title'], ['This field is required.'])
-    
+
     def test_scrapbook_form_missing_image(self):
         # Test the ScrapbookForm with missing image
         form = ScrapbookForm(data={
@@ -68,13 +85,19 @@ class ScrapbookFormTest(TestCase):
         self.assertIn('image', form.errors)
         self.assertEqual(form.errors['image'], ['This field is required.'])
 
-
     # Edge Tests
     def test_scrapbook_form_max_length_title(self):
         # Edge Test: Test the ScrapbookForm with maximum length title
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
-        image = SimpleUploadedFile(name='test_image.jpg',
-            content=image_content, content_type='image/jpeg')
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
+        image = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = ScrapbookForm(data={
             'title': 'a' * 100,
             'content': 'Test Scrapbook Content',
@@ -95,13 +118,20 @@ class ScrapbookFormTest(TestCase):
         self.assertIn('title', form.errors)
         self.assertEqual(form.errors['title'], [
             "The title cannot be more than 100 characters."])
-    
+
     def test_scrapbook_form_special_characters(self):
-        # Edge Test: Test the ScrapbookForm with 
+        # Edge Test: Test the ScrapbookForm with
         # special characters in title and content
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
-        image = SimpleUploadedFile(name='test_image.jpg',
-            content=image_content, content_type='image/jpeg')
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
+        image = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = ScrapbookForm(data={
             'title': 'Test Scrapbook! @#%^&*()_+{}:"<>?',
             'content': 'Test Scrapbook Content! @#%^&*()_+{}:"<>?',
@@ -117,16 +147,16 @@ class ScrapbookFormTest(TestCase):
         self.assertEqual(
             scrapbook.content, 'Test Scrapbook Content! @#%^&*()_+{}:"<>?')
         self.assertEqual(
-            scrapbook.description, 
+            scrapbook.description,
             'Test Scrapbook Description! @#%^&*()_+{}:"<>?')
         self.assertEqual(scrapbook.status, 1)
         self.assertTrue(scrapbook.image is not None)
         self.assertTrue(scrapbook.image != '')
-    
+
     def test_scrapbook_form_invalid_image_format(self):
         # Edge Test: Test the ScrapbookForm with invalid image format
         image = SimpleUploadedFile(
-            name='test_image.gif', 
+            name='test_image.gif',
             content=b'invalid_image',
             content_type='image/gif')
         form = ScrapbookForm(data={
@@ -140,7 +170,7 @@ class ScrapbookFormTest(TestCase):
         self.assertEqual(
             form.errors['image'], [
                 'Upload a valid image or an uncorrupted image.'])
-    
+
     def test_scrapbook_form_large_image_file(self):
         # Edge Test: Test the ScrapbookForm with large image file
         with warnings.catch_warnings():
@@ -150,8 +180,8 @@ class ScrapbookFormTest(TestCase):
             large_image.save(image_io, format='JPEG')
             image_content = image_io.getvalue()
             image = SimpleUploadedFile(
-                name='test_image.jpg', 
-                content=image_content, 
+                name='test_image.jpg',
+                content=image_content,
                 content_type='image/jpeg')
             form = ScrapbookForm(data={
                 'title': 'Test Scrapbook',
@@ -165,23 +195,34 @@ class ScrapbookFormTest(TestCase):
             form.errors['image'], [
                 'Image file too large. Size should not exceed 2.0 MB.'])
 
-class PostFormTest(TestCase):
 
+class PostFormTest(TestCase):
+    """
+    Test case for the PostForm.
+
+    This test case includes tests for validating the PostForm with
+    valid and invalid data, ensuring that the form behaves as expected.
+    """
     def setUp(self):
         self.user = User.objects.create_user(
-            username='testuser', 
+            username='testuser',
             password='testpass')
         self.scrapbook = Scrapbook.objects.create(
-            title='Test Scrapbook', 
+            title='Test Scrapbook',
             author=self.user)
 
     def test_post_form_valid_data(self):
         # Test the PostForm with valid data
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
         image = SimpleUploadedFile(
-            name='test_image.jpg', 
-            content=image_content, 
-            content_type='image/jpeg')
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
             'title': 'Test Post',
@@ -226,15 +267,20 @@ class PostFormTest(TestCase):
         self.assertIn('image', form.errors)
         self.assertEqual(
             form.errors['image'], ['This field is required.'])
-    
+
     # Edge Tests
     def test_post_form_max_length_title(self):
         # Edge Test: Test the PostForm with maximum length title
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
         image = SimpleUploadedFile(
-            name='test_image.jpg', 
-            content=image_content, 
-            content_type='image/jpeg')
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
             'title': 'a' * 100,
@@ -257,13 +303,18 @@ class PostFormTest(TestCase):
             "The title cannot be more than 100 characters."])
 
     def test_post_form_special_characters(self):
-        # Edge Test: Test the PostForm with 
+        # Edge Test: Test the PostForm with
         # special characters in title and content
-        image_content = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        image_content = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+            b'\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b'
+        )
         image = SimpleUploadedFile(
-            name='test_image.jpg', 
-            content=image_content, 
-            content_type='image/jpeg')
+            name='test_image.jpg',
+            content=image_content,
+            content_type='image/jpeg'
+        )
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
             'title': 'Test Post! @#%^&*()_+{}:"<>?',
@@ -285,8 +336,8 @@ class PostFormTest(TestCase):
     def test_post_form_invalid_image_format(self):
         # Edge Test: Test the PostForm with invalid image format
         image = SimpleUploadedFile(
-            name='test_image.gif', 
-            content=b'invalid_image', 
+            name='test_image.gif',
+            content=b'invalid_image',
             content_type='image/gif')
         form = PostForm(data={
             'scrapbook': self.scrapbook.id,
@@ -324,22 +375,29 @@ class PostFormTest(TestCase):
             form.errors['image'],
             ['Image file too large. Size should not exceed 2.0 MB.'])
 
+
 class SharedAccessFormTest(TestCase):
+    """
+    Test case for the SharedAccessForm.
+
+    This test case includes tests for validating the SharedAccessForm with
+    valid and invalid data, ensuring that the form behaves as expected.
+    """
 
     def setUp(self):
         self.user1 = User.objects.create_user(
-            username='user1', 
+            username='user1',
             password='testpass')
         self.user2 = User.objects.create_user(
-            username='user2', 
+            username='user2',
             password='testpass')
         self.scrapbook = Scrapbook.objects.create(
-            title='Test Scrapbook', 
+            title='Test Scrapbook',
             author=self.user1)
         self.post = Post.objects.create(
-            title='Test Post', 
-            author=self.user1, 
-            scrapbook=self.scrapbook, 
+            title='Test Post',
+            author=self.user1,
+            scrapbook=self.scrapbook,
             status=1)
 
     def test_shared_access_form_valid_data(self):
@@ -366,8 +424,8 @@ class SharedAccessFormTest(TestCase):
     def test_shared_access_form_missing_user(self):
         # Test the SharedAccessForm with missing user
         form = ShareContentForm(
-            data={'scrapbook_id': self.scrapbook.id, 'post_id': None}, 
-            shared_by=self.user1, 
+            data={'scrapbook_id': self.scrapbook.id, 'post_id': None},
+            shared_by=self.user1,
             scrapbook=self.scrapbook)
         self.assertFalse(form.is_valid())
         self.assertIn('user', form.errors)
@@ -377,8 +435,8 @@ class SharedAccessFormTest(TestCase):
     def test_shared_access_form_existing_shared_access(self):
         # Test the SharedAccessForm with existing shared access
         SharedAccess.objects.create(
-            user=self.user2, 
-            scrapbook=self.scrapbook, 
+            user=self.user2,
+            scrapbook=self.scrapbook,
             shared_by=self.user1)
         form = ShareContentForm(data={
             'user': self.user2.id,

@@ -41,7 +41,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.codeinstitute-ide.net',
-    "https://*.herokuapp.com",]
+    "https://*.herokuapp.com", ]
 
 # Application definition
 
@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Use sqlite3 for testing if test is in system arguments, 
+# Use sqlite3 for testing if test is in system arguments,
 # otherwise use the DATABASE_URL environment variable
 if 'test' in sys.argv:
     DATABASES = {
@@ -119,7 +119,8 @@ if 'test' in sys.argv:
         }
     }
 else:
-    DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
