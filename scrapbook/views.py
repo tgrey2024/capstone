@@ -5,13 +5,12 @@ from .models import Scrapbook, Post, SharedAccess
 from .forms import PostForm, ScrapbookForm, ShareContentForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-import logging
+from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 
@@ -28,6 +27,12 @@ class ScrapbookListView(generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
     template_name = "scrapbook/index.html"
+    paginate_by = 6  # Show 6 scrapbooks per page
+
+    def get_queryset(self):
+        # Filter scrapbooks to only show public scrapbooks
+        queryset = Scrapbook.objects.filter(status=2).order_by('-created_on')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,17 +44,25 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
     template_name = "scrapbook/scrapbook_mylist.html"
+    paginate_by = 6  # Show 6 scrapbooks per page
     login_url = '/accounts/login/'
 
     def get_queryset(self):
-        # Filter scrapbooks to only show the user's own scrapbooks
-        queryset = Scrapbook.objects.filter(author=self.request.user)
+        # Filter scrapbooks to only show the user's scrapbooks
+        queryset = Scrapbook.objects.filter(author=self.request.user).order_by('-created_on')
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_count'] = Post.objects.filter(
+            scrapbook__in=self.get_queryset(), status=2).count()
+        return context
 
 class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
     model = Scrapbook
     ordering = ["-created_on"]
     template_name = "scrapbook/scrapbook_sharedlist.html"
+    paginate_by = 6  # Show 6 scrapbooks per page
     login_url = '/accounts/login/'
 
     def get_queryset(self):
@@ -59,7 +72,8 @@ class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['shared_scrapbooks'] = self.get_queryset()
+        context['post_count'] = Post.objects.filter(
+            scrapbook__in=self.get_queryset(), status=2).count()
         return context
 
     
@@ -83,10 +97,16 @@ class ScrapbookDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         scrapbook = self.get_object()
         posts = scrapbook.posts.all()
+        paginator = Paginator(posts, 6)  # Show 6 posts per page
+
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         ordering = ["-created_on"]
         context.update({
             'scrapbook': scrapbook,
-            'posts': posts,
+            'page_obj': page_obj,
+            'posts': page_obj.object_list,
+            'is_paginated': page_obj.has_other_pages(),
             'ordering': ordering,
         })
         return context
@@ -228,17 +248,22 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'scrapbook/confirm_delete.html'
     login_url = '/accounts/login/'
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_id = self.kwargs['post_id']
-        return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
+        try:
+            return get_object_or_404(Post, id=post_id, scrapbook__slug=scrapbook_slug)
+        except Http404:
+            return None
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.success(self.request, "Post deleted successfully.")
-        return response
+        self.object = self.get_object()
+        if self.object is None:
+            raise Http404("No Post matches the given query.")
+        success_url = self.get_success_url()
+        self.object.delete()
+        return redirect(success_url)
 
- 
     def get_success_url(self):
         return reverse_lazy('scrapbook:scrapbook_detail', kwargs={'slug': self.object.scrapbook.slug})
 

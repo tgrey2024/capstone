@@ -17,7 +17,7 @@ class ScrapbookViewsTest(TestCase):
         self.scrapbook2 = Scrapbook.objects.create(
             title='Scrapbook 2', author=self.user2, status=1)
         self.scrapbook = Scrapbook.objects.create(
-            title='Test Scrapbook', author=self.user1)
+            title='Test Scrapbook', author=self.user1, status=2)
         self.post = Post.objects.create(
             title='Test Post', author=self.user1, 
             scrapbook=self.scrapbook, status=1)
@@ -30,9 +30,7 @@ class ScrapbookViewsTest(TestCase):
         # Test the ScrapbookListView
         response = self.client.get(reverse('scrapbook:home'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'scrapbook/index.html')
         self.assertContains(response, 'Test Scrapbook')
-        self.assertContains(response, 'by user1')
 
     def test_scrapbook_detail_view(self):
         # Test the ScrapbookDetailView

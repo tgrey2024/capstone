@@ -36,9 +36,9 @@
                 <!-- Scrapbook Entries Column -->
                 <div class="col-12 mt-3 left">
                     <div class="row">
-                        {% for scrapbook in scrapbook_list %}
+                        {% for scrapbook in page_obj %}
                         <!-- don't show a scrapbook if its status is not Public -->
-                        <div class="col-md-6 col-lg-4 {% if not scrapbook.status == 2 %}d-none{% endif %}">
+                        <div class="col-md-6 col-lg-4">
                             <!-- Bootstrap 5 card for each scrapbook -->
                             <div class="card fixed-card mb-4">
                                 <div class="text-center">
@@ -60,10 +60,8 @@
                                     <div class="d-grid gap-2 d-md-block text-center mb-1">
                                         <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>
                                         <!-- if logged in user is the post author, show edit and delete buttons -->
-                                    {% if user.is_authenticated and scrapbook.author == user %}
-                                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" aria-label="Go to the Scrapbook Edit page" class="btn btn-info btn-edit scrapbook-link">Edit <i class="fa-regular fa-pen-to-square"></i></a>
-                                        {% endif %}
                                         {% if user.is_authenticated and scrapbook.author == user %}
+                                        <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" aria-label="Go to the Scrapbook Edit page" class="btn btn-info btn-edit scrapbook-link">Edit <i class="fa-regular fa-pen-to-square"></i></a>
                                         <a href="{% url 'delete-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-danger scrapbook-link" aria-label="Go to Delete Scrapbook page">Delete <i class="fa-regular fa-trash-can"></i></a>
                                         <a href="{% url 'share_content' %}?scrapbook_id={{ scrapbook.id }}" class="btn btn-info scrapbook-link" aria-label="Share Scrapbook">Share <i class="fa-solid fa-share-nodes"></i></a>
                                         {% endif %}
@@ -71,10 +69,27 @@
                                 </div>
                             </div>
                         </div>
+                        {% if forloop.counter|divisibleby:6 %}
+                        </div>
+                        <div class="row">
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Go to previous page"> &laquo; PREV</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Go to next page"> NEXT &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
         </div>
     </section>
     <!-- Testimonials -->
