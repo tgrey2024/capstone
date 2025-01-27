@@ -99,7 +99,7 @@ Research has shown that memory aids such as individualised photo memory books ca
 Here are all the user stories that have been prioritised (all must have and some should have ones) for the current implementation of the webapp:
 
 | User Stories                                    | MoSCoW priority           |  Status |
-| ----------------------------------------------- |:-------------------------:| -------:|
+|:----------------------------------------------- |:-------------------------:|:-------:|
 | User-Friendly Navigation and Responsive Design  | must have                 |   Done  |
 | Account Registration                            | must have                 |   Done  |
 | View Paginated Posts                            | must have                 |   Done  |
@@ -128,7 +128,7 @@ As well as using the Project Board to track progress on our project, I also used
 The broad project plan was to secure the MVP, fully tested and documented sufficiently before incorporating the optional should have and could have features.
 
 | Milestone |                      Scope                      |      Scheduled    |       Actual      |
-| ----------|:----------------------------------------------- |:-----------------:|------------------:|
+|:----------|:----------------------------------------------- |:-----------------:|:-----------------:|
 | v0.1      | Plan, design, Django and Heroku setup           |  Day 1-3          |  Day 1-2          |
 | v1.0      | MVP (all must-haves), automated tests           |  Day 1-7          |  Day 1-7          |
 | v1.0.1    | Initial validation, manual tests, bug fixes     |  Day 6-8          |  Day 6-9          |
@@ -264,12 +264,6 @@ Since most users are expected to access the site on mobile devices, the UI has b
 ![image](https://github.com/user-attachments/assets/9395d64b-900e-418d-8304-81a7162ebb06)
 
 
-
-
-
-
-
-
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Key Features
@@ -277,7 +271,7 @@ Since most users are expected to access the site on mobile devices, the UI has b
 Parts of the site are only accessible when users are registered and logged in:
 
 | Features                           | Unauthenticated Users     |  Authenticated Users |
-|: ---------------------------------- |:-------------------------:|: --------------------:|
+|: --------------------------------- |:-------------------------:|: -------------------:|
 | Homepage                           |           Yes             |          Yes         |
 | About                              |           Yes             |          Yes         |
 | My Scrapbooks                      |           No              |          Yes         |
@@ -397,7 +391,7 @@ All users, logged-in or not, can read published scrapbooks and posts. All other 
 ![image](https://github.com/user-attachments/assets/a143f052-1054-45d3-8777-6586eafd6b3b)
 
 ### Admin Panel
-[add screenshots, show which columns were added]
+The Admin Panel is set up for the admin or superuser to have access to the data in the database, including the Scrapbook, Post and SharedAccess models and the User model. Additional fields have been added to verify data changes after CRUD functions in the front end.
 ![image](https://github.com/user-attachments/assets/1d7f1767-c479-468d-a68c-6b83a74d202c)
 
 ### Inclusivity Notes
@@ -694,7 +688,7 @@ Tests that the About page loads and contains the right content for authenticated
 ![Static Badge](https://img.shields.io/badge/Django_Summernote-rich_text_editor_package-%2311593e)
 ![Static Badge](https://img.shields.io/badge/Django_Pillow-imaging_library_for_image_testing-%2311593e)
 
-All Django packages installed is listed in [requirements.txt](https://github.com/tgrey2024/capstone/blob/main/requirements.txt)).
+All Django packages installed are listed in [requirements.txt](https://github.com/tgrey2024/capstone/blob/main/requirements.txt).
 
 ### Tools and Programs
 ![Static Badge](https://img.shields.io/badge/LogoAI-logo_generator-red)
