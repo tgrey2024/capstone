@@ -61,6 +61,7 @@ h1, h2, h3, h4, h5, h6, .logo {
     margin-bottom: 0.2rem;
 }
 
+/* Notification alert */
 #msg {
     color: #56351e;
     background-color: #ffffa7;
@@ -69,6 +70,19 @@ h1, h2, h3, h4, h5, h6, .logo {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.alert {
+    transition: opacity 1s ease-out;
+}
+
+.alert.show {
+    opacity: 1;
+}
+
+.alert.fade {
+    opacity: 0;
+}
+
+/* Content with or without Back button */
 .move-up {
     position: relative; 
     top: -8px;
