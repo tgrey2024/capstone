@@ -1,4 +1,3 @@
-import logging
 from django import forms
 from django.contrib.auth.models import User
 from allauth.account.forms import SignupForm
@@ -6,8 +5,6 @@ from cloudinary import CloudinaryResource
 from PIL import Image
 from .models import Post, Scrapbook, SharedAccess
 
-# Set up logging
-logger = logging.getLogger(__name__)
 
 class ScrapbookForm(forms.ModelForm):
     """
@@ -229,18 +226,13 @@ class ShareContentForm(forms.ModelForm):
             # Create SharedAccess instances for each post in the scrapbook
             posts = Post.objects.filter(scrapbook=instance.scrapbook)
             for post in posts:
-                shared_access = SharedAccess.objects.create(
+                SharedAccess.objects.create(
                     user=instance.user,
                     scrapbook=instance.scrapbook,
                     post=post,
                     shared_by=instance.shared_by
                 )
-                # Log the creation of each SharedAccess instance
-                logger.debug(
-                    f"SharedAccess created: user={shared_access.user}, "
-                    f"scrapbook={shared_access.scrapbook}, post={shared_access.post}, "
-                    f"shared_by={shared_access.shared_by}"
-                )
+                instance.save()
         return instance
 
 

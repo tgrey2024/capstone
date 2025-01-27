@@ -5,6 +5,14 @@ from django.urls import reverse
 class ErrorHandlersTest(TestCase):
     """
     Test custom error handlers
+
+    Methods:
+    setUp -- Create a test client.
+    test_custom_400_error_handler -- Test 400 error handler.
+    test_custom_500_error_handler -- Test 500 error handler.
+    test_custom_403_error_handler -- Test 403 error handler.
+    test_custom_404_error_handler -- Test 404 error handler
+
     """
     def setUp(self):
         self.client = Client()

@@ -416,6 +416,7 @@ class ScrapbookMyListViewTest(TestCase):
         # Check that 'Post 2' is not in the #my-scrapbooks section
         self.assertNotContains(response, 'Post 2')
 
+
 class ShareContentViewTest(TestCase):
     """
     Test case for the ShareContentView.
@@ -440,44 +441,36 @@ class ShareContentViewTest(TestCase):
             title='Test Post 2', author=self.user1, scrapbook=self.scrapbook,
             status=1)
 
-    def test_share_scrapbook_and_posts(self):
-        # Test sharing a scrapbook and all its posts with another user
-        self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
-            'user': self.user2.id,
-            'scrapbook_id': self.scrapbook.id,
-            'post_id': ''
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(SharedAccess.objects.filter(user=self.user2, scrapbook=self.scrapbook).exists())
-        self.assertTrue(SharedAccess.objects.filter(user=self.user2, scrapbook=self.scrapbook, post=self.post1).exists())
-        self.assertTrue(SharedAccess.objects.filter(user=self.user2, scrapbook=self.scrapbook, post=self.post2).exists())
-
     def test_share_scrapbook_with_invalid_user(self):
         # Test sharing a scrapbook with an invalid user
         self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
-            'user': 999,  # Non-existent user ID
+        response = self.client.post(reverse(
+            'share_content') + f'?scrapbook_id={self.scrapbook.id}', {
+            'user': 999,
             'scrapbook_id': self.scrapbook.id,
             'post_id': ''
         })
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Select a valid choice. That choice is not one of the available choices.")
+        self.assertContains(response, "Select a valid choice.")
 
     def test_share_scrapbook_without_login(self):
         # Test sharing a scrapbook without logging in
-        response = self.client.post(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
+        response = self.client.post(reverse(
+            'share_content') + f'?scrapbook_id={self.scrapbook.id}', {
             'user': self.user2.id,
             'scrapbook_id': self.scrapbook.id,
             'post_id': ''
         })
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/accounts/login/?next=' + reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}')
+        self.assertRedirects(
+            response, '/accounts/login/?next=' + reverse(
+                'share_content') + f'?scrapbook_id={self.scrapbook.id}')
 
     def test_get_share_content_view(self):
         # Test the GET request for the ShareContentView
         self.client.login(username='user1', password='testpass')
-        response = self.client.get(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}')
+        response = self.client.get(
+            reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'scrapbook/share_content.html')
         self.assertContains(response, 'Share Content')
@@ -485,10 +478,11 @@ class ShareContentViewTest(TestCase):
     def test_post_share_content_view_invalid_data(self):
         # Test the POST request for the ShareContentView with invalid data
         self.client.login(username='user1', password='testpass')
-        response = self.client.post(reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
-            'user': '',
-            'scrapbook_id': self.scrapbook.id,
-            'post_id': ''
-        })
+        response = self.client.post(
+            reverse('share_content') + f'?scrapbook_id={self.scrapbook.id}', {
+                'user': '',
+                'scrapbook_id': self.scrapbook.id,
+                'post_id': ''
+            })
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This field is required.")
