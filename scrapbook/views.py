@@ -30,6 +30,8 @@ class ScrapbookListView(generic.ListView):
     get_context_data -- Add the number of posts in each scrapbook to the
     context.
 
+    Template:
+    scrapbook/index.html
     """
     model = Scrapbook
     ordering = ["-created_on"]
@@ -64,6 +66,8 @@ class ScrapbookMyListView(LoginRequiredMixin, generic.ListView):
     get_context_data -- Add the number of posts in each scrapbook to the
     context.
 
+    Template:
+    scrapbook/scrapbook_mylist.html
     """
     model = Scrapbook
     ordering = ["-created_on"]
@@ -100,6 +104,8 @@ class ScrapbookSharedListView(LoginRequiredMixin, generic.ListView):
     get_context_data -- Add the number of posts in each scrapbook to the
     context.
 
+    Template:
+    scrapbook/scrapbook_sharedlist.html
     """
     model = Scrapbook
     ordering = ["-created_on"]
@@ -134,6 +140,8 @@ class ScrapbookDetailView(generic.DetailView):
     permission to view the scrapbook.
     get_context_data -- Add the posts in the scrapbook to the context.
 
+    Template:
+    scrapbook/scrapbook_detail.html
     """
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_detail.html'
@@ -214,6 +222,8 @@ class ScrapbookCreateView(LoginRequiredMixin, CreateView):
     get_success_url -- Redirect to the detail view of the created scrapbook.
     get_context_data -- Add the action to the context.
 
+    Template:
+    scrapbook/scrapbook_form.html
     """
     model = Scrapbook
     form_class = ScrapbookForm
@@ -250,6 +260,8 @@ class ScrapbookUpdateView(LoginRequiredMixin, UpdateView):
     get_success_url -- Redirect to the user's scrapbook list.
     get_context_data -- Add the action to the context.
 
+    Template:
+    scrapbook/scrapbook_form.html
     """
     model = Scrapbook
     form_class = ScrapbookForm
@@ -283,6 +295,8 @@ class ScrapbookDeleteView(LoginRequiredMixin, DeleteView):
     form_valid -- Display a success message when the form is valid.
     get_success_url -- Redirect to the user's scrapbook list.
 
+    Template:
+    scrapbook/confirm_delete.html
     """
     model = Scrapbook
     template_name = 'scrapbook/confirm_delete.html'
@@ -318,6 +332,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     get_success_url -- Redirect to the detail view of the scrapbook.
     get_context_data -- Add the action and the scrapbook to the context.
 
+    Template:
+    scrapbook/post_form.html
     """
     model = Post
     form_class = PostForm
@@ -364,6 +380,8 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     get_success_url -- Redirect to the detail view of the scrapbook.
     get_context_data -- Add the action and the scrapbook to the context.
 
+    Template:
+    scrapbook/post_form.html
     """
     model = Post
     form_class = PostForm
@@ -409,6 +427,8 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     form_valid -- Display a success message when the form is valid.
     get_success_url -- Redirect to the detail view of the scrapbook.
 
+    Template:
+    scrapbook/confirm_delete.html
     """
     model = Post
     template_name = 'scrapbook/confirm_delete.html'
@@ -451,6 +471,8 @@ class PostDetailView(generic.DetailView):
     permission to view the post.
     get_context_data -- Add the scrapbook to the context.
 
+    Template:
+    scrapbook/post_detail.html
     """
     model = Post
     template_name = 'scrapbook/post_detail.html'
@@ -510,6 +532,8 @@ class ShareContentView(View):
     get -- Display the form for sharing the scrapbook.
     post -- Share the scrapbook and its posts with the user.
 
+    Template:
+    scrapbook/share_content.html
     """
     def get(self, request, *args, **kwargs):
         scrapbook_id = request.GET.get('scrapbook_id')
@@ -576,6 +600,8 @@ class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
     permission to view the scrapbook.
     get_context_data -- Add the posts in the scrapbook to the context.
 
+    Template:
+    scrapbook/scrapbook_shareddetail.html
     """
     model = Scrapbook
     template_name = 'scrapbook/scrapbook_shareddetail.html'

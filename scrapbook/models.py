@@ -22,6 +22,30 @@ def validate_status(value):
 class Scrapbook(models.Model):
     """
     Stores a single scrapbook entry related to :model:`auth.User`.
+
+    Scrapbooks are collections of posts that can be shared with other users.
+
+    Attributes:
+        title: A CharField that stores the title of the scrapbook.
+        slug: A SlugField that stores the unique slug of the scrapbook.
+        image: A CloudinaryField that stores the image of the scrapbook.
+        content: A TextField that stores the content of the scrapbook.
+        created_on: A DateTimeField that stores the date and time the 
+            scrapbook was created.
+        updated_on: A DateTimeField that stores the date and time the 
+            scrapbook was last updated.
+        status: An IntegerField that stores the status of the scrapbook.
+        description: A TextField that stores the description of the scrapbook.
+    
+    Methods:
+        __str__: Returns an f-string with the title and author of the
+            scrapbook.
+        save: Overrides the save method to automatically generate a unique
+            slug for the instance if it does not already have one.
+        
+    Meta:
+        ordering: Orders scrapbooks from newest to oldest.
+
     """
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
@@ -55,6 +79,33 @@ class Post(models.Model):
     """
     Stores a single post entry related to :model:`auth.User`
     and :model:`scrapbook.Scrapbook`.
+
+    Posts are entries that belong to a scrapbook and can be shared with other
+    users.
+
+    Attributes:
+        scrapbook: A ForeignKey that stores the scrapbook the post belongs to.
+        author: A ForeignKey that stores the author of the post.
+        title: A CharField that stores the title of the post.
+        slug: A SlugField that stores the unique slug of the post.
+        image: A CloudinaryField that stores the image of the post.
+        created_on: A DateTimeField that stores the date and time the post
+            was created.
+        updated_on: A DateTimeField that stores the date and time the post
+            was last updated.
+        status: An IntegerField that stores the status of the post.
+        content: A TextField that stores the content of the post.
+        approved: A BooleanField that stores whether the post is approved.
+
+    Methods:
+        __str__: Returns an f-string with the title, scrapbook title and author
+            of the post.
+        save: Overrides the save method to automatically generate a unique
+            slug for the instance if it does not already have one.
+    
+    Meta:
+        ordering: Orders posts from newest to oldest.
+
     """
     scrapbook = models.ForeignKey(
         Scrapbook, on_delete=models.CASCADE, related_name="posts")
@@ -77,22 +128,8 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.title} | by {self.author.username}"
 
+    
     def save(self, *args, **kwargs):
-        """
-        Overrides the save method to automatically generate a unique slug
-        for the instance if it does not already have one.
-
-        If the slug is not set, it generates a slug from the title. If a post
-        with the same slug already exists, it appends a unique identifier to
-        the slug to ensure uniqueness.
-
-        Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-
-        Returns:
-            None
-        """
         self.title = self.title.strip()
         if not self.slug:
             self.slug = slugify(self.title)
@@ -106,6 +143,21 @@ class SharedAccess(models.Model):
     Stores a single shared access entry related to :model:`auth.User`,
     :model:`scrapbook.Scrapbook`, :model:`scrapbook.Post` and
     :model:`auth.User`.
+
+    Shared access entries are used to share scrapbooks and posts with other
+    users.
+
+    Attributes:
+        user: A ForeignKey that stores the user the shared access belongs to.
+        scrapbook: A ForeignKey that stores the scrapbook the shared access
+            belongs to.
+        post: A ForeignKey that stores the post the shared access belongs to.
+        shared_by: A ForeignKey that stores the user that shared the access.
+
+    Methods:
+        __str__: Returns an f-string with the username, scrapbook title and
+            post title of the shared access.
+        
     """
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)

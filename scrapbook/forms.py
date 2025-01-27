@@ -190,9 +190,11 @@ class ShareContentForm(forms.ModelForm):
         self.shared_by = kwargs.pop('shared_by', None)
         scrapbook = kwargs.pop('scrapbook', None)
         super().__init__(*args, **kwargs)
+        # Exclude the user sharing the scrapbook from the user queryset
         if self.shared_by:
             self.fields['user'].queryset = User.objects.exclude(
                 id=self.shared_by.id)
+        # Set the initial values for the form fields
         if scrapbook:
             self.fields['scrapbook_id'].initial = scrapbook.id
         self.fields['post_id'].initial = None

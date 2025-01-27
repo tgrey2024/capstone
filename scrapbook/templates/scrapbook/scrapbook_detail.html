@@ -24,6 +24,7 @@
                     <!-- Filter to mark content as safe for rendering as HTML -->
                     <div class="d-grid gap-2 d-md-block mb-1">
                         <p>{{ scrapbook.content | safe }}</p>
+                        <!-- Show note-to-self and Add Post button if user is the author -->
                         {% if user.is_authenticated and scrapbook.author == user %}
                             {% if not scrapbook.description == "" %}
                             <p id="description">Note to Self: {{ scrapbook.description | safe }}</p>
@@ -32,6 +33,7 @@
                         {% endif %}
                     </div>
                 </div>
+                <!-- Edit and Delete Buttons -->
                 <div class="col-sm-12 col-md-2 col-lg-4 text-center mb-1 pb-4">
                     {% if user.is_authenticated and scrapbook.author == user %}
                         <a href="{% url 'edit-scrapbook' scrapbook.slug scrapbook.id %}" class="btn btn-info btn-edit scrapbook-link mx-auto my-2" aria-label="Go to Edit Scrapbook page">Edit <i class="fa-regular fa-pen-to-square"></i></a>
@@ -45,7 +47,7 @@
         <!-- Post Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
-                {% if permission_denied %}
+                {% if not sharedaccess and scrapbook.author != user and scrapbook.status != 2 %}
                 <div class="col-12">
                     <div class="alert alert-danger" role="alert">
                         You do not have permission to view this scrapbook.
@@ -61,26 +63,28 @@
                             <img class="card-img-top {% if user.is_authenticated and post.author == user and post.status == 0 %}opacity-50{% endif %}" src="{{ post.image.url}}" alt="Image for the post titled '{{post.title}}'">
                         </div>
                         <div class="card-header collapsible cursor-pointer collapsed" data-bs-toggle="collapse" data-bs-target="#card-collapsible-{{ post.id }}" aria-controls="collapse-collapsed" aria-expanded="false" id="heading-collapsed">
-                            <h5 class="card-title d-inline">
+                            <div class="card-title d-inline">
                                 <!-- if logged in user is the post author, make the title a link -->
-                                {% if user.is_authenticated and post.author == user %}
-                                <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" aria-label="Go to Post Detail page">
-                                {% endif %}                                    
+                                {% if user.is_authenticated %}
+                                    {% if post.author == user or sharedaccess %}
+                                    <a class="text-decoration-none" href="{% url 'scrapbook:post_detail' scrapbook.slug post.slug %}" aria-label="Go to Post Detail page">
+                                    {% endif %}   
+                                {% endif %}                                 
                                 <h5 class="card-title d-inline {% if user.is_authenticated and post.author == user %}linked-title{% endif %}">{{ post.title }}</h5>
-                                {% if user.is_authenticated and post.author == user %}
-                                </a>
-                                {% endif %}                                    
-                                <!-- Status icon conditionals -->
-                                {% if user.is_authenticated and post.author == user %}
-                                    {% if post.status == 0 %}
-                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
-                                    {% elif post.status == 1 %}
-                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
-                                    {% elif post.status == 2 %}
-                                    <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                {% if user.is_authenticated %}
+                                    {% if post.author == user or sharedaccess %}
+                                    </a>
                                     {% endif %}
                                 {% endif %}
-                            </h5>
+                                <!-- Status icon conditionals -->
+                                {% if post.status == 0 %}
+                                <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                                {% elif post.status == 1 %}
+                                <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                                {% elif post.status == 2 %}
+                                <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                                {% endif %}
+                            </div>
                             <div class="card-toolbar d-inline float-end"><i class="fa fa-chevron-down pull-right ms-auto"></i></div>
                         </div>
                         <div id="card-collapsible-{{ post.id }}" class="collapse" aria-labelledby="heading-collapsed">

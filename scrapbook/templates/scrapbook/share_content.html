@@ -9,6 +9,7 @@
             <h3>Share Content</h3>
             <div class="row justify-content-center">
                 <div class="col-8">
+                    <!-- Form confirms which scrapbook was selected for sharing and users can choose who to share with from a dropdown menu -->
                     <form method="post">
                         <p>You want to share the scrapbook, "<strong>{{ object.title }}</strong>". Who do you want to share it with?</p>
                         {% csrf_token %}

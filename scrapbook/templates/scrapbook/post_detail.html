@@ -19,14 +19,12 @@
                 <!-- Post title -->
                 <h3 class="d-inline">{{ post.title }}</h3>
                 <!-- Status icon conditionals -->
-                {% if user.is_authenticated and post.author == user %}
-                    {% if post.status == 0 %}
-                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-pen"></i></div>
-                    {% elif post.status == 1 %}
-                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-lock"></i></div>
-                    {% elif post.status == 2 %}
-                    <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-globe"></i></div>
-                    {% endif %}
+                {% if post.status == 0 %}
+                <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-pen"></i></div>
+                {% elif post.status == 1 %}
+                <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-lock"></i></div>
+                {% elif post.status == 2 %}
+                <div class="card-text d-inline text-body-secondary h5"><i class="fa-solid fa-globe"></i></div>
                 {% endif %}
                 <!-- Post author | the post's last updated date -->
                 <p class="scrapbook-subtitle date-time">{{ post.author }} | Updated: {{ post.updated_on }}</p>

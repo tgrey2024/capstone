@@ -8,17 +8,28 @@
     <div class="row">
         <div class="col-12 mt-3">
             <h2 class="mb-4">Shared Scrapbooks</h2>
+            <!-- Scrapbook Entries Column -->
             <div class="row">
                 {% for scrapbook in page_obj %}
                 <div class="col-md-6 col-lg-4">
+                    <!-- Bootstrap 5 card for each scrapbook -->
                     <div class="card fixed-card mb-4">
-                        <div class="text-center">
+                        <!-- Make card opaque if draft -->
+                        <div class="{% if user.is_authenticated and scrapbook.status == 0 %}opacity-50{% endif %} text-center">
                             <img src="{{ scrapbook.image.url}}" class="card-img-top" alt="Cover image for the scrapbook titled '{{scrapbook.title}}">
                         </div>
                         <div class="card-body px-3">
                             <a class="text-decoration-none linked-title" href="{% url 'scrapbook_detail' scrapbook.slug %}" aria-label="Go to the Scrapbook Detail page">
                                 <h5 class="card-title d-inline linked-title">{{ scrapbook.title }}</h5></a>
                             <h6 class="card-subtitle text-body-secondary d-inline">by {{ scrapbook.author }}</h6>
+                            <!-- Status icon conditionals -->
+                            {% if scrapbook.status == 0 %}
+                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-pen"></i></div>
+                            {% elif scrapbook.status == 1 %}
+                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-lock"></i></div>
+                            {% elif scrapbook.status == 2 %}
+                            <div class="card-text d-inline text-body-secondary"><i class="fa-solid fa-globe"></i></div>
+                            {% endif %}
                             <p class="card-subtitle date-time mb-2">Updated: {{ scrapbook.updated_on }}</p>
                             <div class="d-grid gap-2 d-md-block text-center mb-1">
                                 <a href="{% url 'scrapbook_detail' scrapbook.slug %}" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">Open <i class="fa-solid fa-book-open"></i></a>

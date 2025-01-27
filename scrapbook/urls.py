@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
 
+# Custom error handlers
 handler403 = 'scrapbook.views.custom_permission_denied_view'
 
+# URL patterns for the scrapbook app
 urlpatterns = [
     path('trigger-403-error/', views.trigger_403_error, name='trigger-403-error'),
     path('trigger-500-error/', views.trigger_500_error, name='trigger-500-error'),
