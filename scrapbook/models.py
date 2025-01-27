@@ -1,9 +1,9 @@
-from django.db import models
-from django.utils.text import slugify
-from django.contrib.auth.models import User
-import uuid
 from cloudinary.models import CloudinaryField
+from django.db import models
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+import uuid
 
 STATUS = (
     (0, "Draft"),

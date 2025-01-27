@@ -26,6 +26,6 @@ class PostAdmin(SummernoteModelAdmin):
 @admin.register(SharedAccess)
 class SharedAccessAdmin(admin.ModelAdmin):
 
-    list_display = ('user', 'scrapbook', 'post', 'shared_by')
-    search_fields = ['scrapbook__title', 'post__title', 'user__username']
-    list_filter = ('scrapbook', 'post', 'user')
+    list_display = ('user', 'scrapbook', 'shared_by')
+    search_fields = ['scrapbook__title', 'user__username']
+    list_filter = ('scrapbook', 'user')

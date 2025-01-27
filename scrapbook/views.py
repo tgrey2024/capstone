@@ -1,18 +1,18 @@
-from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic, View
-from .models import Scrapbook, Post, SharedAccess
-from .forms import PostForm, ScrapbookForm, ShareContentForm
-from django.urls import reverse_lazy, reverse
-from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.http import Http404
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
+from django.http import Http404
 from django.http import HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
+from django.views import generic, View
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from .models import Scrapbook, Post, SharedAccess
+from .forms import PostForm, ScrapbookForm, ShareContentForm
 
 def custom_csrf_failure_view(request, reason=""):
     return render(request, '403_csrf.html', status=403)

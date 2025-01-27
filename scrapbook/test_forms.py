@@ -1,13 +1,14 @@
-from django.test import TestCase
-from django.core.files.uploadedfile import SimpleUploadedFile
-from .forms import PostForm, ShareContentForm, ScrapbookForm
-from .models import Scrapbook, Post, SharedAccess
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
 from PIL import Image
 from PIL import ImageFile
 from PIL.Image import DecompressionBombWarning
 import io
 import warnings
+from .forms import PostForm, ShareContentForm, ScrapbookForm
+from .models import Scrapbook, Post, SharedAccess
+
 
 # Suppress DecompressionBombWarning
 warnings.simplefilter('ignore', DecompressionBombWarning)
@@ -138,7 +139,7 @@ class ScrapbookFormTest(TestCase):
         self.assertIn('image', form.errors)
         self.assertEqual(
             form.errors['image'], [
-                'Upload a valid image. The file you uploaded was either not an image or a corrupted image.'])
+                'Upload a valid image or an uncorrupted image.'])
     
     def test_scrapbook_form_large_image_file(self):
         # Edge Test: Test the ScrapbookForm with large image file
@@ -297,7 +298,7 @@ class PostFormTest(TestCase):
         self.assertIn('image', form.errors)
         self.assertEqual(
             form.errors['image'],
-            ['Upload a valid image. The file you uploaded was either not an image or a corrupted image.'])
+            ['Upload a valid image or an uncorrupted image.'])
 
     def test_post_form_large_image_file(self):
         # Edge Test: Test the PostForm with large image file
@@ -388,4 +389,4 @@ class SharedAccessFormTest(TestCase):
         self.assertIn('__all__', form.errors)
         self.assertEqual(
             form.errors['__all__'],
-            ['This scrapbook has already been shared with the selected user.'])
+            ['This scrapbook has already been shared with this user.'])

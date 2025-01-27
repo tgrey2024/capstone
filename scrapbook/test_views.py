@@ -1,7 +1,7 @@
-from django.test import TestCase, Client
-from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, Client
+from django.urls import reverse
 from .models import Scrapbook, Post, SharedAccess
 
 class ScrapbookViewsTest(TestCase):
