@@ -261,7 +261,7 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 
 Since most users are expected to access the site on mobile devices, the UI has been designed with a mobile first approach. The site is responsive to different screen sizes as it was built using components from the Bootstrap Library.
 
-![image](https://github.com/user-attachments/assets/9395d64b-900e-418d-8304-81a7162ebb06)
+![responsive](https://github.com/user-attachments/assets/1f39077f-45df-4424-b8c6-231e805caa59)
 
 
 <p align="right"><a href="#top">Back to top</a></p>
@@ -269,9 +269,8 @@ Since most users are expected to access the site on mobile devices, the UI has b
 ## Key Features
 ### Authentication
 Parts of the site are only accessible when users are registered and logged in:
-
 | Features                           | Unauthenticated Users     |  Authenticated Users |
-|: --------------------------------- |:-------------------------:|: -------------------:|
+|:---------------------------------- |:-------------------------:|:--------------------:|
 | Homepage                           |           Yes             |          Yes         |
 | About                              |           Yes             |          Yes         |
 | My Scrapbooks                      |           No              |          Yes         |
@@ -445,15 +444,63 @@ Add details of CSS validation:
   <b>Add screenshots</b>
 </details>
 
+### JSHint Linter
+
+- Used [JS Hint](https://jshint.com/)) to test Javascript for ES version 6 and got no warnings. Results are included below:<br>
+script.js
+<details>
+  <summary>messages.js:</summary>
+  ![JSHint_messages](https://github.com/user-attachments/assets/6a318515-e340-4d42-826a-3e5d3d26fd0a)
+
+</details>
+
+<details>
+<summary>thumbnail-image.js:</summary>
+  ![JSHint_thumbnail-image](https://github.com/user-attachments/assets/ed7bfe5a-3bec-468e-be28-fb19057eb863)
+</details>
+
+#### Python Linter
+- Used [Code Institute Python Linter](https://pep8ci.herokuapp.com/) to check all Python code I have written meets the PEP8 standard and got no warnings. Results from linting one of the files (test_models.py) has been included below:<br>
+<details>
+  <summary>test_models.py:</summary>
+  ![python_linter_example_test-models](https://github.com/user-attachments/assets/47a4c704-a8a4-4d10-8983-3498ca15d851)
+
+</details>
+
 
 #### Lighthouse Audit
+Chrome Dev Tools Lighthouse was used to audit the site for response time and accessibility. Testing was done during MVP development after deploying v1 Homepage with only the cards of published scrapbooks, allowing more time for bug fixes.<br>
+
+Colour constrast issues:
+* [Colour constrast issues in the navbar](#colour-scheme) [resolved]
+* Colour constrast issues in card text and subtitle [resolved]
+* Cloudinary not using https [resolved]
+
+Screenshots of Lighthouse Audit on the Homepage after fixes:
+Mobile:
+![image](https://github.com/user-attachments/assets/f25b0992-9387-450d-8cf0-0892db24e85c)
+
+Desktop:
+![image](https://github.com/user-attachments/assets/c63df866-6159-4a8f-bc22-d0437f1bd56a)
+
+
 ### Bugs yet to be Fixed
-*  
+* Third-party cookies from Cloudinary: Chrome has recently deprecated its support for third-party cookies and gives a warning in Chrome Dev Tools. Cloudinary has yet to give a [response](https://community.cloudinary.com/discussion/596/third-party-cookies-will-be-blocked-how-to-solve-it) on how this can be resolved.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Testing Summary
+Summary of test procedures
 
+Summary table of manual tests, expected outcomes, actual results, pass/fail
+
+Table of browser testing results
+
+Summary of auto test cases, expected outcomes, actual results, screenshots, pass/fail
+
+Bugs yet to be fixed
+
+Test summary
 ### Manual Testing
   - **Devices and Browsers Tested:** [List devices and browsers, ensuring testing was conducted with assistive technologies such as screen readers or keyboard-only navigation.]
   - **Features Tested:** [Summarise features tested manually, e.g., CRUD operations, navigation.]
