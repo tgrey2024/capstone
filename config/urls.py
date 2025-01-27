@@ -16,19 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from scrapbook.views import custom_page_not_found_view, custom_permission_denied_view, custom_csrf_failure_view
+from scrapbook.views import (
+    custom_page_not_found_view,
+    custom_permission_denied_view,
+    custom_error_view,
+    custom_bad_request_view,
+)
 
+# Custom error handlers
 handler404 = custom_page_not_found_view
-# handler500 = custom_error_view
+handler500 = custom_error_view
 handler403 = custom_permission_denied_view
-# handler400 = custom_bad_request_view
-handler403csrf = custom_csrf_failure_view
+handler400 = custom_bad_request_view
 
 urlpatterns = [
     path('about/', include("about.urls")),
     path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
-    path('scrapbook/', include(('scrapbook.urls', 'scrapbook'), 
+    path('scrapbook/', include(('scrapbook.urls', 'scrapbook'),
                                namespace='scrapbook')),
     path('summernote/', include('django_summernote.urls')),
     path("", include("scrapbook.urls"), name='scrapbook-urls'),

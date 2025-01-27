@@ -6,8 +6,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 import io
 import warnings
-from .forms import PostForm, ShareContentForm, ScrapbookForm
-from .models import Scrapbook, Post, SharedAccess
+from scrapbook.forms import PostForm, ShareContentForm, ScrapbookForm
+from scrapbook.models import Scrapbook, Post, SharedAccess
 
 
 # Suppress DecompressionBombWarning

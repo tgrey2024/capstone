@@ -4,24 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.http import Http404
-from django.http import HttpResponseForbidden
+from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views import generic, View
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.decorators.csrf import requires_csrf_token
 from .models import Scrapbook, Post, SharedAccess
 from .forms import PostForm, ScrapbookForm, ShareContentForm
-
-def custom_csrf_failure_view(request, reason=""):
-    return render(request, '403_csrf.html', status=403)
-
-def custom_permission_denied_view(request, exception):
-    return render(request, '403.html', status=403)
-
-def custom_page_not_found_view(request, exception):
-    return render(request, '404.html', status=404)
 
 class ScrapbookListView(generic.ListView):
     model = Scrapbook
@@ -368,3 +359,23 @@ class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
             'permission_denied': not sharedaccess and scrapbook.author != self.request.user and scrapbook.status != 2,
         })
         return context
+
+def custom_permission_denied_view(request, exception):
+    return render(request, '403.html', status=403)
+
+def custom_page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+
+def custom_error_view(request):
+    return render(request, '500.html', status=500)
+
+def custom_bad_request_view(request, exception):
+    return render(request, '400.html', status=400)
+
+def trigger_500_error(request):
+    # Intentionally raise an exception to trigger a 500 error
+    raise Exception("Intentional 500 error for testing purposes")
+
+def trigger_403_error(request):
+    # Intentionally raise a PermissionDenied exception to trigger a 403 error
+    raise PermissionDenied("Intentional 403 error for testing purposes")

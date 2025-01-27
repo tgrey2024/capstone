@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Scrapbook, Post, SharedAccess
+from scrapbook.models import Scrapbook, Post, SharedAccess
 
 class ScrapbookViewsTest(TestCase):
 
@@ -118,7 +118,7 @@ class ScrapbookViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response, 
-            'Upload a valid image. The file you uploaded was either not an image or a corrupted image.')
+            'Upload a valid image or an uncorrupted image.')
 
     def test_post_detail_view(self):
         # Test the PostDetailView
