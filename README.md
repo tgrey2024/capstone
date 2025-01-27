@@ -99,7 +99,7 @@ Research has shown that memory aids such as individualised photo memory books ca
 Here are all the user stories that have been prioritised (all must have and some should have ones) for the current implementation of the webapp:
 
 | User Stories                                    | MoSCoW priority           |  Status |
-| ----------------------------------------------- |:-------------------------:| -------:|
+|:----------------------------------------------- |:-------------------------:|:-------:|
 | User-Friendly Navigation and Responsive Design  | must have                 |   Done  |
 | Account Registration                            | must have                 |   Done  |
 | View Paginated Posts                            | must have                 |   Done  |
@@ -117,8 +117,8 @@ Here are all the user stories that have been prioritised (all must have and some
 | Post and Scrapbook Access Control               | must have                 |   Done  |
 | Give Shared Access to Nominated Users           | should have               |   Done  |
 | View About Page                                 | should have               |   Done  |
+| Homepage Hero and Testimonials                  | should have               |   Done  |
 
-[add Homepage, Card collapse and hover effect, custom error pages, image uploader preview]
 All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
 
 As well as using the Project Board to track progress on our project, I also used it during testing to log any significant bugs that need to be fixed before the project deadline. These were then assigned and prioritised alongside other issues and user stories.
@@ -128,7 +128,7 @@ As well as using the Project Board to track progress on our project, I also used
 The broad project plan was to secure the MVP, fully tested and documented sufficiently before incorporating the optional should have and could have features.
 
 | Milestone |                      Scope                      |      Scheduled    |       Actual      |
-| ----------|:----------------------------------------------- |:-----------------:|------------------:|
+|:----------|:----------------------------------------------- |:-----------------:|:-----------------:|
 | v0.1      | Plan, design, Django and Heroku setup           |  Day 1-3          |  Day 1-2          |
 | v1.0      | MVP (all must-haves), automated tests           |  Day 1-7          |  Day 1-7          |
 | v1.0.1    | Initial validation, manual tests, bug fixes     |  Day 6-8          |  Day 6-9          |
@@ -142,7 +142,7 @@ The broad project plan was to secure the MVP, fully tested and documented suffic
 <hr/>
 
 ## Design
-When designing for the UI for Remineez, it was important to remember that our primary target users are seniors who may be diagnosed with dementia or other cognitive challenges. There may also be certain vision challenges due to the age of this user group, e.g. colour blindness. Many senior users may already use assistive tools on their devices, such as screen readers. It is important to design the site for accessibility. Semantic tags, image alt tags and ARIA labels help screen reader users to understand and navigate the content more easily. Font Awesome icons have been used to help remind users what each function does on the page. 
+When designing for the UI for Remineez, it was important to remember that our primary target users are seniors who may be diagnosed with dementia or other cognitive challenges. Colour contrast needs to be sufficient for improved readability and accessibility. There may also be certain vision challenges due to the age of this user group, e.g. colour blindness. Many senior users may already use assistive tools on their devices, such as screen readers. It is important to design the site for accessibility. Semantic tags, image alt tags and ARIA labels help screen reader users to understand and navigate the content more easily. Font Awesome icons have been used to help remind users what each function does on the page. The early deployed site was tested for accessibility using tools like Chrome Dev Tools Lighthouse Audit and <a href="https://wave.webaim.org/" target="blank">WAVE Web Accessibility Evaluation Tool</a> and bugs were logged and prioritised for fixing.
 
 ### Wireframes
 Based on the user stories, I used Balsamiq to design the wireframes for the main UI, starting with mobile first.
@@ -192,6 +192,13 @@ Here is the ERD of the final model:
 
 ![image](https://github.com/user-attachments/assets/17122097-8c80-448c-b793-34b1e681ce11)
 
+Post - a container for a single image asset, with a title and some caption content, an author who is a registered and logged in user and date-time fields when the post is created and updated. The slug is system-generated as a unique id which forms part of the URL for CRUD functions.
+Scrapbook - a collection of Posts, which also has a title, slug and content text, along with an author, create and updated fields. The description field is an author to make notes to themselves for producing the scrapbook. This 'note-to-self' is only visible to the author.
+User - a registered user who is identified by their username and has a password for logging in.
+SharedAccess - when an author (User A) wants to share his/her scrapbook with User B, a new instance of SharedAccess is created for User B as the user of the SharedAccess, shared_by User A of a specific scrapbook. 
+
+In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. There is potential for the Post-SharedAccess to be fully implemented so users can control the sharing of posts (see Future Enhancements on the sharing function).
+
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
 ![colour palette_v2](https://github.com/user-attachments/assets/e6e7cee8-61a9-4ce7-b837-621b6819ab24)<br><br>
@@ -224,9 +231,24 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 ### Imagery
 
 On Pexels, I found a collection of old photos on Pexels that provided a good sample of the range of photos that might be added to a digital scrapbook by the target users, as well as images that could be used to draw users to share and connect with loved ones.
-![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
+
 ![placeholder](https://github.com/user-attachments/assets/6772097c-88b1-421e-a4e5-063ebba69c4e)
-![pexels-rdne-6148985](https://github.com/user-attachments/assets/e6764bd1-6b77-4146-9116-772fb6a34910)
+<details>
+    <summary>Other Pexels images used</summary>
+    
+![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
+![about](https://github.com/user-attachments/assets/b70e7499-dcf6-4b08-b9c2-ab3c17c0d916)
+
+![class photo](https://github.com/user-attachments/assets/01db0a23-a54c-4714-ba83-faa5a5a4a8b4)
+
+![teddies](https://github.com/user-attachments/assets/12a76682-8362-43b2-816c-b79630fe24ce)
+
+![pexels-jason-shi-2104613-29549028](https://github.com/user-attachments/assets/aa1f8465-9b74-4860-97e1-65bf7795e3a9)
+
+</details>
+
+
+
 
 MS Copilot and DALL-E also provided some AI generated imagery.
 
@@ -244,7 +266,11 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 </details>
 
 ### Mockups
-  - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
+It is important to involve users early in the project to discuss product requirements. Canva was used to sketch a [mockup of the Homepage and About page](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e). Using the preview mode, the UI design was user tested with a small sample of potential users, including users from the primary target age group and profile, and allowed for quick changes to the layout and colour palette which helped to confirm the design before building the site.
+
+Users were keen to know on the homepage what the product is and whether it is for them. This is valuable but not key to deliverying value as part of the MVP, hence it was only prioritised as a should-have.
+  
+  ![image](https://github.com/user-attachments/assets/18a313f7-7db7-4e96-8aed-139c02aec140)
 
 #### Design Rationale
   - [Explain key design decisions, how accessibility guidelines (e.g., WCAG) were integrated.]
@@ -261,13 +287,7 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 
 Since most users are expected to access the site on mobile devices, the UI has been designed with a mobile first approach. The site is responsive to different screen sizes as it was built using components from the Bootstrap Library.
 
-![image](https://github.com/user-attachments/assets/9395d64b-900e-418d-8304-81a7162ebb06)
-
-
-
-
-
-
+![responsive](https://github.com/user-attachments/assets/1f39077f-45df-4424-b8c6-231e805caa59)
 
 
 <p align="right"><a href="#top">Back to top</a></p>
@@ -275,9 +295,8 @@ Since most users are expected to access the site on mobile devices, the UI has b
 ## Key Features
 ### Authentication
 Parts of the site are only accessible when users are registered and logged in:
-
 | Features                           | Unauthenticated Users     |  Authenticated Users |
-|: ---------------------------------- |:-------------------------:|: --------------------:|
+|:---------------------------------- |:-------------------------:|:--------------------:|
 | Homepage                           |           Yes             |          Yes         |
 | About                              |           Yes             |          Yes         |
 | My Scrapbooks                      |           No              |          Yes         |
@@ -397,7 +416,7 @@ All users, logged-in or not, can read published scrapbooks and posts. All other 
 ![image](https://github.com/user-attachments/assets/a143f052-1054-45d3-8777-6586eafd6b3b)
 
 ### Admin Panel
-[add screenshots, show which columns were added]
+The Admin Panel is set up for the admin or superuser to have access to the data in the database, including the Scrapbook, Post and SharedAccess models and the User model. Additional fields have been added to verify data changes after CRUD functions in the front end.
 ![image](https://github.com/user-attachments/assets/1d7f1767-c479-468d-a68c-6b83a74d202c)
 
 ### Inclusivity Notes
@@ -451,15 +470,68 @@ Add details of CSS validation:
   <b>Add screenshots</b>
 </details>
 
+### JSHint Linter
+
+- Used [JS Hint](https://jshint.com/)) to test Javascript for ES version 6 and got no warnings. Results are included below:<br>
+script.js
+<details>
+  <summary>messages.js:</summary>
+    
+  ![JSHint_messages](https://github.com/user-attachments/assets/6a318515-e340-4d42-826a-3e5d3d26fd0a)
+
+</details>
+
+<details>
+<summary>thumbnail-image.js:</summary>
+    
+  ![JSHint_thumbnail-image](https://github.com/user-attachments/assets/ed7bfe5a-3bec-468e-be28-fb19057eb863)
+</details>
+
+#### Python Linter
+- Used [Code Institute Python Linter](https://pep8ci.herokuapp.com/) to check all Python code I have written meets the PEP8 standard and got no warnings. Results from linting one of the files (test_models.py) has been included below:<br>
+
+<details>
+  <summary>test_models.py:</summary>
+    
+  ![python_linter_example_test-models](https://github.com/user-attachments/assets/47a4c704-a8a4-4d10-8983-3498ca15d851)
+
+</details>
+
 
 #### Lighthouse Audit
+Chrome Dev Tools Lighthouse was used to audit the site for response time and accessibility. Testing was done during MVP development after deploying v1 Homepage with only the cards of published scrapbooks, allowing more time for bug fixes.<br>
+
+Colour constrast issues:
+* Colour contrast issues in navbar as mentioned above in [Colour Scheme](#colour-scheme) [resolved]
+* Colour constrast issues in card text and subtitle [resolved]
+* Cloudinary not using https [resolved]
+
+Screenshots of Lighthouse Audit on the Homepage after fixes:
+
+Mobile:
+![image](https://github.com/user-attachments/assets/f25b0992-9387-450d-8cf0-0892db24e85c)
+
+Desktop:
+![image](https://github.com/user-attachments/assets/c63df866-6159-4a8f-bc22-d0437f1bd56a)
+
+
 ### Bugs yet to be Fixed
-*  
+* Third-party cookies from Cloudinary: Chrome has recently deprecated its support for third-party cookies and gives a warning in Chrome Dev Tools. Cloudinary has yet to give a [response](https://community.cloudinary.com/discussion/596/third-party-cookies-will-be-blocked-how-to-solve-it) on how this can be resolved.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Testing Summary
+Summary of test procedures
 
+Summary table of manual tests, expected outcomes, actual results, pass/fail
+
+Table of browser testing results
+
+Summary of auto test cases, expected outcomes, actual results, screenshots, pass/fail
+
+Bugs yet to be fixed
+
+Test summary
 ### Manual Testing
   - **Devices and Browsers Tested:** [List devices and browsers, ensuring testing was conducted with assistive technologies such as screen readers or keyboard-only navigation.]
   - **Features Tested:** [Summarise features tested manually, e.g., CRUD operations, navigation.]
@@ -694,7 +766,7 @@ Tests that the About page loads and contains the right content for authenticated
 ![Static Badge](https://img.shields.io/badge/Django_Summernote-rich_text_editor_package-%2311593e)
 ![Static Badge](https://img.shields.io/badge/Django_Pillow-imaging_library_for_image_testing-%2311593e)
 
-All Django packages installed is listed in [requirements.txt](https://github.com/tgrey2024/capstone/blob/main/requirements.txt)).
+All Django packages installed are listed in [requirements.txt](https://github.com/tgrey2024/capstone/blob/main/requirements.txt).
 
 ### Tools and Programs
 ![Static Badge](https://img.shields.io/badge/LogoAI-logo_generator-red)
