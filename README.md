@@ -117,8 +117,8 @@ Here are all the user stories that have been prioritised (all must have and some
 | Post and Scrapbook Access Control               | must have                 |   Done  |
 | Give Shared Access to Nominated Users           | should have               |   Done  |
 | View About Page                                 | should have               |   Done  |
+| Homepage Hero and Testimonials                  | should have               |   Done  |
 
-[add Homepage, Card collapse and hover effect, custom error pages, image uploader preview]
 All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
 
 As well as using the Project Board to track progress on our project, I also used it during testing to log any significant bugs that need to be fixed before the project deadline. These were then assigned and prioritised alongside other issues and user stories.
@@ -142,7 +142,7 @@ The broad project plan was to secure the MVP, fully tested and documented suffic
 <hr/>
 
 ## Design
-When designing for the UI for Remineez, it was important to remember that our primary target users are seniors who may be diagnosed with dementia or other cognitive challenges. There may also be certain vision challenges due to the age of this user group, e.g. colour blindness. Many senior users may already use assistive tools on their devices, such as screen readers. It is important to design the site for accessibility. Semantic tags, image alt tags and ARIA labels help screen reader users to understand and navigate the content more easily. Font Awesome icons have been used to help remind users what each function does on the page. 
+When designing for the UI for Remineez, it was important to remember that our primary target users are seniors who may be diagnosed with dementia or other cognitive challenges. Colour contrast needs to be sufficient for improved readability and accessibility. There may also be certain vision challenges due to the age of this user group, e.g. colour blindness. Many senior users may already use assistive tools on their devices, such as screen readers. It is important to design the site for accessibility. Semantic tags, image alt tags and ARIA labels help screen reader users to understand and navigate the content more easily. Font Awesome icons have been used to help remind users what each function does on the page. The early deployed site was tested for accessibility using tools like Chrome Dev Tools Lighthouse Audit and [WAVE Web Accessibility Evaluation Tool](https://wave.webaim.org/) and bugs were logged and prioritised for fixing.
 
 ### Wireframes
 Based on the user stories, I used Balsamiq to design the wireframes for the main UI, starting with mobile first.
@@ -192,6 +192,13 @@ Here is the ERD of the final model:
 
 ![image](https://github.com/user-attachments/assets/17122097-8c80-448c-b793-34b1e681ce11)
 
+Post - a container for a single image asset, with a title and some caption content, an author who is a registered and logged in user and date-time fields when the post is created and updated. The slug is system-generated as a unique id which forms part of the URL for CRUD functions.
+Scrapbook - a collection of Posts, which also has a title, slug and content text, along with an author, create and updated fields. The description field is an author to make notes to themselves for producing the scrapbook. This 'note-to-self' is only visible to the author.
+User - a registered user who is identified by their username and has a password for logging in.
+SharedAccess - when an author (User A) wants to share his/her scrapbook with User B, a new instance of SharedAccess is created for User B as the user of the SharedAccess, shared_by User A of a specific scrapbook. 
+
+In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. There is potential for the Post-SharedAccess to be fully implemented so users can control the sharing of posts (see Future Enhancements on the sharing function).
+
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
 ![colour palette_v2](https://github.com/user-attachments/assets/e6e7cee8-61a9-4ce7-b837-621b6819ab24)<br><br>
@@ -224,9 +231,24 @@ For the paragraph and menu text, I have picked the widely-available and reliable
 ### Imagery
 
 On Pexels, I found a collection of old photos on Pexels that provided a good sample of the range of photos that might be added to a digital scrapbook by the target users, as well as images that could be used to draw users to share and connect with loved ones.
-![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
+
 ![placeholder](https://github.com/user-attachments/assets/6772097c-88b1-421e-a4e5-063ebba69c4e)
-![pexels-rdne-6148985](https://github.com/user-attachments/assets/e6764bd1-6b77-4146-9116-772fb6a34910)
+<details>
+    <summary>Other Pexels images used</summary>
+    
+![pexels-rodolfoclix-3031501](https://github.com/user-attachments/assets/53bf2b90-96f2-457f-b18e-c77b5512f73e)
+![about](https://github.com/user-attachments/assets/b70e7499-dcf6-4b08-b9c2-ab3c17c0d916)
+
+![class photo](https://github.com/user-attachments/assets/01db0a23-a54c-4714-ba83-faa5a5a4a8b4)
+
+![teddies](https://github.com/user-attachments/assets/12a76682-8362-43b2-816c-b79630fe24ce)
+
+![pexels-jason-shi-2104613-29549028](https://github.com/user-attachments/assets/aa1f8465-9b74-4860-97e1-65bf7795e3a9)
+
+</details>
+
+
+
 
 MS Copilot and DALL-E also provided some AI generated imagery.
 
@@ -244,7 +266,11 @@ MS Copilot and DALL-E also provided some AI generated imagery.
 </details>
 
 ### Mockups
-  - [Canva Mockup](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e)
+It is important to involve users early in the project to discuss product requirements. Canva was used to sketch a [mockup of the Homepage and About page](https://www.canva.com/design/DAGbzmo_8Iw/GjNxoK5LvaTmJT1r-8IEiQ/view?utm_content=DAGbzmo_8Iw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf37b8eca3e). Using the preview mode, the UI design was user tested with a small sample of potential users, including users from the primary target age group and profile, and allowed for quick changes to the layout and colour palette which helped to confirm the design before building the site.
+
+Users were keen to know on the homepage what the product is and whether it is for them. This is valuable but not key to deliverying value as part of the MVP, hence it was only prioritised as a should-have.
+  
+  ![image](https://github.com/user-attachments/assets/18a313f7-7db7-4e96-8aed-139c02aec140)
 
 #### Design Rationale
   - [Explain key design decisions, how accessibility guidelines (e.g., WCAG) were integrated.]
