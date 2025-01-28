@@ -8,8 +8,9 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 
 ## Table of Contents
 - [User Experience Design Process](#user-experience-design-process)
+- [Project Brief](#project-brief)
     - [Problem Statement](#problem-statement)
-    - [Project Brief](#project-brief)
+    - [Project Goals](#project-goals)
     - [Use Case](#use-case)
     - [Users](#users)
 - [Planning](#planning)
@@ -28,6 +29,7 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
     - [Authentication](#authentication)
     - [Header and Footer Navigation](#header-and-footer-navigation)
     - [Homepage and Published Scrapbooks](#homepage-and-published-scrapbooks)
+    - [About Page](#about-page_
     - [Accounts Management](#accounts-management)
     - [Log in Status](#log-in-status)
     - [CRUD Functions](#crud-functions)
@@ -40,7 +42,7 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
     - [Publish Status](#publish-status)
     - [Notifications](#notifications)
     - [Admin Panel](#admin-panel)
-    - [Inclusivity Notes](#inclusivity-notes)
+    - [Custom Error Pages](#custom-error-pages)
 - [Deployment](#deployment)
     - [Platform](#platform)
     - [High Level Deployment Steps](#high-level-deployment-steps)
@@ -65,7 +67,7 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 <hr/>
 
 ## User Experience Design Process
-
+## Project Brief
 ### Problem Statement
 
 Many people with dementia or similar cognitive impairments may experience significant challenges with memory and language, making it difficult to recall names, words and faces, which affects their daily tasks, their wellbeing and their self-esteem. Carers and loved ones find it difficult to understand and connect with the patient, which can impact on their well-being. Visual aids are often used in occupational therapy, but visual aids with personal meaning could encourage more neural connections to be made, thus can further enhance cognitive and speech development.
@@ -77,7 +79,7 @@ Reminiscence Therapy is a form of therapy that uses prompts such as photographs,
 - Encourages social interaction and reduces isolation
 - Provides a focus to initiate meaningful conversation
 
-## Project Brief
+## Project Goals
 
 The aim is to develop a digital scrapbooking solution to support users in their reminiscence therapy, through which they could improve their cognitive functions, speech and wellbeing.
 
@@ -212,7 +214,7 @@ User - a registered user who is identified by their username and has a password 
 
 SharedAccess - when an author (User A) wants to share his/her scrapbook with User B, a new instance of SharedAccess is created for User B as the user of the SharedAccess, shared_by User A of a specific scrapbook. 
 
-In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. In future versions the Post-SharedAccess could be fully implemented so users can have finer control of the sharing of posts in the same way as the sharing of scrapbooks (see Future Enhancements on the sharing function).
+In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. In future versions the Post-SharedAccess relationship could be fully implemented so users can have finer control of the sharing of posts in the same way as the sharing of scrapbooks (see Future Enhancements on the sharing function).
 
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
@@ -231,6 +233,7 @@ Once I built the Bootstrap navbar, I tested with different shades of background 
 <br>
 ![WCAG_navbar link text](https://github.com/user-attachments/assets/4a5dc435-642b-478c-b5d9-05b14abade01)
 
+![wcag](https://github.com/user-attachments/assets/6051bf3c-ab51-41d8-83b4-9d0013a63948)
 
 ### Typography
 After testing different font combinations on [Google Fonts](https://fonts.google.com/) and [Online Fonts](https://online-fonts.com/), I have chosen sans-serif fonts as they are easier to read for most users.<br>
@@ -287,16 +290,6 @@ Users were keen to know on the homepage what the product is and whether it is fo
   
   ![image](https://github.com/user-attachments/assets/18a313f7-7db7-4e96-8aed-139c02aec140)
 
-#### Design Rationale
-  - [Explain key design decisions, how accessibility guidelines (e.g., WCAG) were integrated.]
-  -   - [Explain the rationale behind the layout and design choices, focusing on usability and accessibility for all users, including those using assistive technologies.]
-  - [Highlight any considerations made for users with disabilities, such as screen reader support.]
-
-
-
-#### Reasoning For Any Final Changes
-  - [Summarise significant changes made to the design during development and the reasons behind them.]
-  - [Reflect on how these changes enhance inclusivity and accessibility.]
 
 ### Responsive Design
 
@@ -494,17 +487,10 @@ The deployment process is as follows:
 9. In the app's Resources tab, check that Eco Dynos are used and remove any unnecessary Add-ons.
 10. Subsequent changes to the code will need to be pushed to the Github repo and manually deployed on Heroku.
 
-### Verification and Validation
-  - Steps taken to verify the deployed version matches the development version in functionality.
-  - [Include any additional checks to ensure accessibility of the deployed application.]
-
-### Security Measures
-  - Use of environment variables for sensitive data.
-  - Ensured DEBUG mode is disabled in production.
-
 <p align="right"><a href="#top">Back to top</a></p>
 
-Validation of HTML/CSS, Lighthouse Audits, Bugs
+### Verification and Validation
+
 #### HTML Validation
 Some unclosed empty tags were found on the initial parses of HTML validation during MVP development. These were resolved and subsequently no errors were found in the HTML files from the code I wrote.
 
@@ -607,7 +593,7 @@ No errors were found in the CSS file.
 
 </details>
 
-### JSHint Linter
+#### JSHint Linter
 
 - Used [JS Hint](https://jshint.com/) to test Javascript for ES version 6 and got no warnings. Results are included below:<br>
 script.js
@@ -668,9 +654,17 @@ The WAVE tool was used to test for accessibility and usability. No errors were r
 #### Outstanding issues
 * Third-party cookies from Cloudinary: Chrome has recently deprecated its support for third-party cookies and gives a warning in Chrome Dev Tools. Cloudinary has yet to give a [response](https://community.cloudinary.com/discussion/596/third-party-cookies-will-be-blocked-how-to-solve-it) on how this can be resolved.
 
+
+
+### Security Measures
+
+Sensitive data such as the credentials for the secret key, database and cloudinary are sensitive and should not be published and therefore cannot be stored in Github Repo. They are stored locally in the env.py file, and on Heroku in config vars. This ensures that the site is secure.
+
+When deploying DEBUG in settings.py is set to False so it is disable in production.
+
 <p align="right"><a href="#top">Back to top</a></p>
 
-## Testing Summary
+### Testing Summary
 
 #### Browser and Device Testing
 The site was tested on my laptop (Surface Pro  7) across the 3 popular browsers. The test is passed if the expected result is produced:
