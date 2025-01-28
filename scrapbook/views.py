@@ -472,7 +472,6 @@ class PostDetailView(generic.DetailView):
     get_object -- Get the post object.
     handle_no_permission -- Handle cases where the user does not have
     permission to view the post.
-    get_context_data -- Add the scrapbook to the context.
 
     Template:
     scrapbook/post_detail.html
@@ -484,12 +483,15 @@ class PostDetailView(generic.DetailView):
         scrapbook_slug = self.kwargs['scrapbook_slug']
         post_slug = self.kwargs['post_slug']
         post = get_object_or_404(
-            Post, slug=post_slug, scrapbook__slug=scrapbook_slug
-        )
+            Post, slug=post_slug, scrapbook__slug=scrapbook_slug)
         user = self.request.user
         if post.status != 2 and post.author != user:
-            if not user.is_authenticated or not SharedAccess.objects.filter(
-                user=user, scrapbook=post.scrapbook, post=post).exists():
+            if (
+                not user.is_authenticated or
+                not SharedAccess.objects.filter(
+                    user=user, scrapbook=post.scrapbook
+                ).exists()
+            ):
                 raise PermissionDenied(
                     "You do not have permission to view this post."
                 )
