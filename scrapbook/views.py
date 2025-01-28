@@ -541,24 +541,38 @@ class ShareContentView(View):
     def get(self, request, *args, **kwargs):
         scrapbook_id = request.GET.get('scrapbook_id')
         scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
-        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
-        form = ShareContentForm(initial={'scrapbook_id': scrapbook.id}, shared_by=request.user, scrapbook=scrapbook)
-        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
+        posts = Post.objects.filter(
+            scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        form = ShareContentForm(initial={
+            'scrapbook_id': scrapbook.id},
+            shared_by=request.user, scrapbook=scrapbook)
+        return render(
+            request, 'scrapbook/share_content.html', {
+                'form': form, 'object': scrapbook, 'posts': posts})
 
     def post(self, request, *args, **kwargs):
         scrapbook_id = request.GET.get('scrapbook_id')
         scrapbook = get_object_or_404(Scrapbook, id=scrapbook_id)
-        form = ShareContentForm(request.POST, shared_by=request.user, scrapbook=scrapbook)
+        form = ShareContentForm(
+            request.POST,
+            shared_by=request.user,
+            scrapbook=scrapbook)
         if form.is_valid():
             shared_access = form.save(commit=False)
             shared_access.shared_by = request.user
             shared_access.save()
-            messages.success(request, "Scrapbook and its posts shared successfully.")
+            messages.success(
+                request, "Scrapbook and its posts shared successfully.")
             return redirect('scrapbook_detail', slug=scrapbook.slug)
         else:
             messages.error(request, "Failed to share the scrapbook.")
-        posts = Post.objects.filter(scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
-        return render(request, 'scrapbook/share_content.html', {'form': form, 'object': scrapbook, 'posts': posts})
+        posts = Post.objects.filter(
+            scrapbook=scrapbook).exclude(status=0)  # Exclude draft posts
+        return render(
+            request, 'scrapbook/share_content.html', {
+                'form': form,
+                'object': scrapbook,
+                'posts': posts})
 
 
 class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
@@ -616,7 +630,8 @@ class ScrapbookSharedDetailView(LoginRequiredMixin, generic.DetailView):
 
         # Get shared posts for the current user and scrapbook
         shared_posts = SharedAccess.objects.filter(
-            user=self.request.user, scrapbook=scrapbook).values_list('post', flat=True)
+            user=self.request.user,
+            scrapbook=scrapbook).values_list('post', flat=True)
 
         context.update({
             'scrapbook': scrapbook,
