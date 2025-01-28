@@ -8,8 +8,8 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 
 ## Table of Contents
 - [User Experience Design Process](#user-experience-design-process)
-- [Project Brief](#project-brief)
     - [Problem Statement](#problem-statement)
+    - [Project Brief](#project-brief)
     - [Use Case](#use-case)
     - [Users](#users)
 - [Planning](#planning)
@@ -65,17 +65,25 @@ Live site: [https://remineez-6fa07ac70d1d.herokuapp.com/](https://remineez-6fa07
 <hr/>
 
 ## User Experience Design Process
-<p align="right"><a href="#top">Back to top</a></p>
-<hr/>
-
-## Project Brief
-The site user's goal is to create and use personal digital scrapbooks of photos of their mementos as a means of recalling their memories for cognitive development, and a means of communicating valued thoughts and emotions with their loved ones, carers and therapists.
-
-The project goal is to produce a functional prototype of a user-friendly scrapbook web app which facilitates publishing and private-sharing of scrapbooks, that can be tested with users as a proof of concept and to further define user requirements.
 
 ### Problem Statement
 
-Someone with dementia or similar cognitive impairments may experience significant problems with memory and language, making it difficult to recall names, words and faces, which affects their daily tasks, their wellbeing and their self-esteem. Carers and loved ones find it difficult to understand and connect with the patient, which can impact on their well-being. Visual aids are often used in occupational therapy, but visual aids with personal meaning could encourage more neural connections to be made, thus can further enhance cognitive and speech development.
+Many people with dementia or similar cognitive impairments may experience significant challenges with memory and language, making it difficult to recall names, words and faces, which affects their daily tasks, their wellbeing and their self-esteem. Carers and loved ones find it difficult to understand and connect with the patient, which can impact on their well-being. Visual aids are often used in occupational therapy, but visual aids with personal meaning could encourage more neural connections to be made, thus can further enhance cognitive and speech development.
+
+Reminiscence Therapy is a form of therapy that uses prompts such as photographs, music, or familiar items to encourage individuals, particularly the elderly, to recall and share memories from their past. Potential benefits include:
+- Enhances mood and reduces depression
+- Improves cognitive function and memory recall
+- Strengthens personal identity and sense of self
+- Encourages social interaction and reduces isolation
+- Provides a focus to initiate meaningful conversation
+
+## Project Brief
+
+The aim is to develop a digital scrapbooking solution to support users in their reminiscence therapy, through which they could improve their cognitive functions, speech and wellbeing.
+
+The site user's goal is to create and use personal digital scrapbooks of photos of their mementos as a means of recalling their memories for cognitive development, and a means of communicating valued thoughts and emotions with their loved ones, carers and therapists.
+
+The project goal is to produce a functional prototype of a user-friendly scrapbook web app which facilitates publishing and private-sharing of scrapbooks, that can be tested with users as a proof of concept and to further define user requirements.
 
 ### Use Case
 
@@ -118,6 +126,7 @@ Here are all the user stories that have been prioritised (all must have and some
 | Give Shared Access to Nominated Users           | should have               |   Done  |
 | View About Page                                 | should have               |   Done  |
 | Homepage Hero and Testimonials                  | should have               |   Done  |
+| Interactive Scrapbook and Post cards            | should have               |   Done  |
 
 All user stories were logged on the [Kanban Project Board](https://github.com/users/tgrey2024/projects/14) on GitHub Projects, along with the assessment criteria and expected performance for the project, which were also prioritised as must-have.
 
@@ -457,17 +466,104 @@ The deployment process is as follows:
 
 Validation of HTML/CSS, Lighthouse Audits, Bugs
 #### HTML Validation
-Add details of HTML validation:
+Some unclosed empty tags were found on the initial parses of HTML validation during MVP development. These were resolved and subsequently no errors were found in the HTML files from the code I wrote.
+
+The only 4 errors come from HTML in the Sign up pages default when setting up authentication using AllAuth, so should be considered out of scope for this project. Here are the screenshots from running the HTML validation:
+
 <details>
-  <summary>HTML validation screenshots:</summary>
-  <b>Add screenshots</b>
+  <summary>HTML validation - Homepage - No errors:</summary>
+
+![image](https://github.com/user-attachments/assets/f48e5248-a2cb-4f13-903a-ee322ef17489)
+
+</details>
+<details>
+  <summary>HTML validation - About - No errors:</summary>
+    
+![image](https://github.com/user-attachments/assets/65fb1d91-01c2-4661-b56c-9d4ef697b8ec)
+
+</details>
+<details>
+  <summary>HTML validation - My Scrapbooks - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/40ba7ec7-84a4-4372-ab70-aaa823353d9e)
+
+</details>
+<details>
+  <summary>HTML validation - My Scrapbook Detail - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/00320c6d-f070-45b8-978e-a897cb3a68f4)
+
+</details>
+<details>
+  <summary>HTML validation - Shared Scrapbooks - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/0525fe01-2e6b-4676-a30c-4e506d748a11)
+
+
+</details>
+<details>
+  <summary>HTML validation - Shared Scrapbook Detail - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/d8c8c7a6-8e69-4e2b-acdf-9dfc960696f4)
+
+</details>
+<details>
+  <summary>HTML validation - Post Detail - No errors :</summary>
+    
+![image](https://github.com/user-attachments/assets/243b2a2f-cb94-4350-8216-4d3bcc2b4ca1)
+
+</details>
+<details>
+  <summary>HTML validation - Create/Edit Scrapbook - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/111d6569-dfa2-44af-a2a0-492eb71af002)
+
+
+</details>
+<details>
+  <summary>HTML validation - Delete Scrapbook/Post - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/7aa4a994-4047-44c0-bd6b-cdc6a9ed4eae)
+
+</details>
+<details>
+  <summary>HTML validation - Sign Up - 4 errors </summary>
+
+![image](https://github.com/user-attachments/assets/4de62907-4ea3-4daa-8be3-351c6f4ad772)
+
+The 4 errors in the signup page relate to the span tag around the unordered list tag for the help instructions for making a valid password for signing up. This is set up by default in AllAuth and inserted using the standard {{ form.as_p }} using Crispy Forms, and therefore cannot be edited in my code.
+  
+![image](https://github.com/user-attachments/assets/1d29d557-dda1-49b1-88d7-9c5147bc808f)
+
+
+</details>
+<details>
+  <summary>HTML validation - Log In - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/6e6da528-1f0c-4ff6-b72e-1b0f8ecb0e5b)
+
+</details>
+<details>
+  <summary>HTML validation - Log Out - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/06759461-a628-4b83-b4c4-86aea1d0b7ed)
+
+
+</details>
+<details>
+  <summary>HTML validation - Custom Error Pages e.g. 404 error page: - No errors </summary>
+  
+![image](https://github.com/user-attachments/assets/00320c6d-f070-45b8-978e-a897cb3a68f4)
+
 </details>
 
 #### CSS Validation
-Add details of CSS validation:
+No errors were found in the CSS file.
 <details>
-  <summary>CSS validation screenshots:</summary>
-  <b>Add screenshots</b>
+  <summary>CSS validation screenshot - No errors:</summary>
+    
+  ![image](https://github.com/user-attachments/assets/4a079e15-bc09-4854-8dbe-76263af8790a)
+
 </details>
 
 ### JSHint Linter
