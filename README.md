@@ -521,24 +521,36 @@ Desktop:
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Testing Summary
-Summary of test procedures
 
+### Manual Testing
 Summary table of manual tests, expected outcomes, actual results, pass/fail
 
-Table of browser testing results
-
-Summary of auto test cases, expected outcomes, actual results, screenshots, pass/fail
-
-Bugs yet to be fixed
-
 Test summary
-### Manual Testing
-  - **Devices and Browsers Tested:** [List devices and browsers, ensuring testing was conducted with assistive technologies such as screen readers or keyboard-only navigation.]
+#### Browser and Device Testing
+The site was tested on my laptop (Surface Pro  7) across the 3 popular browsers. The test is passed if the expected result is produced:
+
+|     Features          |     Test and Expected Result    |      Chrome      |     Firefox     |      MS Edge     |
+| :--------------------- |:-------------:|:---------------:|:---------------:|:---------------:|
+| Responsive Design: the site is rendered correctly for mobile, ipad and laptop screens	| change screen size in Devtools |	Pass |	Pass |	Pass
+| CSS Rendering: styles and animations are rendered correctly| navbar colours and hover, card hover animation and posts expand/collapse|	Pass	|Pass	|Pass |
+| Grid and Flexbox Layouts: card layout adapts to screen size | cards change layout in DevTools | Pass | Pass | Pass |
+| JavaScript Behavior: message alert timeout and image thumnbnail preview |	message disappears after 9s and preview updates when new image chosen |	Pass |	Pass| Pass|
+| JavaScript Errors: check Devtools console for errors|	no errors while tested above JS functions |	Pass| Pass|Pass|
+| Form Validation: prompts user for correct type|	Sign up: alert when submit text with no @ in email field|Pass|Pass|Pass|
+| Loading Times: tested in Lighthouse Audit under Performance|	homepage loading, score > 70	| Pass|Pass|Pass|
+| Keyboard Navigation: users can interact with UI using only keyboard|	Scrapbook Detail: users can <tab> through navbar and collapsed cards and <Enter> to open a post|	Pass|	Pass|	Pass|
+| Error Pages: custom error pages are displayed|	use URL to access post after deleted, should get custom error page|	Pass|	Pass|	Pass|
+
+The same tests (except for varying screen size and keyboard navigation) were also run in Chrome on an iPhone SE and passed.
+In future, more testing will need to be done on other devices and on Safari.
+
+
   - **Features Tested:** [Summarise features tested manually, e.g., CRUD operations, navigation.]
   - **Results:** [Summarise testing results, e.g., "All critical features worked as expected, including accessibility checks."]
 ### Automated Testing
-  - Tools Used: [Mention any testing frameworks or tools, e.g., Django TestCase.]
-  - Features Covered: [Briefly list features covered by automated tests.]
+Automated Tests were set up in Django test_ files. These all use Django TestCase and focus on unit tests and edge tests. Tests were developed towards the end of MVP implementation to verify models, views and forms have been built as intended. As features are added the automated tests are run before code is committed. 
+
+Also see the [AI Reflection on Automated Unit Testing](automated-unit-testing) below on how tests were written with the help of Github Copilot.
 
 #### Models: test_models.py:
 
@@ -719,10 +731,14 @@ Tests that the About page loads and contains the right content for authenticated
 
 </details>
 
+#### Error Handling: test_error_handling.py
+<details>
+    <summary>Unit Tests (4 tests, passed)</summary>
 
+![image](https://github.com/user-attachments/assets/40a0f22c-a7f9-4046-bcdb-8c473c6cedaa)
 
+</details>
 
-  - Adjustments Made: [Describe any manual corrections to AI-generated test cases, particularly for accessibility.]
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Future Enhancements
