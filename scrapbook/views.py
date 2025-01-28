@@ -461,6 +461,21 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class PostDetailView(generic.DetailView):
+    """
+    View for displaying a post.
+
+    Attributes:
+    model -- The Post model.
+    template_name -- The template used to render the view.
+
+    Methods:
+    get_object -- Get the post object.
+    handle_no_permission -- Handle cases where the user does not have
+    permission to view the post.
+
+    Template:
+    scrapbook/post_detail.html
+    """
     model = Post
     template_name = 'scrapbook/post_detail.html'
 
