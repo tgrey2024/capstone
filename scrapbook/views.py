@@ -148,13 +148,19 @@ class ScrapbookDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         scrapbook = super().get_object(queryset)
-        if scrapbook.status != 2 and scrapbook.author != self.request.user:
-            if not SharedAccess.objects.filter(
-                user=self.request.user, scrapbook=scrapbook
-            ).exists():
+        user = self.request.user
+        if (
+            scrapbook.status != 2 and
+            (not user.is_authenticated or scrapbook.author != user)
+        ):
+            if (
+                not user.is_authenticated or
+                not SharedAccess.objects.filter(
+                    user=user,
+                    scrapbook=scrapbook).exists()
+            ):
                 raise PermissionDenied(
-                    "You do not have permission to view this scrapbook."
-                )
+                    "You do not have permission to view this scrapbook.")
         return scrapbook
 
     def handle_no_permission(self):
@@ -174,8 +180,10 @@ class ScrapbookDetailView(generic.DetailView):
         ordering = ["-created_on"]
 
         # Get shared access for the current user and scrapbook
-        sharedaccess = SharedAccess.objects.filter(
-            user=self.request.user, scrapbook=scrapbook).exists()
+        sharedaccess = False
+        if self.request.user.is_authenticated:
+            sharedaccess = SharedAccess.objects.filter(
+                user=self.request.user, scrapbook=scrapbook).exists()
 
         context.update({
             'scrapbook': scrapbook,
@@ -186,14 +194,6 @@ class ScrapbookDetailView(generic.DetailView):
             'sharedaccess': sharedaccess,
         })
         return context
-
-    # def get(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     return super().get(request, *args, **kwargs)
-
-    # def post(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     return handle_post_request(request, self.object)
 
 
 def handle_post_request(request, scrapbook):
