@@ -196,17 +196,23 @@ The purple arrows show the user flows for the creation, updating and deleting of
 
 ### Database
 Using the user stories, Perplexity gave me a schema of the entities, fields and relationships. Using this, Eraser DiagramGPT provided an initial ERD from which I built the initial models.
+![ERD](https://github.com/user-attachments/assets/2435aaff-e7db-42a4-8e20-1806ca021293)
+
+During MVP development and as new requirements were introduced with subsequent releases, it was necessary to change the model to fit the requirements. With every change in the Django model, it is necessary to make migrations and migrate in order to control the versions of the model and map the changes.
 
 Here is the ERD of the final model:
 
 ![image](https://github.com/user-attachments/assets/17122097-8c80-448c-b793-34b1e681ce11)
 
 Post - a container for a single image asset, with a title and some caption content, an author who is a registered and logged in user and date-time fields when the post is created and updated. The slug is system-generated as a unique id which forms part of the URL for CRUD functions.
+
 Scrapbook - a collection of Posts, which also has a title, slug and content text, along with an author, create and updated fields. The description field is an author to make notes to themselves for producing the scrapbook. This 'note-to-self' is only visible to the author.
+
 User - a registered user who is identified by their username and has a password for logging in.
+
 SharedAccess - when an author (User A) wants to share his/her scrapbook with User B, a new instance of SharedAccess is created for User B as the user of the SharedAccess, shared_by User A of a specific scrapbook. 
 
-In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. There is potential for the Post-SharedAccess to be fully implemented so users can control the sharing of posts (see Future Enhancements on the sharing function).
+In the current version scrapbooks are shared at the Scrapbook level, ie. all posts in the shared Scrapbook are also shared. In future versions the Post-SharedAccess could be fully implemented so users can have finer control of the sharing of posts in the same way as the sharing of scrapbooks (see Future Enhancements on the sharing function).
 
 ### Colour Scheme
 The aim of the web app is for users to collate and showcase the memorable photos and other media that they cherish, while making it cheerful and calm for users of any age or gender. A lot of photos in the sample research are black and white or sepia toned. I used [Coolors](https://coolors.co/174f11-f2e3bc-2660a4-c47335-a15317-56351e) to find a palette that would complement those tones:<br>
@@ -336,11 +342,15 @@ A simple footer in dark brown(#56351e) has the brand and copyright, with links t
 ![image](https://github.com/user-attachments/assets/6d3a5a5d-2ed5-402d-b99a-c52ddbb050f1)
 ![image](https://github.com/user-attachments/assets/01b9771f-89b9-4aff-a1b3-71ce5f1da576)
 
-
+The navbar in the header and the footer, as well as the notification message, are implemented in the base template, which all templates extend and therefore are rendered with these features available to users.
 
 ### Homepage and Published Scrapbooks
 The highest priority section of the homepage, namely the published scrapbooks, needed to be implemented first. Bootstrap cards have been used to ensure that the layout of the cards is responsive to different screen sizes. The same layout is used to list the scrapbooks on My Scrapbooks and Shared Scrapbooks.
-[include screenshots to show cards layout adapt to screen sizes, check pagination is working]
+![image](https://github.com/user-attachments/assets/a6e0a1ad-fad7-427f-b670-7dabab999909)
+![image](https://github.com/user-attachments/assets/8288f09b-0d64-4d11-a770-e19b38da2075)
+![image](https://github.com/user-attachments/assets/1ef10163-d7c3-4807-ad5e-52c92cc6ba7e)
+
+Portrait and landscape images uploaded are displayed within the limits set in the custom CSS for the card image in order to achieve a consistent size of cards and a neater layout of scrapbook cards. This is also replicated on My Scrapbook and Shared Scrapbook lists.
 
 #### Hero image
 In v1.2, the hero section was added with a call-to-action button, which changes depending on whether the user is logged in. This is mirrored in the hero section on the About page.
@@ -491,7 +501,8 @@ The only 4 errors come from HTML in the Sign up pages default when setting up au
 <details>
   <summary>HTML validation - My Scrapbook Detail - No errors </summary>
   
-![image](https://github.com/user-attachments/assets/00320c6d-f070-45b8-978e-a897cb3a68f4)
+![scrapbook_detail_validation](https://github.com/user-attachments/assets/95703b94-ee3f-4a0e-a61b-ce28f9b62994)
+
 
 </details>
 <details>
@@ -610,18 +621,27 @@ Mobile:
 Desktop:
 ![image](https://github.com/user-attachments/assets/c63df866-6159-4a8f-bc22-d0437f1bd56a)
 
+Pages without Cloudinary content were scored much better on the Chrome version of Lighthouse:
+![image](https://github.com/user-attachments/assets/e708b291-5102-40e4-82ee-231fb1eb7af0)
 
-### Bugs yet to be Fixed
+Lighthouse Audits run on MS Edge achieved better scores as the Cloudinary cookies were not considered an issue:
+
+![lighthouse_home_edge](https://github.com/user-attachments/assets/461bc5d0-8fa0-44ce-afa7-bcc9e00341c3)
+![lighthouse_post_detail_edge](https://github.com/user-attachments/assets/42904d31-3cac-4434-9668-d2c13b7eb013)
+
+#### WAVE Accessibility Evaluation
+The WAVE tool was used to test for accessibility and usability. No errors were raised. The alert was on visible and hidden buttons adjacent to each other having similar functions, but these are used to tailor the user experience for different users.
+
+![image](https://github.com/user-attachments/assets/2428093d-6a09-42c2-8457-7eda9be3db77)
+
+
+#### Outstanding issues
 * Third-party cookies from Cloudinary: Chrome has recently deprecated its support for third-party cookies and gives a warning in Chrome Dev Tools. Cloudinary has yet to give a [response](https://community.cloudinary.com/discussion/596/third-party-cookies-will-be-blocked-how-to-solve-it) on how this can be resolved.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Testing Summary
 
-### Manual Testing
-Summary table of manual tests, expected outcomes, actual results, pass/fail
-
-Test summary
 #### Browser and Device Testing
 The site was tested on my laptop (Surface Pro  7) across the 3 popular browsers. The test is passed if the expected result is produced:
 
@@ -640,13 +660,15 @@ The site was tested on my laptop (Surface Pro  7) across the 3 popular browsers.
 The same tests (except for varying screen size and keyboard navigation) were also run in Chrome on an iPhone SE and passed.
 In future, more testing will need to be done on other devices and on Safari.
 
-
-  - **Features Tested:** [Summarise features tested manually, e.g., CRUD operations, navigation.]
-  - **Results:** [Summarise testing results, e.g., "All critical features worked as expected, including accessibility checks."]
 ### Automated Testing
-Automated Tests were set up in Django test_ files. These all use Django TestCase and focus on unit tests and edge tests. Tests were developed towards the end of MVP implementation to verify models, views and forms have been built as intended. As features are added the automated tests are run before code is committed. 
+Automated Tests were set up in Django test_ files to test the implementation of models, views, forms and templates in the project. These all use Django TestCase and focus on unit tests and edge tests. Tests were developed towards the end of MVP implementation to verify models, views and forms have been built as intended. As features are added the automated tests are run before code is committed. 
 
 Also see the [AI Reflection on Automated Unit Testing](automated-unit-testing) below on how tests were written with the help of Github Copilot.
+
+#### Bugs to be Fixed
+* Third-party cookies from Cloudinary: as mentioned in Chrome Lighthouse Audit
+* The Back buttons on each page needs to be more thought through and tested to make sense in each user flow, as it does not make sense to e.g. take a user back to the Delete page after they have deleted a post or scrapbook.
+* The validation error in the Sign Up page is dependent on code provided by a third party. The page is currently functional but 
 
 #### Models: test_models.py:
 
@@ -834,6 +856,15 @@ Tests that the About page loads and contains the right content for authenticated
 ![image](https://github.com/user-attachments/assets/40a0f22c-a7f9-4046-bcdb-8c473c6cedaa)
 
 </details>
+
+### Manual Testing
+With the completion of every feature, the site is manually tested in addition to the automated tests to ensure that existing functionalities are still in place and not impacted by the latest changes in the code. Any bugs could then be prioritised in the project board and scheduled for fixing.
+
+Towards the end of the project, the final system that has been unit tested was also tested as a whole for integration testing. The table below shows the scope of the functions tested and the results from manual testing:
+
+![image](https://github.com/user-attachments/assets/c317e1cc-3abf-4d25-85b5-279e6ad0bb53)
+
+In addition to that, all pages were tested for broken links and interactive effects on the deloyed site to ensure all parts of the site are rendering as intended on the deployment site before final delivery.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
