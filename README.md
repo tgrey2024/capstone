@@ -893,15 +893,17 @@ In addition to that, all pages were tested for broken links and interactive effe
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Future Enhancements
-- [List potential improvements or additional features for future development.]
-- Consider enhancements to improve accessibility further, such as voice input capabilities or additional language support.
+
+- Tagging of posts for better navigation and discovery of content
 - Manage Shared Access:
   - in addition to creating shared access, users could also have finer control of shared access so they can:
       - see who they have given access to
       - update or remove the access so they can manage who has access to their creations and when
       - manage permissions by family or friend groups
+      - share posts individually and regardless of status
 - Incorporate links, videos and audio clips in their scrapbook posts, as multimedia content such as songs, soundbytes, music and contemporary video footage can all enrich the experience of reminiscencing and make the experience more immersive.
 - Audio input as a means of scrapbooking, whether as sound clips or through voice-to-text input, making it easier for users to enter content about their memories and emotions, thus encouraging users to express themselves through speech.
+- Enhancements to improve accessibility further, such as voice input capabilities or additional language support.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
