@@ -486,15 +486,10 @@ class PostDetailView(generic.DetailView):
         post = get_object_or_404(
             Post, slug=post_slug, scrapbook__slug=scrapbook_slug
         )
-        if post.status != 2 and post.author != self.request.user:
-            if (
-                not self.request.user.is_authenticated or
-                not SharedAccess.objects.filter(
-                    user=self.request.user,
-                    scrapbook=post.scrapbook,
-                    post=post
-                ).exists()
-            ):
+        user = self.request.user
+        if post.status != 2 and post.author != user:
+            if not user.is_authenticated or not SharedAccess.objects.filter(
+                user=user, scrapbook=post.scrapbook, post=post).exists():
                 raise PermissionDenied(
                     "You do not have permission to view this post."
                 )
