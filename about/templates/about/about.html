@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}About{% endblock %}
-
 {% block content %}
 <!-- Hero section -->
 <section id="about-hero" class="hero bg-light text-center">
     <div class="container ms-auto">
-        <div class="text-center"></div>
+        <div class="text-center">
             <h1>Let your Memories do the Talking</h1>
             <p class="lead">create | share | connect</p>
             {% if not user.is_authenticated %}
@@ -27,74 +26,68 @@
             <div class="col-sm-12 col-lg-8">
                 <h2>What is Reminiscence Therapy?</h2>
                 <p>Reminiscence Therapy is a form of therapy that uses prompts such as photographs, music, or familiar items to encourage individuals, particularly the elderly, to recall and share memories from their past.</p>
-                <h4>About Remineez</h4>
-                <p>Remineez can support this process and help to improve mood, cognitive function and overall well-being by fostering a sense of identity and connection. This can be particularly valuable to patients with dementia or other cognitive challenges with inhibited speech. Benefits include:<br>
-                    <ul>
-                        <li>Enhances mood and reduces depression</li>
-                        <li>Improves cognitive function and memory recall</li>
-                        <li>Strengthens personal identity and sense of self</li>
-                        <li>Encourages social interaction and reduces isolation</li>
-                        <li>Provides a focus to initiate meaningful conversation</li>
-                    </ul>
-                </p>
+                <h3>About Remineez</h3>
+                <p>Remineez can support this process and help to improve mood, cognitive function and overall well-being by fostering a sense of identity and connection. This can be particularly valuable to patients with dementia or other cognitive challenges with inhibited speech. Benefits include:</p>
+                <ul>
+                    <li>Enhances mood and reduces depression</li>
+                    <li>Improves cognitive function and memory recall</li>
+                    <li>Strengthens personal identity and sense of self</li>
+                    <li>Encourages social interaction and reduces isolation</li>
+                    <li>Provides a focus to initiate meaningful conversation</li>
+                </ul>
             </div>
         </div>
+    </div>
 </section>
 <!-- Benefits section -->
 <section id="benefits" class="benefits my-3 py-2">
     <div class="container move-up">
         <div class="row">
             <div class="col-12 mt-3 left">
-            <div class="row">
-                <div class="col-md-4">
-                <!-- Row of 3 benefits in cards -->
-                <div class="card mb-4">
-                    <div class="text-center">
-                    <img src="{% static 'images/carousel1.png' %}" class="card-img-top" alt="A grandad sharing his scrapbook with his two grand-daughters">
-                    </div>
-                    <div class="card-body px-3">
-                        <div>
-                            <h5 class="card-title d-inline linked-title">Improve Memory and Speech</h5>
-                            <p class="card-text">Digital scrapbooks make powerful memory aids. Reminiscing can evoke positive emotions and spark neural connections for memory and language.</p>
+                <div class="row">
+                    <!-- Row of 3 benefits in cards -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'images/carousel1.png' %}" class="card-img-top" alt="A grandad sharing his scrapbook with his two grand-daughters">
+                            </div>
+                            <div class="card-body px-3">
+                                <div>
+                                    <h5 class="card-title d-inline linked-title">Improve Memory and Speech</h5>
+                                    <p class="card-text">Digital scrapbooks make powerful memory aids. Reminiscing can evoke positive emotions and spark neural connections for memory and language.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                </div>
-                <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="text-center">
-                    <img src="{% static 'images/carousel2.png' %}" class="card-img-top" alt="A group of friends looking at a scrapbook together">
-                    </div>
-                    <div class="card-body px-3">
-                        <div>
-                            <h5 class="card-title d-inline linked-title">Share Precious Memories</h5>
-                            <p class="card-text">By curating meaningful content, users can share their memories with carers and loved ones, fostering more meaningful conversations.</p>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'images/carousel2.png' %}" class="card-img-top" alt="A group of friends looking at a scrapbook together">
+                            </div>
+                            <div class="card-body px-3">
+                                <div>
+                                    <h5 class="card-title d-inline linked-title">Share Precious Memories</h5>
+                                    <p class="card-text">By curating meaningful content, users can share their memories with carers and loved ones, fostering more meaningful conversations.</p>
+                                </div>
+                            </div>
                         </div>
-                        <!-- <div class="text-end mb-1">
-                            <a href="#" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">More <i class="fa-solid fa-book-open"></i></a>
-                        </div> -->
                     </div>
-                </div>
-                </div>
-                <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="text-center">
-                    <img src="{% static 'images/carousel3.png' %}" class="card-img-top" alt="A woman showing her scrapbook to her family">
-                    </div>
-                    <div class="card-body px-3">
-                        <div>
-                            <h5 class="card-title d-inline linked-title">User-Friendly and Intuitive</h5>
-                            <p class="card-text">The simple design encourages users to actively preserve and celebrate their memories, promoting a positive and fulfilling experience.</p>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="text-center">
+                                <img src="{% static 'images/carousel3.png' %}" class="card-img-top" alt="A woman showing her scrapbook to her family">
+                            </div>
+                            <div class="card-body px-3">
+                                <div>
+                                    <h5 class="card-title d-inline linked-title">User-Friendly and Intuitive</h5>
+                                    <p class="card-text">The simple design encourages users to actively preserve and celebrate their memories, promoting a positive and fulfilling experience.</p>
+                                </div>
+                            </div>
                         </div>
-                        <!-- <div class="text-end mb-1">
-                            <a href="#" class="btn btn-info scrapbook-link" aria-label="Go to the Scrapbook Detail page">More <i class="fa-solid fa-book-open"></i></a>
-                        </div> -->
                     </div>
-                </div>
                 </div>
             </div>
-            </div>
-        </div></div>
+        </div>
     </div>
 </section>
 <!-- FAQ section -->
@@ -114,5 +107,6 @@
                 <img src="{% static 'images/about.webp' %}" class="card-img-top" alt="A family looking at old family photos">                
             </div>
         </div>
+    </div>
 </section>
 {% endblock %}
