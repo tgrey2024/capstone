@@ -44,6 +44,6 @@ class SharedAccessAdmin(admin.ModelAdmin):
 
     """
 
-    list_display = ('user', 'scrapbook', 'post', 'shared_by')
+    list_display = ('user', 'scrapbook', 'shared_by')
     search_fields = ['scrapbook__title', 'user__username']
-    list_filter = ('scrapbook', 'user', 'post', 'shared_by')
+    list_filter = ('scrapbook', 'user', 'shared_by')

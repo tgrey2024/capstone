@@ -174,7 +174,7 @@ class SharedAccess(models.Model):
         # to a scrapbook
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'scrapbook', 'post'],
+                fields=['user', 'scrapbook' ],
                 name='unique_shared_access')
         ]
 
