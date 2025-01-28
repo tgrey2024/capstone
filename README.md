@@ -366,7 +366,11 @@ In v1.2, Github Copilot generated code for the Bootstrap Carousel, which was ada
 This provides user with more information on how other users feel about the product.
 
 ### Accounts Management
-[add screenshots, show how they use the same template, register and cancel buttons]
+Django AllAuth and Users have been used to implement the registration and authentication of users in the front-end. The default templates for signup, log in and log out extend the base template to keep a consistent look-and-feel. The signup and log in pages use Crispy Forms for the implementation of form fields. Form validation has been implemented in the sign up form for the email field to ensure the user enters a valid email address.
+![image](https://github.com/user-attachments/assets/cdde58ca-9f12-484e-9018-f74880116865)
+![signup_email_validation](https://github.com/user-attachments/assets/d07d7019-8db6-47fa-842c-b5f014084898)
+
+A Cancel button has been added to allow users to go back to opt out of submitting and return to the previous page.
 
 ### Log in Status
 The logged in status message and icon in the top right under the navbar tells users whether they are logged in or not.
@@ -414,32 +418,50 @@ Here is a summary of the CRUD functionalities implemented.
 All users, logged-in or not, can read published scrapbooks and posts. All other CRUD functions are all only accessible to logged-in users.
 
 ### Access Control
-### Create and Edit Scrapbooks
-[add screenshots to show they use the same template, context passed from each view to determine and dynamically change content for better UI]
-### Create and Edit Posts
-[add screenshots to show they use the same template, context passed from each view to determine and dynamically change content for better UI]
+Django Template Language has been used to implement the conditions as detailed in the CRUD table above.
+
+It was also necessary to ensure that users without permissions cannot access the CRUD functions for the scrapbooks and post. A LoginRequiredMixin has been used to control the access to those views.
+
+### Create and Edit Scrapbooks/Posts
+The same template is used for the creation and editing of scrapbooks, and the content is updated dynamically using Django Template language.
+
+Crispy Forms is used to implement the form fields, but it was not sufficiently clear whether the right image has been selected.
+![image](https://github.com/user-attachments/assets/10a6f668-1cc8-4c85-99ed-b5ba60543b7d)
+
+I wrote an image uploader in Javascript to listen for when images are selected and give the user a preview of the image.
+
+A similar design is used for creating and editing posts.
+
 ### Post Detail
 [add screenshots, set size for photo but max-width limited on very large screens]
 
 ### Delete Scrapbook or Post
-[add screenshots, show how they use the same template, confirmation and cancel buttons]
+The delete page gives the user the name of the item being deleted so that they can confirm or cancel the deletion. 
+![image](https://github.com/user-attachments/assets/072c9203-e39d-4cf4-b8ca-fcc3aac6d59f)
+
 
 ### My Scrapbooks
+Logged in users can create, edit and delete their own scrapbooks and posts, and there is a link in the navbar directly to My Scrapbooks so users can see all their own scrapbooks. All scrapbook cards on this page allow the user to Open, Edit, Delete and Share their scrapbooks:
+![image](https://github.com/user-attachments/assets/21d812ef-a843-4967-bae2-d31435cf82e2)
 
 
-
+### Shared Scrapbooks
+Logged in users can also see the scrapbooks that have been shared with them, and they can navigate directly to it from the Shared Scrapbooks link in the navbar. In this version, users that have permission to a shared scrapbook also have permission to access the posts in that scrapbook, but only private and public posts. Draft posts can only be accessed by the author of the scrapbook.
+![image](https://github.com/user-attachments/assets/e6cc9844-741c-4a49-8b0c-f02960d65c1a)
 
 
 ### Notifications
-[add screenshots, list which messages get sent to alert, disappear after 15s if not closed]
+Users receive notifications when they log in or out and with any CRUD functions. This is implemented in the base template just on top of the navbar, and adapts to the screen size of the user. Javascript has been used to time out and fade out the message after 9s.
 ![image](https://github.com/user-attachments/assets/a143f052-1054-45d3-8777-6586eafd6b3b)
 
 ### Admin Panel
 The Admin Panel is set up for the admin or superuser to have access to the data in the database, including the Scrapbook, Post and SharedAccess models and the User model. Additional fields have been added to verify data changes after CRUD functions in the front end.
 ![image](https://github.com/user-attachments/assets/1d7f1767-c479-468d-a68c-6b83a74d202c)
 
-### Inclusivity Notes
-  - [Mention how the features address the needs of diverse users, including those with SEND.]
+### Custom Error Pages
+Custom error pages have been implemented to handle 403, 403 CSRF, 404 and 500 errors in order to give users a more familiar and tailored message when an error is raised, and also provides them with the option to use the Homepage button provided or the navbar in the base template to go to other parts of the site.
+![image](https://github.com/user-attachments/assets/d669401f-9669-4cc5-975b-18e8f57f3af8)
+
 <p align="right"><a href="#top">Back to top</a></p>
 
 ## Deployment
@@ -472,6 +494,7 @@ The deployment process is as follows:
 ### Security Measures
   - Use of environment variables for sensitive data.
   - Ensured DEBUG mode is disabled in production.
+
 <p align="right"><a href="#top">Back to top</a></p>
 
 Validation of HTML/CSS, Lighthouse Audits, Bugs
