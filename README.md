@@ -365,6 +365,13 @@ In v1.2, Github Copilot generated code for the Bootstrap Carousel, which was ada
 
 This provides user with more information on how other users feel about the product.
 
+### About Page
+The About page was created to provide the user a better understanding of the purpose of the site and the benefits it could deliver:
+![image](https://github.com/user-attachments/assets/5b901560-fe4a-4559-8415-664da66f8f33)
+
+It also includes an FAQ which could be used to provide more information on data security and how to use the site:
+![image](https://github.com/user-attachments/assets/fda83069-3e95-4302-8646-eccf97e781e8)
+
 ### Accounts Management
 Django AllAuth and Users have been used to implement the registration and authentication of users in the front-end. The default templates for signup, log in and log out extend the base template to keep a consistent look-and-feel. The signup and log in pages use Crispy Forms for the implementation of form fields. Form validation has been implemented in the sign up form for the email field to ensure the user enters a valid email address.
 ![image](https://github.com/user-attachments/assets/cdde58ca-9f12-484e-9018-f74880116865)
