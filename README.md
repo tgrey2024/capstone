@@ -609,7 +609,7 @@ No errors were found in the CSS file.
 
 ### JSHint Linter
 
-- Used [JS Hint](https://jshint.com/)) to test Javascript for ES version 6 and got no warnings. Results are included below:<br>
+- Used [JS Hint](https://jshint.com/) to test Javascript for ES version 6 and got no warnings. Results are included below:<br>
 script.js
 <details>
   <summary>messages.js:</summary>
